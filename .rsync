@@ -1,0 +1,11 @@
+# http://rsync.samba.org/ftp/rsync/rsync.html
+
+# Dont send but don't delete on receiver
+- /node_modules/
+
+# Dont send and delete them on receiver
+hide *~
+hide .git/
+include /public/assets/manifest.json
+hide /public/assets/*
+

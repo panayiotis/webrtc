@@ -1,0 +1,13 @@
+extends ./layout.jade
+block title
+  title!= "Jasmine Spec Runner"
+
+block content
+  link(rel='shortcut icon', type='image/png', href='lib/jasmine-2.2.0/jasmine_favicon.png')
+  link(rel='stylesheet', href='lib/jasmine-2.2.0/jasmine.custom.css')
+  script(src='lib/jasmine-2.2.0/jasmine.js')
+  script(src='lib/jasmine-2.2.0/jasmine-html.js')
+  script(src='lib/jasmine-2.2.0/boot.js')
+  script(src='lib/jasmine-jquery.js')
+  script(src='spec/GeneralSpec.js')
+  a(href='/doc/GeneralSpec.html') GeneralSpec

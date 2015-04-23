@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>my.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="app.html">
+                app.coffee
+              </a>
+            
+              
+              <a class="source" href="backbone.html">
+                backbone.coffee
+              </a>
+            
+              
+              <a class="source" href="PeerConnectionCollection.html">
+                PeerConnectionCollection.coffee
+              </a>
+            
+              
+              <a class="source" href="ServerConnectionCollection.html">
+                ServerConnectionCollection.coffee
+              </a>
+            
+              
+              <a class="source" href="Peer.html">
+                Peer.coffee
+              </a>
+            
+              
+              <a class="source" href="PeerConnection.html">
+                PeerConnection.coffee
+              </a>
+            
+              
+              <a class="source" href="ServerConnection.html">
+                ServerConnection.coffee
+              </a>
+            
+              
+              <a class="source" href="my.html">
+                my.coffee
+              </a>
+            
+              
+              <a class="source" href="router.html">
+                router.coffee
+              </a>
+            
+              
+              <a class="source" href="KitchensinkView.html">
+                KitchensinkView.coffee
+              </a>
+            
+              
+              <a class="source" href="PeerConnectionView.html">
+                PeerConnectionView.coffee
+              </a>
+            
+              
+              <a class="source" href="PeerView.html">
+                PeerView.coffee
+              </a>
+            
+              
+              <a class="source" href="ServerConnectionView.html">
+                ServerConnectionView.coffee
+              </a>
+            
+              
+              <a class="source" href="GeneralSpec.html">
+                GeneralSpec.coffee
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>my.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>peer = <span class="hljs-literal">undefined</span>
+conn = <span class="hljs-literal">undefined</span>
+<span class="hljs-function">
+<span class="hljs-title">log</span> = <span class="hljs-params">(message)</span> -&gt;</span>
+  <span class="hljs-built_in">console</span>.log message
+  $(<span class="hljs-string">'pre.debug'</span>).append <span class="hljs-string">"<span class="hljs-subst">#{message}</span>\n"</span>
+<span class="hljs-function">
+<span class="hljs-title">create_peer</span> = <span class="hljs-params">({username, server}={})</span> -&gt;</span>
+  username ?= <span class="hljs-string">''</span>
+  server ?= default_signalling_server
+  <span class="hljs-built_in">console</span>.log <span class="hljs-string">"username: <span class="hljs-subst">#{username}</span>, server: <span class="hljs-subst">#{server}</span>"</span>
+  peer = <span class="hljs-keyword">new</span> Peer(username,
+    <span class="hljs-attribute">debug</span>: <span class="hljs-number">3</span> <span class="hljs-comment"># 1: Errors, 2: Warnings, 3: All logs</span>
+    <span class="hljs-attribute">host</span>: server
+    <span class="hljs-attribute">port</span>: <span class="hljs-number">9000</span>
+    <span class="hljs-attribute">path</span>: <span class="hljs-string">'/peerjs'</span>)
+  peer.<span class="hljs-literal">on</span> <span class="hljs-string">'open'</span>, <span class="hljs-function"><span class="hljs-params">(id)</span> -&gt;</span>
+    log <span class="hljs-string">"My peer ID is: <span class="hljs-subst">#{id}</span>"</span>
+    <span class="hljs-keyword">return</span>
+  peer.<span class="hljs-literal">on</span> <span class="hljs-string">'connection'</span>, <span class="hljs-function"><span class="hljs-params">(connection)</span> -&gt;</span>
+    conn = connection
+    conn.<span class="hljs-literal">on</span> <span class="hljs-string">'data'</span>, <span class="hljs-function"><span class="hljs-params">(data)</span> -&gt;</span>
+      log data
+    conn.<span class="hljs-literal">on</span> <span class="hljs-string">'error'</span>, <span class="hljs-function"><span class="hljs-params">(err)</span> -&gt;</span>
+      log err
+  peer.<span class="hljs-literal">on</span> <span class="hljs-string">'error'</span>, <span class="hljs-function"><span class="hljs-params">(err)</span> -&gt;</span>
+    log err
+  peer.<span class="hljs-literal">on</span> <span class="hljs-string">'disconnected'</span>, <span class="hljs-function">-&gt;</span>
+    log <span class="hljs-string">'disconnected from the signalling server'</span>
+<span class="hljs-function">
+<span class="hljs-title">connect_to</span> = <span class="hljs-params">(username)</span> -&gt;</span>
+  conn = peer.connect(username)
+  conn.<span class="hljs-literal">on</span> <span class="hljs-string">'open'</span>, <span class="hljs-function">-&gt;</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Receive messages</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    log <span class="hljs-string">'connection open'</span>
+    <span class="hljs-keyword">return</span>
+  conn.<span class="hljs-literal">on</span> <span class="hljs-string">'data'</span>, <span class="hljs-function"><span class="hljs-params">(data)</span> -&gt;</span>
+    log data
+    <span class="hljs-keyword">return</span>
+  conn.<span class="hljs-literal">on</span> <span class="hljs-string">'error'</span>, <span class="hljs-function"><span class="hljs-params">(err)</span> -&gt;</span>
+    log err
+    <span class="hljs-keyword">return</span>
+<span class="hljs-function">
+<span class="hljs-title">send</span> = <span class="hljs-params">(message)</span> -&gt;</span>
+  <span class="hljs-keyword">if</span> conn.open
+    conn.send message
+    log <span class="hljs-string">"sent <span class="hljs-subst">#{message}</span>"</span>
+  <span class="hljs-keyword">else</span>
+    log <span class="hljs-string">'Message was not sent. Connection is closed'</span>
+<span class="hljs-function">
+<span class="hljs-title">availablePeers</span> = -&gt;</span>
+  <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> peer
+    <span class="hljs-keyword">return</span> []
+  <span class="hljs-keyword">try</span>
+    peer.listAllPeers (res) -&gt;
+      <span class="hljs-built_in">console</span>.log res.length
+      diff = []
+      i = <span class="hljs-number">0</span>
+      ii = res.length
+      <span class="hljs-keyword">while</span> i &lt; ii
+        id = res[i]
+        <span class="hljs-built_in">console</span>.log id
+        i += <span class="hljs-number">1</span>
+      <span class="hljs-keyword">return</span>
+  <span class="hljs-keyword">catch</span> e
+  <span class="hljs-keyword">return</span>
+
+$ -&gt;
+  <span class="hljs-built_in">console</span>.log <span class="hljs-string">'my.coffee is loaded'</span>
+  
+  $(<span class="hljs-string">'.button.username'</span>).click -&gt;
+    server = $(<span class="hljs-string">'input.server'</span>).val() <span class="hljs-keyword">or</span> default_signalling_server
+    username = $(<span class="hljs-string">'input.username'</span>).val()
+    create_peer
+      <span class="hljs-attribute">username</span>: username
+      <span class="hljs-attribute">server</span>: server
+    <span class="hljs-keyword">return</span>
+  
+  $(<span class="hljs-string">'.button.connect'</span>).click -&gt;
+    username = $(<span class="hljs-string">'input.connect'</span>).val()
+    connect_to username
+    <span class="hljs-keyword">return</span>
+  
+  $(<span class="hljs-string">'.button.send'</span>).click -&gt;
+    message = $(<span class="hljs-string">'input.send'</span>).val()
+    send message
+    $(<span class="hljs-string">'input.send'</span>).val(<span class="hljs-string">''</span>)
+    <span class="hljs-keyword">return</span>
+<span class="hljs-function">
+<span class="hljs-title">supported_alert</span> = -&gt;</span>
+  $(<span class="hljs-string">'#browser-alert'</span>).removeClass <span class="hljs-string">'alert'</span>
+  $(<span class="hljs-string">'#browser-alert'</span>).addClass <span class="hljs-string">'success'</span>
+  $(<span class="hljs-string">'#browser-message'</span>).text <span class="hljs-string">'Your Browser is supported'</span>
+  <span class="hljs-keyword">return</span>
+
+$ -&gt;
+  browser = util.browser
+  <span class="hljs-keyword">switch</span> browser
+    <span class="hljs-keyword">when</span> <span class="hljs-string">'Firefox'</span> <span class="hljs-keyword">then</span> supported_alert()
+    <span class="hljs-keyword">when</span> <span class="hljs-string">'Chrome'</span> <span class="hljs-keyword">then</span> supported_alert()
+    <span class="hljs-keyword">when</span> <span class="hljs-string">'Supported'</span> <span class="hljs-keyword">then</span> supported_alert()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>when ‘Unsupported’ then unsupported_alert()</p>
+
+            </div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

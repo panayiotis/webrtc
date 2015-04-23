@@ -1,0 +1,37 @@
+{
+  "name": "webrtc",
+  "version": "0.0.1",
+  "description": "A WebRTC application",
+  "main": "app.coffee",
+  "scripts": {
+    "start": "coffee app.coffee",
+    "test": "grunt test"
+  },
+  "author": "Panayiotis Vlantis",
+  "license": "BSD",
+  "dependencies": {
+    "express": "~4.12.3",
+    "peer": "~0.2.8",
+    "jade": "~1.9.2",
+    "coffee-script": "~1.9.1",
+    "node-sass": "~2.0.1",
+    "uglify-js": "~2.4.19",
+    "connect-assets": "~4.7.0",
+    "csswring": "~3.0.2"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-cli": "~0.1.13",
+    "grunt-contrib-jasmine": "~0.8.2",
+    "grunt-contrib-coffee": "~0.13.0",
+    "grunt-contrib-jade": "~0.14.1",
+    "grunt-contrib-watch": "~0.6.1",
+    "livereload": "~0.3.7",
+    "grunt-nodemon": "~0.4.0",
+    "coffeelint": "~1.9.3",
+    "docco": "~0.7.0",
+    "grunt-docco": "~0.3.3",
+    "coffeelint": "~1.9.3",
+    "grunt-coffeelint": "0.0.13"
+  }
+}

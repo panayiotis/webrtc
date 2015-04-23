@@ -1,0 +1,17 @@
+//= require vendor/foundation/foundation
+// require vendor/foundation/foundation.abide
+// require vendor/foundation/foundation.accordion
+//= require vendor/foundation/foundation.alert
+// require vendor/foundation/foundation.clearing
+// require vendor/foundation/foundation.dropdown
+// require vendor/foundation/foundation.equalizer
+// require vendor/foundation/foundation.interchange
+// require vendor/foundation/foundation.joyride
+// require vendor/foundation/foundation.magellan
+// require vendor/foundation/foundation.offcanvas
+// require vendor/foundation/foundation.orbit
+// require vendor/foundation/foundation.reveal
+// require vendor/foundation/foundation.slider
+// require vendor/foundation/foundation.tab
+// require vendor/foundation/foundation.tooltip
+// require vendor/foundation/foundation.topbar

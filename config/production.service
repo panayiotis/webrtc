@@ -1,0 +1,17 @@
+[Unit]
+Description=Webrtc application
+After=syslog.target network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/var/www/node/webrtc
+User=panos
+Group=panos
+TimeoutSec=60
+Restart=on-failure
+Environment="NODE_ENV=production"
+ExecStart=/var/www/node/webrtc/node_modules/.bin/coffee app.coffee
+ExecStop=/bin/kill -s QUIT $MAINPID
+
+[Install]
+WantedBy=multi-user.target

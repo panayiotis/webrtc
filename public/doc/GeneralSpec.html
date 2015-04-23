@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>GeneralSpec.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="app.html">
+                app.coffee
+              </a>
+            
+              
+              <a class="source" href="backbone.html">
+                backbone.coffee
+              </a>
+            
+              
+              <a class="source" href="PeerConnectionCollection.html">
+                PeerConnectionCollection.coffee
+              </a>
+            
+              
+              <a class="source" href="ServerConnectionCollection.html">
+                ServerConnectionCollection.coffee
+              </a>
+            
+              
+              <a class="source" href="Peer.html">
+                Peer.coffee
+              </a>
+            
+              
+              <a class="source" href="PeerConnection.html">
+                PeerConnection.coffee
+              </a>
+            
+              
+              <a class="source" href="ServerConnection.html">
+                ServerConnection.coffee
+              </a>
+            
+              
+              <a class="source" href="my.html">
+                my.coffee
+              </a>
+            
+              
+              <a class="source" href="router.html">
+                router.coffee
+              </a>
+            
+              
+              <a class="source" href="KitchensinkView.html">
+                KitchensinkView.coffee
+              </a>
+            
+              
+              <a class="source" href="PeerConnectionView.html">
+                PeerConnectionView.coffee
+              </a>
+            
+              
+              <a class="source" href="PeerView.html">
+                PeerView.coffee
+              </a>
+            
+              
+              <a class="source" href="ServerConnectionView.html">
+                ServerConnectionView.coffee
+              </a>
+            
+              
+              <a class="source" href="GeneralSpec.html">
+                GeneralSpec.coffee
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>GeneralSpec.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>phantom = <span class="hljs-regexp">/PhantomJS/</span>.test(navigator.userAgent)
+
+<span class="hljs-keyword">unless</span> phantom
+  describe <span class="hljs-string">'Browser'</span>, <span class="hljs-function">-&gt;</span>
+    it <span class="hljs-string">'should support WebRTC'</span>, <span class="hljs-function">-&gt;</span>
+      browser = util.browser
+      expect([<span class="hljs-string">'Firefox'</span>,<span class="hljs-string">'Chrome'</span>,<span class="hljs-string">'Supported'</span>]).toContain(browser) <span class="hljs-keyword">unless</span> phantom
+
+
+
+<span class="hljs-keyword">unless</span> phantom
+  describe <span class="hljs-string">'Peerjs'</span>, <span class="hljs-function">-&gt;</span>
+    peer = <span class="hljs-literal">null</span>
+    
+    it <span class="hljs-string">'should create peer'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+      opened = <span class="hljs-literal">false</span>
+      
+      peer = <span class="hljs-keyword">new</span> Peer(Math.random().toString(<span class="hljs-number">36</span>).substring(<span class="hljs-number">7</span>),
+        <span class="hljs-attribute">debug</span>: <span class="hljs-number">3</span> <span class="hljs-comment"># 1: Errors, 2: Warnings, 3: All logs</span>
+        <span class="hljs-attribute">host</span>: <span class="hljs-string">'signalling.home'</span>
+        <span class="hljs-attribute">port</span>: <span class="hljs-number">9000</span>
+        <span class="hljs-attribute">path</span>: <span class="hljs-string">'/peerjs'</span>)
+      
+      peer.<span class="hljs-literal">on</span> <span class="hljs-string">'open'</span>, <span class="hljs-function"><span class="hljs-params">(id)</span> -&gt;</span>
+        opened = <span class="hljs-literal">true</span>
+        <span class="hljs-keyword">return</span>
+      
+      setTimeout (<span class="hljs-function">-&gt;</span>
+        expect(opened).toBeTruthy()
+        expect(peer.open).toBeTruthy()
+        done()
+      ), <span class="hljs-number">100</span>
+      <span class="hljs-keyword">return</span>
+    
+    it <span class="hljs-string">'should get available peers'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+      expect(peer).toBeTruthy()
+      list = <span class="hljs-literal">null</span>
+      peer.listAllPeers (res) -&gt;
+        list = res
+      setTimeout (<span class="hljs-function">-&gt;</span>
+        expect(_.isArray(list)).toBeTruthy()
+        done()
+      ), <span class="hljs-number">100</span>
+
+
+
+describe <span class="hljs-string">'Node.js'</span>, <span class="hljs-function">-&gt;</span>
+  it <span class="hljs-string">'should load .jst.jade templates'</span>, <span class="hljs-function">-&gt;</span>
+    expect(JST[<span class="hljs-string">'templates/hello'</span>]()).toBe <span class="hljs-string">'&lt;h1&gt;Hello&lt;/h1&gt;'</span>
+  it <span class="hljs-string">'should load jquery'</span>, <span class="hljs-function">-&gt;</span>
+    expect($(<span class="hljs-string">'body'</span>)).toBeInDOM()
+  it <span class="hljs-string">'should load Backbone'</span>, <span class="hljs-function">-&gt;</span>
+    expect(Backbone).toBeTruthy()
+    expect(Webrtc).toBeTruthy()
+
+
+
+describe <span class="hljs-string">'ServerConnection'</span>, <span class="hljs-function">-&gt;</span>
+  
+  describe <span class="hljs-string">'initialization'</span>, <span class="hljs-function">-&gt;</span>
+    
+    connection = <span class="hljs-literal">null</span>
+    
+    beforeAll (done) -&gt;
+      connection = <span class="hljs-keyword">new</span> Webrtc.Models.ServerConnection()
+      setTimeout (<span class="hljs-function">-&gt;</span>
+        done()
+      ), <span class="hljs-number">100</span>
+      <span class="hljs-keyword">return</span>
+    
+    it <span class="hljs-string">'should set default attributes'</span>, <span class="hljs-function">-&gt;</span>
+      expect(Object.keys(connection.attributes)).toContain(<span class="hljs-string">'host'</span>)
+      <span class="hljs-keyword">if</span> phantom
+        expect(connection.get(<span class="hljs-string">'open'</span>)).toBeFalsy()
+      <span class="hljs-keyword">else</span>
+        expect(connection.get(<span class="hljs-string">'open'</span>)).toBeTruthy()
+      
+    it <span class="hljs-string">'should set string id'</span>, <span class="hljs-function">-&gt;</span>
+      expect(<span class="hljs-keyword">typeof</span> connection.id).toEqual <span class="hljs-string">'string'</span>
+    
+    xit <span class="hljs-string">'should generate good random id'</span>, <span class="hljs-function">-&gt;</span>
+      ids = []
+      <span class="hljs-keyword">while</span> (ids.length &lt; <span class="hljs-number">1000</span>)
+        id = (Math.random().toString(<span class="hljs-number">36</span>) + <span class="hljs-string">'0000000000000000000'</span>).substr(<span class="hljs-number">2</span>, <span class="hljs-number">10</span>)
+        expect(ids).<span class="hljs-keyword">not</span>.toContain(id)
+        ids.push id
+  
+  describe <span class="hljs-string">'connectivity'</span>, <span class="hljs-function">-&gt;</span>
+    <span class="hljs-keyword">unless</span> phantom
+      server = <span class="hljs-literal">null</span>
+      
+      beforeEach (done) -&gt;
+        <span class="hljs-built_in">window</span>.it = <span class="hljs-built_in">window</span>.xit
+        server = <span class="hljs-keyword">new</span> Webrtc.Models.ServerConnection()
+        setTimeout (<span class="hljs-function">-&gt;</span>
+          done()
+        ), <span class="hljs-number">100</span>
+        <span class="hljs-keyword">return</span>
+      
+      it <span class="hljs-string">'should get available peers from server'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+        list = <span class="hljs-literal">null</span>
+        server.listenTo(server, <span class="hljs-string">'availablePeers'</span>, <span class="hljs-function"><span class="hljs-params">(res)</span> -&gt;</span>
+          list = res
+        )
+        server.availablePeers()
+        
+        setTimeout (<span class="hljs-function">-&gt;</span>
+          expect(_.isArray(list)).toBeTruthy()
+          expect(list).toContain(server.id)
+          done()
+        ), <span class="hljs-number">100</span>
+      
+      it <span class="hljs-string">'should disconnect'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+        expect(server.get(<span class="hljs-string">'open'</span>)).toBeTruthy()
+        server.disconnect()
+        setTimeout (<span class="hljs-function">-&gt;</span>
+          expect(server.get(<span class="hljs-string">'open'</span>)).toBeFalsy()
+          expect(server.connection.open).toBeFalsy()
+          done()
+        ), <span class="hljs-number">100</span>
+        
+      
+      it <span class="hljs-string">'should reconnect'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+        server.disconnect()
+        
+        setTimeout (<span class="hljs-function">-&gt;</span>
+          server.reconnect()
+        ), <span class="hljs-number">100</span>
+        
+        setTimeout (<span class="hljs-function">-&gt;</span>
+          expect(server.get(<span class="hljs-string">'open'</span>)).toBeTruthy()
+          expect(server.connection.open).toBeTruthy()
+          done()
+        ), <span class="hljs-number">200</span>
+
+      it <span class="hljs-string">'should get destroyed'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+        
+        server.destroy()
+        setTimeout (<span class="hljs-function">-&gt;</span>
+          <span class="hljs-built_in">console</span>.log server
+          expect(server.get(<span class="hljs-string">'open'</span>)).toBeFalsy()
+          expect(server.connection.open).toBeFalsy()
+          done()
+        ), <span class="hljs-number">100</span>
+
+
+
+describe <span class="hljs-string">'PeerConnection'</span>, <span class="hljs-function">-&gt;</span>
+
+  describe <span class="hljs-string">'initialization'</span>, <span class="hljs-function">-&gt;</span>
+    connection = <span class="hljs-literal">null</span>
+    
+    beforeAll (done) -&gt;
+      connection = <span class="hljs-keyword">new</span> Webrtc.Models.PeerConnection()
+      setTimeout (<span class="hljs-function">-&gt;</span>
+        done()
+      ), <span class="hljs-number">100</span>
+      <span class="hljs-keyword">return</span>
+    
+    it <span class="hljs-string">'should set default attributes'</span>, <span class="hljs-function">-&gt;</span>
+      connection = <span class="hljs-keyword">new</span> Webrtc.Models.PeerConnection()
+      expect(connection.peer).toBe(<span class="hljs-literal">null</span>)
+      expect(connection.server).toBe(<span class="hljs-literal">null</span>)
+      
+      other = <span class="hljs-keyword">new</span> Webrtc.Models.PeerConnection({<span class="hljs-attribute">server</span>:<span class="hljs-string">'server'</span>, <span class="hljs-attribute">peer</span>:<span class="hljs-string">'peer'</span>})
+      expect(other.peer).toEqual(<span class="hljs-string">'peer'</span>)
+      expect(other.server).toEqual(<span class="hljs-string">'server'</span>)
+
+  <span class="hljs-keyword">unless</span> phantom
+    describe <span class="hljs-string">'connectivity'</span>, <span class="hljs-function">-&gt;</span>
+      alice_server = <span class="hljs-literal">null</span>
+      bob_server = <span class="hljs-literal">null</span>
+      alice_peer = <span class="hljs-literal">null</span>
+      bob_peer = <span class="hljs-literal">null</span>
+      
+      beforeEach (done) -&gt;
+        alice_server = <span class="hljs-keyword">new</span> Webrtc.Models.ServerConnection()
+        bob_server = <span class="hljs-keyword">new</span> Webrtc.Models.ServerConnection()
+        setTimeout (<span class="hljs-function">-&gt;</span>
+          done()
+        ), <span class="hljs-number">100</span>
+        <span class="hljs-keyword">return</span>
+      
+      it <span class="hljs-string">'should connect to another peer'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+        options = { <span class="hljs-attribute">server</span>: alice_server, <span class="hljs-attribute">peer</span>: bob_server.id }
+        alice_bob = <span class="hljs-keyword">new</span> Webrtc.Models.PeerConnection(options)
+        alice_bob.connect()
+        setTimeout (<span class="hljs-function">-&gt;</span>
+          expect(alice_bob.connection.open).toBeTruthy()
+          done()
+        ), <span class="hljs-number">200</span>
+        
+      it <span class="hljs-string">'should close connection to other peer'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+        <span class="hljs-built_in">console</span>.log bob_server.id
+        options = { <span class="hljs-attribute">server</span>: alice_server, <span class="hljs-attribute">peer</span>: bob_server.id }
+        alice_bob = <span class="hljs-keyword">new</span> Webrtc.Models.PeerConnection(options)
+        alice_bob.connect()
+        setTimeout (<span class="hljs-function">-&gt;</span>
+          alice_bob.close()
+        ), <span class="hljs-number">200</span>
+        setTimeout (<span class="hljs-function">-&gt;</span>
+          expect(alice_bob.connection.open).toBeFalsy()
+          done()
+        ), <span class="hljs-number">400</span>
+
+
+
+xdescribe <span class="hljs-string">'ServerConnectionCollection'</span>, <span class="hljs-function">-&gt;</span>
+  
+  connections = <span class="hljs-literal">null</span>
+  
+  beforeEach -&gt;
+    $(<span class="hljs-string">'.server'</span>).remove()
+    connections = <span class="hljs-keyword">new</span> Webrtc.Collections.ServerConnectionCollection()
+    
+  afterEach -&gt;
+    connections.remove()
+
+  it <span class="hljs-string">'should remove views'</span>, <span class="hljs-function">-&gt;</span>
+    
+    expect($(<span class="hljs-string">'.server'</span>)).<span class="hljs-keyword">not</span>.toBeInDOM()
+    expect(connections.views.length).toEqual(<span class="hljs-number">0</span>)
+    
+    connections.add(<span class="hljs-keyword">new</span> Webrtc.Models.ServerConnection())
+    expect($(<span class="hljs-string">'.server'</span>)).toBeInDOM()
+    
+    connections.add(<span class="hljs-keyword">new</span> Webrtc.Models.ServerConnection())
+    connections.add(<span class="hljs-keyword">new</span> Webrtc.Models.ServerConnection())
+    expect(connections.views.length).toEqual(<span class="hljs-number">3</span>)
+    
+    connections.remove()
+    expect(connections.views.length).toEqual(<span class="hljs-number">0</span>)
+    expect($(<span class="hljs-string">'.server'</span>)).<span class="hljs-keyword">not</span>.toBeInDOM()
+    
+    connections.remove()
+    
+  it <span class="hljs-string">'should render views when connections are created'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+    expect($(<span class="hljs-string">'.server'</span>)).<span class="hljs-keyword">not</span>.toBeInDOM()
+    connections.add(<span class="hljs-keyword">new</span> Webrtc.Models.ServerConnection())
+    setTimeout (<span class="hljs-function">-&gt;</span>
+      done()
+    ), <span class="hljs-number">100</span>
+    expect($(<span class="hljs-string">'.server'</span>)).toBeInDOM()
+    connections.remove()
+
+describe <span class="hljs-string">'PeerConnectionCollection'</span>, <span class="hljs-function">-&gt;</span>
+  
+  connections = <span class="hljs-literal">null</span>
+  
+  beforeEach -&gt;
+    $(<span class="hljs-string">'.peer'</span>).remove()
+    connections = <span class="hljs-keyword">new</span> Webrtc.Collections.PeerConnectionCollection()
+  
+  afterEach -&gt;
+    connections.remove()
+  
+  it <span class="hljs-string">'should be initialized'</span>, <span class="hljs-function">-&gt;</span>
+    expect(connections).toBeTruthy()
+  
+  it <span class="hljs-string">'has connections added'</span>, <span class="hljs-function">-&gt;</span>
+    connections.add(<span class="hljs-keyword">new</span> Webrtc.Models.PeerConnection())
+    expect(connections.size()).toEqual(<span class="hljs-number">1</span>)
+  
+  it <span class="hljs-string">'should remove views'</span>, <span class="hljs-function">-&gt;</span>
+    expect($(<span class="hljs-string">'.peer'</span>)).<span class="hljs-keyword">not</span>.toBeInDOM()
+    connections.add(<span class="hljs-keyword">new</span> Webrtc.Models.PeerConnection())
+    expect($(<span class="hljs-string">'.peer'</span>)).toBeInDOM()
+    connections.add(<span class="hljs-keyword">new</span> Webrtc.Models.PeerConnection())
+    connections.add(<span class="hljs-keyword">new</span> Webrtc.Models.PeerConnection())
+    expect(connections.views.length).toEqual(<span class="hljs-number">3</span>)
+    connections.remove()
+    expect(connections.views.length).toEqual(<span class="hljs-number">0</span>)
+    expect($(<span class="hljs-string">'.peer'</span>)).<span class="hljs-keyword">not</span>.toBeInDOM()
+    connections.remove()
+  
+  it <span class="hljs-string">'should render views when connections are created'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+    expect($(<span class="hljs-string">'.peer'</span>)).<span class="hljs-keyword">not</span>.toBeInDOM()
+    connections.add(<span class="hljs-keyword">new</span> Webrtc.Models.PeerConnection())
+    setTimeout (<span class="hljs-function">-&gt;</span>
+      expect($(<span class="hljs-string">'.peer'</span>)).toBeInDOM()
+      done()
+    ), <span class="hljs-number">200</span>
+    
+    
+
+describe <span class="hljs-string">'Peer'</span>, <span class="hljs-function">-&gt;</span>
+  describe <span class="hljs-string">'Initialization'</span>, <span class="hljs-function">-&gt;</span>
+    it <span class="hljs-string">'should succeed'</span>, <span class="hljs-function">-&gt;</span>
+      alice = <span class="hljs-keyword">new</span> Webrtc.Models.Peer()
+      expect(alice).toBeTruthy()
+  
+  describe <span class="hljs-string">'Server Collection'</span>, <span class="hljs-function">-&gt;</span>
+    alice = <span class="hljs-literal">null</span>
+    beforeAll -&gt;
+      alice = <span class="hljs-keyword">new</span> Webrtc.Models.Peer()
+    it <span class="hljs-string">'should initialize when peer initializes'</span>, <span class="hljs-function">-&gt;</span>
+      proto = Webrtc.Collections.ServerConnectionCollection.prototype
+      expect(proto.isPrototypeOf(alice.servers)).toBeTruthy()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>expect(alice).toBeTruthy()</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    
+    it <span class="hljs-string">'should add server connection'</span>, <span class="hljs-function">-&gt;</span>
+      expect(alice.servers.length).toEqual(<span class="hljs-number">0</span>)
+      alice.addServer()
+      expect(alice.servers.length).toEqual(<span class="hljs-number">1</span>)
+  
+  describe <span class="hljs-string">'Peer Collection'</span>, <span class="hljs-function">-&gt;</span>
+    alice = <span class="hljs-literal">null</span>
+    bob = <span class="hljs-literal">null</span>
+    beforeAll -&gt;
+      alice = <span class="hljs-keyword">new</span> Webrtc.Models.Peer()
+      bob = <span class="hljs-keyword">new</span> Webrtc.Models.Peer()
+      alice.addServer()
+      bob.addServer()
+    
+    afterEach -&gt;
+      alice.peers.remove()
+      bob.peers.remove()
+    
+    it <span class="hljs-string">'should  initialize when peer initializes'</span>, <span class="hljs-function">-&gt;</span>
+      proto = Webrtc.Collections.PeerConnectionCollection.prototype
+      expect(proto.isPrototypeOf(alice.peers)).toBeTruthy()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>expect(alice).toBeTruthy()</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    
+    it <span class="hljs-string">'should throw error when adding peer if peer is not provided'</span>, <span class="hljs-function">-&gt;</span>
+      expect(<span class="hljs-function">-&gt;</span>
+        alice.connect()
+        alice.connect({<span class="hljs-attribute">server</span>:<span class="hljs-string">'abcd'</span>})
+        alice.connect({<span class="hljs-attribute">peer</span>:<span class="hljs-string">''</span>})
+      ).toThrow()
+      
+      expect(<span class="hljs-function">-&gt;</span>
+        alice.connect({<span class="hljs-attribute">peer</span>:<span class="hljs-string">'abcd'</span>})
+      ).<span class="hljs-keyword">not</span>.toThrow()
+    
+    it <span class="hljs-string">'should add a peer connection when the other peer exists'</span>, <span class="hljs-function">-&gt;</span>
+      lenght = alice.peers.size()
+      alice.connect(<span class="hljs-attribute">peer</span>:bob.id)
+      expect(alice.peers.size()).toEqual(length + <span class="hljs-number">1</span>)
+    
+    it <span class="hljs-string">'should add a peer connection when the other peer does not exist'</span>, <span class="hljs-function">-&gt;</span>
+      lenght = alice.peers.size()
+      alice.connect(<span class="hljs-attribute">peer</span>:<span class="hljs-string">'hi'</span>)
+      expect(alice.peers.size()).toBeGreaterThan(length)
+    
+    <span class="hljs-keyword">unless</span> phantom
+      it <span class="hljs-string">'should add incomming peer connections'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+        lenght = alice.peers.size()
+        bob.connect(<span class="hljs-attribute">peer</span>:alice.id)
+        bob.peers.first().connect()
+        setTimeout (<span class="hljs-function">-&gt;</span>
+          expect(alice.peers.size()).toBeGreaterThan(length)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>console.log bob.peers
+console.log alice.peers</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          done()
+        ), <span class="hljs-number">200</span>
+
+
+
+
+
+
+
+
+
+describe <span class="hljs-string">'PeerConnectionView'</span>, <span class="hljs-function">-&gt;</span>
+  describe <span class="hljs-string">'Rerendering'</span>, <span class="hljs-function">-&gt;</span>
+    it <span class="hljs-string">'should occur when model changes'</span>, <span class="hljs-function">-&gt;</span>
+      counter = <span class="hljs-number">0</span>
+      proto = Webrtc.Views.PeerConnectionView.prototype
+      spyOn(proto, <span class="hljs-string">'render'</span>).<span class="hljs-keyword">and</span>.callThrough()
+      expect(proto.render).<span class="hljs-keyword">not</span>.toHaveBeenCalled()
+      model = <span class="hljs-keyword">new</span> Webrtc.Models.PeerConnection()
+      view = <span class="hljs-keyword">new</span> Webrtc.Views.PeerConnectionView(<span class="hljs-attribute">model</span>:model )
+      expect(view.render.calls.count()).toEqual(<span class="hljs-number">1</span>)
+      view.model.set(<span class="hljs-string">'attribute'</span>,<span class="hljs-string">'attribute'</span>)
+      expect(view.render.calls.count()).toEqual(<span class="hljs-number">2</span>)
+      <span class="hljs-keyword">return</span>
+
+
+
+describe <span class="hljs-string">'PeerView'</span>, <span class="hljs-function">-&gt;</span>
+  describe <span class="hljs-string">'Initialization'</span>, <span class="hljs-function">-&gt;</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>no more</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    xit <span class="hljs-string">'should create element in dom'</span>, <span class="hljs-function">-&gt;</span>
+      expect($(<span class="hljs-string">'#peer-view'</span>)).<span class="hljs-keyword">not</span>.toBeInDOM()
+      <span class="hljs-keyword">new</span> Webrtc.Views.PeerView()
+      expect($(<span class="hljs-string">'#peer-view'</span>)).toBeInDOM()
+    
+    it <span class="hljs-string">'should be associated with a Peer'</span>, <span class="hljs-function">-&gt;</span>
+      model = <span class="hljs-keyword">new</span> Webrtc.Models.Peer()
+      view = <span class="hljs-keyword">new</span> Webrtc.Views.PeerView({<span class="hljs-attribute">model</span>:model})
+      proto = Webrtc.Models.Peer.prototype
+      expect(proto.isPrototypeOf(view.model)).toBeTruthy()
+      expect(view.model).toEqual(model)
+    
+    it <span class="hljs-string">'should create a Peer if not associated with one'</span>, <span class="hljs-function">-&gt;</span>
+      view = <span class="hljs-keyword">new</span> Webrtc.Views.PeerView()
+      proto = Webrtc.Models.Peer.prototype
+      expect(proto.isPrototypeOf(view.model)).toBeTruthy()</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
