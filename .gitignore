@@ -28,6 +28,7 @@ node_modules
 
 *~
 
+assets/js/compiled
 public/assets
 
-assets/js/compiled
+
