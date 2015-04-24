@@ -8,12 +8,12 @@ module.exports = function(grunt) {
     // remember also to edit jasmine jade view
     jasmine: {
       test: {
-        src: ['assets/js/compiled/backbone.js',
-              'assets/js/compiled/templates.js',
-              'assets/js/compiled/models/*.js',
-              'assets/js/compiled/collections/*.js',
-              'assets/js/compiled/views/*.js',
-              'assets/js/compiled/router.js'
+        src: ['tmp/backbone.js',
+              'tmp/templates.js',
+              'tmp/models/*.js',
+              'tmp/collections/*.js',
+              'tmp/views/*.js',
+              'tmp/router.js'
              ],
         options: {
             //keepRunner:true,
@@ -41,10 +41,19 @@ module.exports = function(grunt) {
               'backbone.coffee',
               'router.coffee'
              ],
-        dest: 'assets/js/compiled/',   // Destination path prefix.
+        dest: 'tmp/',   // Destination path prefix.
         ext: '.js'
       },
       specs: {
+        expand:true,
+        sourceMap: true,
+        cwd: 'spec/',   // Src matches are relative to this path.
+        src: ['*.coffee'     // Actual pattern(s) to match.
+             ],
+        dest: 'public/spec', // Destination path prefix.
+        ext: '.js'
+      },
+      doc: {
         expand:true,
         sourceMap: true,
         cwd: 'spec/',   // Src matches are relative to this path.
@@ -71,7 +80,7 @@ module.exports = function(grunt) {
           }
         },
         files: {
-          "assets/js/compiled/templates.js": ["assets/js/templates/*.jade"]
+          "tmp/templates.js": ["assets/js/templates/*.jade"]
         }
       }
     },
