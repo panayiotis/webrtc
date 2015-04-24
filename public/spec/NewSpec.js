@@ -1,7 +1,9 @@
 (function() {
-  var User;
+  var Peer, User;
 
   User = App.User;
+
+  Peer = App.Peer;
 
   describe('User', function() {
     describe('initialization', function() {
@@ -26,6 +28,11 @@
         it('connects to server', function() {
           return expect(this.bob.connection.open).toBeTruthy();
         });
+        it('sets connection to Peer.js connection object', function() {
+          var proto;
+          proto = PeerJS.prototype;
+          return expect(proto.isPrototypeOf(this.bob.connection)).toBeTruthy();
+        });
         it('sets open attribute', function() {
           return expect(this.bob.get('open')).toBeTruthy();
         });
@@ -48,15 +55,51 @@
     }
     if (!phantom) {
       describe('Peer active Connectivity', function() {
-        beforeEach(function() {});
-        xit('connects to existing peer', function() {});
+        beforeEach(function(done) {
+          this.alice = new User('alice');
+          this.bob = new User('bob');
+          return setTimeout(done, 300);
+        });
+        it('connects to existing peer', function(done) {
+          var peer;
+          peer = new Peer({
+            server: this.alice.connection,
+            id: this.bob.id
+          });
+          peer.connect();
+          console.log(peer);
+          return setTimeout(function() {
+            expect(peer.get('open')).toBeTruthy();
+            return done();
+          }, 300);
+        });
         return xit('does not connect to not existing peer, but fails silently', function() {});
       });
     }
     if (!phantom) {
       describe('Peer passive Connectivity', function() {
-        beforeEach(function() {});
-        xit('accepts incomming connections from other peers', function() {});
+        beforeEach(function(done) {
+          this.alice = new User('alice');
+          this.bob = new User('bob');
+          return setTimeout(done, 300);
+        });
+        it('accepts incomming connections from other peers', function(done) {
+          var flag, peer;
+          flag = false;
+          peer = new Peer({
+            server: this.bob.connection,
+            id: this.alice.id
+          });
+          this.alice.listenTo(this.alice, 'connection', function() {
+            return flag = true;
+          });
+          peer.connect();
+          console.log(peer);
+          return setTimeout(function() {
+            expect(flag).toBeTruthy();
+            return done();
+          }, 300);
+        });
         return xit('accepts incomming data from other peers', function() {});
       });
     }
@@ -80,10 +123,6 @@
       xit('removes Peers', function() {});
       return xit('removes Peers only if they are not connected to us', function() {});
     });
-  });
-
-  describe('Peer', function() {
-    return xit('initializes with object', function() {});
   });
 
   describe('UserView', function() {

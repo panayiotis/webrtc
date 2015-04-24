@@ -1,13 +1,16 @@
 'use strict'
 
+# The Peer User of the application
 class App.User extends Backbone.Model
   
   defaults:
     'host': '127.0.0.1'
     'port': '8000'
     'open': false
+
   # groups
   groups: null
+
   # List of server connections
   #servers: null
   
@@ -22,7 +25,7 @@ class App.User extends Backbone.Model
   # Initializes with optional username.
   initialize: (id) ->
     @set('host', window.default_signalling_server)
-    @id= id + Math.random().toString(36).substring(7)
+    @id= id + '-' + Math.random().toString(36).substring(7)
     @groups = {}
     @connect()
   
@@ -43,9 +46,9 @@ class App.User extends Backbone.Model
     @connection.on 'disconnected', =>
       @set('open', false)
     
-    #@connection.on 'connection', (connection) =>
-    #  this.trigger('connection', {server:this, connection:connection})
-    #  console.log ('Incomming Connection')
+    @connection.on 'connection', (conn) =>
+      this.trigger('connection', {server:this, connection:conn})
+      console.log ('Incomming Connection')
   
   reconnect: ->
     @connection.reconnect()

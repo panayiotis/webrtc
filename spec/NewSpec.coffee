@@ -1,4 +1,6 @@
 User = App.User
+Peer = App.Peer
+
 ##
 ##  User
 ##
@@ -25,6 +27,10 @@ describe 'User', ->
       it 'connects to server', ->
         expect(@bob.connection.open).toBeTruthy()
       
+      it 'sets connection to Peer.js connection object', ->
+        proto = PeerJS.prototype
+        expect(proto.isPrototypeOf(@bob.connection)).toBeTruthy()
+      
       it 'sets open attribute', ->
         expect(@bob.get('open')).toBeTruthy()
       
@@ -43,20 +49,46 @@ describe 'User', ->
   
   unless phantom
     describe 'Peer active Connectivity', ->
-      beforeEach ->
-        # initialize two peers
-        #@alice = new User('alice')
-        #@bob = new User('bob')
-        #setTimeout( done , 100)
+      beforeEach (done) ->
+        #initialize two peers
+        @alice = new User('alice')
+        @bob = new User('bob')
+        
+        #@bobpeer = new Peer(server:@alice.connection)
+        setTimeout( done , 300)
+        
+      it 'connects to existing peer', (done) ->
+        peer= new Peer(server: @alice.connection, id: @bob.id)
+        peer.connect()
+        console.log peer
+        setTimeout( ->
+          expect(peer.get('open')).toBeTruthy()
+          done()
+        , 300)
       
-      xit 'connects to existing peer', ->
       xit 'does not connect to not existing peer, but fails silently', ->
   
   unless phantom
     describe 'Peer passive Connectivity', ->
-      beforeEach ->
-        # initialize two peers
-      xit 'accepts incomming connections from other peers', ->
+      beforeEach (done) ->
+        #initialize two peers
+        @alice = new User('alice')
+        @bob = new User('bob')
+        setTimeout( done , 300)
+      
+      it 'accepts incomming connections from other peers', (done) ->
+        flag = false
+        peer= new Peer(server: @bob.connection, id: @alice.id)
+        @alice.listenTo(@alice, 'connection', ->
+          flag=true
+        )
+        peer.connect()
+        console.log peer
+        setTimeout( ->
+          expect(flag).toBeTruthy()
+          done()
+        , 300)
+      
       xit 'accepts incomming data from other peers', ->
   
   unless phantom
@@ -85,14 +117,6 @@ describe 'PeerCollection', ->
     xit 'does not add Peers if they already exist in collection', ->
     xit 'removes Peers', ->
     xit 'removes Peers only if they are not connected to us', ->
-
-
-
-##
-##  Peer
-##
-describe 'Peer', ->
-  xit 'initializes with object', ->
 
 
 

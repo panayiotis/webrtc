@@ -118,7 +118,10 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-string">'use strict'</span>
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span>.<span class="hljs-title">PeerConnection</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">Model</span></span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span>.<span class="hljs-title">Peer</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">Model</span></span>
+
+  <span class="hljs-attribute">defaults</span>:
+    <span class="hljs-string">'open'</span>: <span class="hljs-literal">false</span>
   
   <span class="hljs-attribute">server</span>: <span class="hljs-literal">null</span>
   
@@ -126,51 +129,18 @@
   
   <span class="hljs-attribute">connection</span>: <span class="hljs-literal">null</span>
   
-  <span class="hljs-attribute">open</span>: <span class="hljs-literal">null</span>
-  
   <span class="hljs-attribute">initialize</span>: <span class="hljs-function"><span class="hljs-params">(options)</span> -&gt;</span>
     options = options <span class="hljs-keyword">or</span> {}
     <span class="hljs-property">@peer</span> = options.peer <span class="hljs-keyword">or</span> <span class="hljs-literal">null</span>
     <span class="hljs-property">@server</span> = options.server <span class="hljs-keyword">or</span> <span class="hljs-literal">null</span>
     <span class="hljs-property">@connection</span> = options.connection <span class="hljs-keyword">or</span> <span class="hljs-literal">null</span>
-    <span class="hljs-property">@open</span> = <span class="hljs-literal">false</span>
     <span class="hljs-keyword">return</span>
   
   
   
   <span class="hljs-attribute">connect</span>: <span class="hljs-function">-&gt;</span>
     
-    <span class="hljs-keyword">unless</span> <span class="hljs-property">@connection</span>
-      <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> App.ServerConnection.prototype.isPrototypeOf(<span class="hljs-property">@server</span>)
-        msg = <span class="hljs-string">'PeerConnection.connect(): Attempt to connect to a peer
-               without suppling server connection.'</span>
-        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error msg
-        <span class="hljs-keyword">return</span>
-      <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-property">@peer</span>
-        msg = <span class="hljs-string">'PeerConnection.connect(): Attempt to connect to a peer
-               without defining peer id.'</span>
-        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error msg
-        <span class="hljs-keyword">return</span>
-      
-      <span class="hljs-property">@connection</span> = <span class="hljs-property">@server</span>.connection.connect(<span class="hljs-property">@peer</span>)
-
-    <span class="hljs-property">@connection</span>.<span class="hljs-literal">on</span> <span class="hljs-string">'open'</span>, <span class="hljs-function">=&gt;</span>
-      <span class="hljs-built_in">console</span>.log <span class="hljs-string">'connection open'</span>
-      <span class="hljs-property">@open</span> = <span class="hljs-literal">true</span>
-      
-      <span class="hljs-property">@connection</span>.<span class="hljs-literal">on</span> <span class="hljs-string">'data'</span>, <span class="hljs-function"><span class="hljs-params">(data)</span> -&gt;</span>
-        <span class="hljs-built_in">console</span>.log <span class="hljs-string">'connection data'</span>
-        <span class="hljs-built_in">console</span>.log data
-        <span class="hljs-keyword">return</span>
-      
-      <span class="hljs-property">@connection</span>.<span class="hljs-literal">on</span> <span class="hljs-string">'error'</span>, <span class="hljs-function"><span class="hljs-params">(err)</span> -&gt;</span>
-        <span class="hljs-built_in">console</span>.log <span class="hljs-string">'connection error'</span>
-        <span class="hljs-property">@open</span> = <span class="hljs-property">@connection</span>.open
-        <span class="hljs-built_in">console</span>.log err
-        <span class="hljs-keyword">return</span>
-
-  <span class="hljs-attribute">close</span>: <span class="hljs-function">-&gt;</span>
-    <span class="hljs-property">@connection</span>.close()</pre></div></div>
+    <span class="hljs-keyword">unless</span> <span class="hljs-property">@connection</span></pre></div></div>
             
         </li>
         
@@ -180,6 +150,49 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>if not App.ServerConnection.prototype.isPrototypeOf(@server)
+ msg = ‘PeerConnection.connect(): Attempt to connect to a peer
+        without suppling server connection.’
+ throw new Error msg
+ return</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-property">@peer</span>
+        msg = <span class="hljs-string">'Peer.connect(): Attempt to connect to a peer
+               without defining peer id.'</span>
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error msg
+        <span class="hljs-keyword">return</span>
+      
+      <span class="hljs-property">@connection</span> = <span class="hljs-property">@server</span>.connection.connect(<span class="hljs-property">@peer</span>)
+
+    <span class="hljs-property">@connection</span>.<span class="hljs-literal">on</span> <span class="hljs-string">'open'</span>, <span class="hljs-function">=&gt;</span>
+      <span class="hljs-built_in">console</span>.log <span class="hljs-string">'Peer: connection open'</span>
+      <span class="hljs-property">@set</span>(<span class="hljs-string">'open'</span>, <span class="hljs-literal">true</span>)
+      
+      <span class="hljs-property">@connection</span>.<span class="hljs-literal">on</span> <span class="hljs-string">'data'</span>, <span class="hljs-function"><span class="hljs-params">(data)</span> -&gt;</span>
+        <span class="hljs-built_in">console</span>.log <span class="hljs-string">'Peer: connection data'</span>
+        <span class="hljs-built_in">console</span>.log data
+        <span class="hljs-keyword">return</span>
+      
+      <span class="hljs-property">@connection</span>.<span class="hljs-literal">on</span> <span class="hljs-string">'error'</span>, <span class="hljs-function"><span class="hljs-params">(err)</span> -&gt;</span>
+        <span class="hljs-built_in">console</span>.log <span class="hljs-string">'Peer: connection error'</span>
+        <span class="hljs-property">@set</span>(<span class="hljs-string">'open'</span>, <span class="hljs-literal">false</span>)
+        <span class="hljs-built_in">console</span>.log err
+        <span class="hljs-keyword">return</span>
+
+  <span class="hljs-attribute">close</span>: <span class="hljs-function">-&gt;</span>
+    <span class="hljs-property">@connection</span>.close()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
               <p> send: (message) -&gt;
    if @peer and @peer.open
