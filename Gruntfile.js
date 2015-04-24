@@ -8,17 +8,16 @@ module.exports = function(grunt) {
     // remember also to edit jasmine jade view
     jasmine: {
       test: {
-        src: [
+        src: ['assets/js/compiled/backbone.js',
               'assets/js/compiled/templates.js',
-              'assets/js/compiled/backbone.js',
-              'assets/js/compiled/router.js',
               'assets/js/compiled/models/*.js',
+              'assets/js/compiled/collections/*.js',
               'assets/js/compiled/views/*.js',
-              'assets/js/compiled/collections/*.js'
+              'assets/js/compiled/router.js'
              ],
         options: {
             //keepRunner:true,
-            specs: 'public/spec/*.js',
+            specs: 'public/spec/NewSpec.js',
             vendor: ['assets/js/vendor/jquery.min.js',
                      'public/lib/jasmine-jquery.js',
                      'assets/js/vendor/jade.js',

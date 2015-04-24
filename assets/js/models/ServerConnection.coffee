@@ -1,6 +1,6 @@
 'use strict'
 
-class Webrtc.Models.ServerConnection extends Backbone.Model
+class App.ServerConnection extends Backbone.Model
   
   defaults:
     'host': '127.0.0.1'

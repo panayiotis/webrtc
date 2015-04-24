@@ -1,22 +1,22 @@
 'use strict'
 
-class Webrtc.Views.KitchensinkView extends Backbone.View
+class App.KitchensinkView extends Backbone.View
   
   template: JST['templates/kitchensink']
   
   initialize: ->
     $('body').append(@template())
     
-    alice = new Webrtc.Models.Peer()
-    alice.view = new Webrtc.Views.PeerView(model:alice)
+    alice = new App.Peer()
+    alice.view = new App.PeerView(model:alice)
     alice.addServer()
     
     $('body').append(alice.view.render().el)
     $('body').append('<hr/>')
     
-    bob = new Webrtc.Models.Peer()
+    bob = new App.Peer()
     bob.addServer()
-    bob.view = new Webrtc.Views.PeerView(model:bob)
+    bob.view = new App.PeerView(model:bob)
     
     
     $('body').append(bob.view.render().el)

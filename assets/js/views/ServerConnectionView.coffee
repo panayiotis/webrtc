@@ -1,6 +1,6 @@
 'use strict'
 
-class Webrtc.Views.ServerConnectionView extends Backbone.View
+class App.ServerConnectionView extends Backbone.View
   
   template: JST['templates/server']
   

@@ -1,6 +1,6 @@
 'use strict'
 
-class Webrtc.Views.PeerConnectionView extends Backbone.View
+class App.PeerConnectionView extends Backbone.View
   
   template: JST['templates/peer']
   

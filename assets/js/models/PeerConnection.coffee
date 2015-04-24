@@ -1,6 +1,6 @@
 'use strict'
 
-class Webrtc.Models.PeerConnection extends Backbone.Model
+class App.PeerConnection extends Backbone.Model
   
   server: null
   
@@ -23,7 +23,7 @@ class Webrtc.Models.PeerConnection extends Backbone.Model
   connect: ->
     
     unless @connection
-      if not Webrtc.Models.ServerConnection.prototype.isPrototypeOf(@server)
+      if not App.ServerConnection.prototype.isPrototypeOf(@server)
         msg = 'PeerConnection.connect(): Attempt to connect to a peer
                without suppling server connection.'
         throw new Error msg

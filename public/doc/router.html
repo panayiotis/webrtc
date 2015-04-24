@@ -39,11 +39,6 @@
               </a>
             
               
-              <a class="source" href="Peer.html">
-                Peer.coffee
-              </a>
-            
-              
               <a class="source" href="PeerConnection.html">
                 PeerConnection.coffee
               </a>
@@ -51,6 +46,11 @@
               
               <a class="source" href="ServerConnection.html">
                 ServerConnection.coffee
+              </a>
+            
+              
+              <a class="source" href="User.html">
+                User.coffee
               </a>
             
               
@@ -88,6 +88,11 @@
                 GeneralSpec.coffee
               </a>
             
+              
+              <a class="source" href="NewSpec.html">
+                NewSpec.coffee
+              </a>
+            
           </div>
         </li>
       </ul>
@@ -113,7 +118,7 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-string">'use strict'</span>
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Webrtc</span>.<span class="hljs-title">Routers</span>.<span class="hljs-title">Router</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">Router</span></span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span>.<span class="hljs-title">Router</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">Router</span></span>
 
   <span class="hljs-attribute">routes</span>:
     <span class="hljs-string">'kitchensink'</span> : <span class="hljs-string">'kitchensink'</span>
@@ -163,7 +168,7 @@
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>console.log “Router Map Index”
-new Webrtc.Views.IndexView()</p>
+new App.IndexView()</p>
 
             </div>
             
@@ -184,7 +189,7 @@ new Webrtc.Views.IndexView()</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">new</span> Webrtc.Views.KitchensinkView()
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">new</span> App.KitchensinkView()
     <span class="hljs-keyword">return</span></pre></div></div>
             
         </li>

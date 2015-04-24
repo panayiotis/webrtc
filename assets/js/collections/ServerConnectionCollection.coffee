@@ -1,8 +1,8 @@
 'use strict'
 
-class Webrtc.Collections.ServerConnectionCollection extends Backbone.Collection
+class App.ServerConnectionCollection extends Backbone.Collection
   
-  model: Webrtc.Models.ServerConnection
+  model: App.ServerConnection
   
   views: null
   
@@ -12,7 +12,7 @@ class Webrtc.Collections.ServerConnectionCollection extends Backbone.Collection
     return
     
   addOne: (connection) ->
-    view = new Webrtc.Views.ServerConnectionView( {model: connection} )
+    view = new App.ServerConnectionView( {model: connection} )
     @views.push view
     #$("body").append( view.render().el )
   

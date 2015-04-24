@@ -39,11 +39,6 @@
               </a>
             
               
-              <a class="source" href="Peer.html">
-                Peer.coffee
-              </a>
-            
-              
               <a class="source" href="PeerConnection.html">
                 PeerConnection.coffee
               </a>
@@ -51,6 +46,11 @@
               
               <a class="source" href="ServerConnection.html">
                 ServerConnection.coffee
+              </a>
+            
+              
+              <a class="source" href="User.html">
+                User.coffee
               </a>
             
               
@@ -88,6 +88,11 @@
                 GeneralSpec.coffee
               </a>
             
+              
+              <a class="source" href="NewSpec.html">
+                NewSpec.coffee
+              </a>
+            
           </div>
         </li>
       </ul>
@@ -118,13 +123,15 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-built_in">window</span>.Webrtc =
-  <span class="hljs-attribute">Models</span>: {}
-  <span class="hljs-attribute">Collections</span>: {}
-  <span class="hljs-attribute">Views</span>: {}
-  <span class="hljs-attribute">Routers</span>: {}
-  <span class="hljs-attribute">init</span>: <span class="hljs-function">-&gt;</span>
-    <span class="hljs-string">'use strict'</span></pre></div></div>
+<span class="hljs-built_in">window</span>.PeerJS = Peer
+<span class="hljs-built_in">window</span>.Peer = <span class="hljs-literal">null</span>
+
+<span class="hljs-built_in">window</span>.default_signalling_server = <span class="hljs-string">'signalling.home'</span>
+
+<span class="hljs-built_in">window</span>.phantom = <span class="hljs-regexp">/PhantomJS/</span>.test(navigator.userAgent)
+
+
+<span class="hljs-built_in">window</span>.App =</pre></div></div>
             
         </li>
         
@@ -135,15 +142,35 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
+              <p>Models: {}
+Collections: {}
+Views: {}
+Routers: {}</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-attribute">init</span>: <span class="hljs-function">-&gt;</span>
+    <span class="hljs-string">'use strict'</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
               <p>console.log ‘Hello from Backbone!’</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">new</span> Webrtc.Routers.Router()
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">new</span> App.Router()
     Backbone.history.start(<span class="hljs-attribute">pushState</span>: <span class="hljs-literal">true</span>)
+
 $ -&gt;
   <span class="hljs-string">'use strict'</span>
-  <span class="hljs-built_in">window</span>.Webrtc.init()</pre></div></div>
+  <span class="hljs-built_in">window</span>.App.init()</pre></div></div>
             
         </li>
         

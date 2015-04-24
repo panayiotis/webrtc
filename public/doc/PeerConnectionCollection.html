@@ -39,11 +39,6 @@
               </a>
             
               
-              <a class="source" href="Peer.html">
-                Peer.coffee
-              </a>
-            
-              
               <a class="source" href="PeerConnection.html">
                 PeerConnection.coffee
               </a>
@@ -51,6 +46,11 @@
               
               <a class="source" href="ServerConnection.html">
                 ServerConnection.coffee
+              </a>
+            
+              
+              <a class="source" href="User.html">
+                User.coffee
               </a>
             
               
@@ -88,6 +88,11 @@
                 GeneralSpec.coffee
               </a>
             
+              
+              <a class="source" href="NewSpec.html">
+                NewSpec.coffee
+              </a>
+            
           </div>
         </li>
       </ul>
@@ -111,21 +116,21 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-string">'use strict'</span>;
+            <div class="content"><div class='highlight'><pre><span class="hljs-string">'use strict'</span>
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Webrtc</span>.<span class="hljs-title">Collections</span>.<span class="hljs-title">PeerConnectionCollection</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">Collection</span></span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span>.<span class="hljs-title">PeerConnectionCollection</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">Collection</span></span>
   
-  <span class="hljs-attribute">model</span>: Webrtc.Models.PeerConnection
+  <span class="hljs-attribute">model</span>: App.PeerConnection
   
   <span class="hljs-attribute">views</span>: <span class="hljs-literal">null</span>
   
   initialize : <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span>
-    <span class="hljs-keyword">this</span>.listenTo(<span class="hljs-keyword">this</span>, <span class="hljs-string">'add'</span>, <span class="hljs-property">@addOne</span>);
+    <span class="hljs-keyword">this</span>.listenTo(<span class="hljs-keyword">this</span>, <span class="hljs-string">'add'</span>, <span class="hljs-property">@addOne</span>)
     <span class="hljs-property">@views</span> = []
     <span class="hljs-keyword">return</span>
     
   <span class="hljs-attribute">addOne</span>: <span class="hljs-function"><span class="hljs-params">(connection)</span> -&gt;</span>
-    view = <span class="hljs-keyword">new</span> Webrtc.Views.PeerConnectionView( {<span class="hljs-attribute">model</span>: connection} )
+    view = <span class="hljs-keyword">new</span> App.PeerConnectionView( {<span class="hljs-attribute">model</span>: connection} )
     <span class="hljs-property">@views</span>.push view
     $(<span class="hljs-string">"body"</span>).append( view.render().el )
   

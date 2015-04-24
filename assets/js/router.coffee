@@ -1,6 +1,6 @@
 'use strict'
 
-class Webrtc.Routers.Router extends Backbone.Router
+class App.Router extends Backbone.Router
 
   routes:
     'kitchensink' : 'kitchensink'
@@ -14,10 +14,10 @@ class Webrtc.Routers.Router extends Backbone.Router
   ##
   all: ->
     #console.log "Router Map Index"
-    #new Webrtc.Views.IndexView()
+    #new App.IndexView()
     return
   
   kitchensink: ->
     #alert "hi"
-    new Webrtc.Views.KitchensinkView()
+    new App.KitchensinkView()
     return

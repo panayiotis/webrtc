@@ -1,11 +1,11 @@
 'use strict'
 
-class Webrtc.Views.PeerView extends Backbone.View
+class App.PeerView extends Backbone.View
   
   template: JST['templates/peerview']
   
   initialize: ->
-    @model = new Webrtc.Models.Peer() unless @model
+    @model = new App.Peer() unless @model
     this.listenTo(this.model, 'change', this.render)
     @render()
     return

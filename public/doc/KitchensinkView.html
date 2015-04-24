@@ -39,11 +39,6 @@
               </a>
             
               
-              <a class="source" href="Peer.html">
-                Peer.coffee
-              </a>
-            
-              
               <a class="source" href="PeerConnection.html">
                 PeerConnection.coffee
               </a>
@@ -51,6 +46,11 @@
               
               <a class="source" href="ServerConnection.html">
                 ServerConnection.coffee
+              </a>
+            
+              
+              <a class="source" href="User.html">
+                User.coffee
               </a>
             
               
@@ -88,6 +88,11 @@
                 GeneralSpec.coffee
               </a>
             
+              
+              <a class="source" href="NewSpec.html">
+                NewSpec.coffee
+              </a>
+            
           </div>
         </li>
       </ul>
@@ -113,23 +118,23 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-string">'use strict'</span>
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Webrtc</span>.<span class="hljs-title">Views</span>.<span class="hljs-title">KitchensinkView</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">View</span></span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span>.<span class="hljs-title">KitchensinkView</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">View</span></span>
   
   <span class="hljs-attribute">template</span>: JST[<span class="hljs-string">'templates/kitchensink'</span>]
   
   <span class="hljs-attribute">initialize</span>: <span class="hljs-function">-&gt;</span>
     $(<span class="hljs-string">'body'</span>).append(<span class="hljs-property">@template</span>())
     
-    alice = <span class="hljs-keyword">new</span> Webrtc.Models.Peer()
-    alice.view = <span class="hljs-keyword">new</span> Webrtc.Views.PeerView(<span class="hljs-attribute">model</span>:alice)
+    alice = <span class="hljs-keyword">new</span> App.Peer()
+    alice.view = <span class="hljs-keyword">new</span> App.PeerView(<span class="hljs-attribute">model</span>:alice)
     alice.addServer()
     
     $(<span class="hljs-string">'body'</span>).append(alice.view.render().el)
     $(<span class="hljs-string">'body'</span>).append(<span class="hljs-string">'&lt;hr/&gt;'</span>)
     
-    bob = <span class="hljs-keyword">new</span> Webrtc.Models.Peer()
+    bob = <span class="hljs-keyword">new</span> App.Peer()
     bob.addServer()
-    bob.view = <span class="hljs-keyword">new</span> Webrtc.Views.PeerView(<span class="hljs-attribute">model</span>:bob)
+    bob.view = <span class="hljs-keyword">new</span> App.PeerView(<span class="hljs-attribute">model</span>:bob)
     
     
     $(<span class="hljs-string">'body'</span>).append(bob.view.render().el)
