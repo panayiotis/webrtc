@@ -30,6 +30,6 @@ node_modules
 
 assets/js/compiled
 
-public/assets
+public/assets/*
 
 tmp
