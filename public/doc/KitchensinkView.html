@@ -29,8 +29,8 @@
               </a>
             
               
-              <a class="source" href="PeerConnectionCollection.html">
-                PeerConnectionCollection.coffee
+              <a class="source" href="PeerCollection.html">
+                PeerCollection.coffee
               </a>
             
               
@@ -69,6 +69,11 @@
               </a>
             
               
+              <a class="source" href="PeerCollectionView.html">
+                PeerCollectionView.coffee
+              </a>
+            
+              
               <a class="source" href="PeerConnectionView.html">
                 PeerConnectionView.coffee
               </a>
@@ -81,6 +86,11 @@
               
               <a class="source" href="ServerConnectionView.html">
                 ServerConnectionView.coffee
+              </a>
+            
+              
+              <a class="source" href="ContentSpec.html">
+                ContentSpec.coffee
               </a>
             
               
@@ -122,28 +132,32 @@
   
   <span class="hljs-attribute">template</span>: JST[<span class="hljs-string">'templates/kitchensink'</span>]
   
+  <span class="hljs-attribute">tagName</span>: <span class="hljs-string">'div'</span>
+  
+  <span class="hljs-attribute">className</span>: <span class="hljs-string">'view'</span>
+  
+  <span class="hljs-attribute">events</span>:
+    <span class="hljs-string">'click #discover'</span>: <span class="hljs-string">'discover'</span>
+    <span class="hljs-string">'click .button.edit'</span>: <span class="hljs-string">'openEditDialog'</span>
+    <span class="hljs-string">'click .button.delete'</span>: <span class="hljs-string">'destroy'</span>
+  
+  <span class="hljs-attribute">peers</span>: <span class="hljs-literal">null</span>
+  
   <span class="hljs-attribute">initialize</span>: <span class="hljs-function">-&gt;</span>
-    $(<span class="hljs-string">'body'</span>).append(<span class="hljs-property">@template</span>())
-    
-    alice = <span class="hljs-keyword">new</span> App.Peer()
-    alice.view = <span class="hljs-keyword">new</span> App.PeerView(<span class="hljs-attribute">model</span>:alice)
-    alice.addServer()
-    
-    $(<span class="hljs-string">'body'</span>).append(alice.view.render().el)
-    $(<span class="hljs-string">'body'</span>).append(<span class="hljs-string">'&lt;hr/&gt;'</span>)
-    
-    bob = <span class="hljs-keyword">new</span> App.Peer()
-    bob.addServer()
-    bob.view = <span class="hljs-keyword">new</span> App.PeerView(<span class="hljs-attribute">model</span>:bob)
-    
-    
-    $(<span class="hljs-string">'body'</span>).append(bob.view.render().el)
-    
-    setTimeout (<span class="hljs-function">-&gt;</span>
-      alice.connect(<span class="hljs-attribute">peer</span>:bob.id)
-    ), <span class="hljs-number">500</span>
-    <span class="hljs-built_in">window</span>.alice = alice
-    <span class="hljs-built_in">window</span>.bob = bob</pre></div></div>
+    <span class="hljs-property">@listenTo</span> <span class="hljs-property">@model</span>, <span class="hljs-string">'change'</span>, <span class="hljs-property">@render</span>
+    <span class="hljs-property">@peers</span> = <span class="hljs-keyword">new</span> App.PeerCollectionView(<span class="hljs-attribute">collection</span>: <span class="hljs-property">@model</span>.peers)
+    <span class="hljs-property">@listenTo</span> <span class="hljs-property">@model</span>, <span class="hljs-string">'availablePeers'</span>, <span class="hljs-function"><span class="hljs-params">(peer_ids)</span> -&gt;</span>
+      <span class="hljs-property">@peers</span>.collection.update(peer_ids)
+    <span class="hljs-keyword">return</span>
+  
+  
+  <span class="hljs-attribute">render</span>: <span class="hljs-function">-&gt;</span>
+    <span class="hljs-property">@$el</span>.html( <span class="hljs-property">@template</span>(<span class="hljs-attribute">user</span>:<span class="hljs-property">@model</span>) )
+    <span class="hljs-property">@$el</span>.append(<span class="hljs-property">@peers</span>.render().el)
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>
+
+  <span class="hljs-attribute">discover</span>: <span class="hljs-function">-&gt;</span>
+    <span class="hljs-property">@model</span>.discover()</pre></div></div>
             
         </li>
         

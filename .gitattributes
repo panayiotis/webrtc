@@ -1,3 +1,4 @@
 public/doc/* linguist-documentation
 public/jasmine-2.2.0/* linguist-vendored
 assets/js/vendor/* linguist-vendored
+assets/css/vendor/* linguist-vendored

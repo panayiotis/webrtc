@@ -2,26 +2,25 @@
 
 class App.PeerView extends Backbone.View
   
-  template: JST['templates/peerview']
+  template: JST['templates/peer']
+  
+  tagName: 'div'
+  
+  id: null
+  
+  className: 'peer view'
+  
+  events:
+    'click .button': 'connect'
   
   initialize: ->
-    @model = new App.Peer() unless @model
-    this.listenTo(this.model, 'change', this.render)
-    @render()
+    @listenTo @model, 'change', @render
     return
   
-  render: ->
-    #$('body').append(@template())
-    
-    this.$el.html(this.template())
-    
-    _.each(@model.servers.views, (view) =>
-      this.$el.append(view.render().el)
-    )
-    _.each(@model.peers.views, (view) =>
-      this.$el.append(view.render().el)
-    )
-    # this.$el.append
-    # .render()
-    # @models.peers.render()
+  render: =>
+    @$el.html(this.template(peer:@model))
+    this.delegateEvents()
     return this
+  
+  connect: ->
+    @model.connect()

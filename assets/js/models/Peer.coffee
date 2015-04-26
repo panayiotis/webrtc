@@ -1,5 +1,6 @@
 'use strict'
 
+  
 class App.Peer extends Backbone.Model
 
   defaults:
@@ -16,15 +17,18 @@ class App.Peer extends Backbone.Model
     @id = options.id or null
     @server = options.server or null
     @connection = options.connection or null
-  
-  
+    
+    Object.defineProperty this, 'username',
+      get: -> @id.slice(0, @id.indexOf('-'))
+    
+    return
   # Connect to this peer
   connect: ->
     
     # Unless the peerjs connection object is already passed to the model,
     # there must be a 'server connection' object present
     # and the peer's username
-    unless @connection
+    if not @connection
       if not PeerJS.prototype.isPrototypeOf(@server)
         msg = 'PeerConnection.connect(): Attempt to connect to a peer
                without suppling server connection.'
@@ -35,7 +39,11 @@ class App.Peer extends Backbone.Model
                without defining peer id.'
         throw new Error msg
         return
-      
+      @connection = @server.connect(@id)
+      #
+      #this.listenTo(@server, 'disconnected', -> alert(''))
+      #
+    else if not @connection.open
       @connection = @server.connect(@id)
 
     @connection.on 'open', =>
@@ -47,11 +55,17 @@ class App.Peer extends Backbone.Model
         console.log data
         return
       
-      @connection.on 'error', (err) ->
+      @connection.on 'error', (err) =>
         console.log 'Peer: connection error'
         @set('open', false)
         console.log err
         return
+      
+      @connection.on 'close', =>
+        console.log 'Peer: connection closed'
+        @set('open', false)
+        return
+  
   
   close: ->
     @connection.close()

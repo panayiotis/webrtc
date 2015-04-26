@@ -29,8 +29,8 @@
               </a>
             
               
-              <a class="source" href="PeerConnectionCollection.html">
-                PeerConnectionCollection.coffee
+              <a class="source" href="PeerCollection.html">
+                PeerCollection.coffee
               </a>
             
               
@@ -69,6 +69,11 @@
               </a>
             
               
+              <a class="source" href="PeerCollectionView.html">
+                PeerCollectionView.coffee
+              </a>
+            
+              
               <a class="source" href="PeerConnectionView.html">
                 PeerConnectionView.coffee
               </a>
@@ -81,6 +86,11 @@
               
               <a class="source" href="ServerConnectionView.html">
                 ServerConnectionView.coffee
+              </a>
+            
+              
+              <a class="source" href="ContentSpec.html">
+                ContentSpec.coffee
               </a>
             
               
@@ -117,7 +127,8 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>User = App.User
-Peer = App.Peer</pre></div></div>
+Peer = App.Peer
+PeerCollection = App.PeerCollection</pre></div></div>
             
         </li>
         
@@ -134,17 +145,15 @@ Peer = App.Peer</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>describe <span class="hljs-string">'User'</span>, <span class="hljs-function">-&gt;</span>
-  describe <span class="hljs-string">'initialization'</span>, <span class="hljs-function">-&gt;</span>
-    beforeEach -&gt;
-      <span class="hljs-property">@bob</span> = <span class="hljs-keyword">new</span> User()
-    
-    it <span class="hljs-string">'accepts id as an argument for debuging purposes'</span>, <span class="hljs-function">-&gt;</span>
-      alice = <span class="hljs-keyword">new</span> User(<span class="hljs-string">'alice'</span>)
-      expect(alice.id).toMatch <span class="hljs-regexp">/^alice.+/</span>
-    
-    it <span class="hljs-string">'initializes groups property'</span>, <span class="hljs-function">-&gt;</span>
-      expect( <span class="hljs-keyword">typeof</span>( <span class="hljs-property">@bob</span>.groups )).toBe <span class="hljs-string">'object'</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">unless</span> phantom
+  describe <span class="hljs-string">'User'</span>, <span class="hljs-function">-&gt;</span>
+    describe <span class="hljs-string">'initialization'</span>, <span class="hljs-function">-&gt;</span>
+      beforeEach -&gt;
+        <span class="hljs-property">@bob</span> = <span class="hljs-keyword">new</span> User()
+      
+      it <span class="hljs-string">'accepts id as an argument for debuging purposes'</span>, <span class="hljs-function">-&gt;</span>
+        alice = <span class="hljs-keyword">new</span> User(<span class="hljs-string">'alice'</span>)
+        expect(alice.id).toMatch <span class="hljs-regexp">/^alice.+/</span></pre></div></div>
             
         </li>
         
@@ -159,8 +168,7 @@ Peer = App.Peer</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  
-  <span class="hljs-keyword">unless</span> phantom
+            <div class="content"><div class='highlight'><pre>    
     describe <span class="hljs-string">'server connectivity'</span>, <span class="hljs-function">-&gt;</span>
       beforeEach (done) -&gt;
         <span class="hljs-property">@bob</span> = <span class="hljs-keyword">new</span> User()
@@ -176,7 +184,7 @@ Peer = App.Peer</pre></div></div>
       it <span class="hljs-string">'sets open attribute'</span>, <span class="hljs-function">-&gt;</span>
         expect(<span class="hljs-property">@bob</span>.get(<span class="hljs-string">'open'</span>)).toBeTruthy()
       
-      it <span class="hljs-string">'gets peers for a certain key from server'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
+      it <span class="hljs-string">'gets peers from server'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
         list = <span class="hljs-literal">null</span>
         <span class="hljs-property">@bob</span>.listenTo(<span class="hljs-property">@bob</span>, <span class="hljs-string">'availablePeers'</span>, <span class="hljs-function"><span class="hljs-params">(res)</span> -&gt;</span>
           list = res
@@ -186,10 +194,10 @@ Peer = App.Peer</pre></div></div>
         setTimeout (<span class="hljs-function">=&gt;</span>
           expect(_.isArray(list)).toBeTruthy()
           expect(list).toContain(<span class="hljs-property">@bob</span>.id)
+          <span class="hljs-built_in">console</span>.log list
           done()
         ), <span class="hljs-number">100</span>
-  
-  <span class="hljs-keyword">unless</span> phantom
+    
     describe <span class="hljs-string">'Peer active Connectivity'</span>, <span class="hljs-function">-&gt;</span>
       beforeEach (done) -&gt;</pre></div></div>
             
@@ -234,8 +242,7 @@ Peer = App.Peer</pre></div></div>
         , <span class="hljs-number">300</span>)
       
       xit <span class="hljs-string">'does not connect to not existing peer, but fails silently'</span>, <span class="hljs-function">-&gt;</span>
-  
-  <span class="hljs-keyword">unless</span> phantom
+    
     describe <span class="hljs-string">'Peer passive Connectivity'</span>, <span class="hljs-function">-&gt;</span>
       beforeEach (done) -&gt;</pre></div></div>
             
@@ -263,15 +270,13 @@ Peer = App.Peer</pre></div></div>
           flag=<span class="hljs-literal">true</span>
         )
         peer.connect()
-        <span class="hljs-built_in">console</span>.log peer
         setTimeout( <span class="hljs-function">-&gt;</span>
           expect(flag).toBeTruthy()
           done()
         , <span class="hljs-number">300</span>)
       
       xit <span class="hljs-string">'accepts incomming data from other peers'</span>, <span class="hljs-function">-&gt;</span>
-  
-  <span class="hljs-keyword">unless</span> phantom
+    
     describe <span class="hljs-string">'Peer communication'</span>, <span class="hljs-function">-&gt;</span>
       beforeEach -&gt;</pre></div></div>
             
@@ -307,13 +312,39 @@ and connect them</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>describe <span class="hljs-string">'PeerCollection'</span>, <span class="hljs-function">-&gt;</span>
-  describe <span class="hljs-string">'parsing'</span>, <span class="hljs-function">-&gt;</span>
-    xit <span class="hljs-string">'parses \'available peers\' json'</span>, <span class="hljs-function">-&gt;</span>
-
-
-  describe <span class="hljs-string">'collection manipulation'</span>, <span class="hljs-function">-&gt;</span>
-    beforeEach -&gt;</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">unless</span> phantom
+  describe <span class="hljs-string">'PeerCollection'</span>, <span class="hljs-function">-&gt;</span>
+    describe <span class="hljs-string">'initialization'</span>, <span class="hljs-function">-&gt;</span>
+      
+      it <span class="hljs-string">'can be initialized without arguments'</span>, <span class="hljs-function">-&gt;</span>
+        expect(<span class="hljs-function">-&gt;</span> <span class="hljs-keyword">new</span> PeerCollection()).<span class="hljs-keyword">not</span>.toThrow(Error)
+      
+      it <span class="hljs-string">'can be initialized with server property'</span>, <span class="hljs-function">-&gt;</span>
+        bob = <span class="hljs-keyword">new</span> User(<span class="hljs-string">'bob'</span>)
+        peers = <span class="hljs-literal">null</span>
+        expect( <span class="hljs-function">-&gt;</span>
+          peers = <span class="hljs-keyword">new</span> PeerCollection([],<span class="hljs-attribute">server</span>: bob.connection)
+        ).<span class="hljs-keyword">not</span>.toThrow(Error)
+        expect(peers.server).toBe(bob.connection)
+        
+        expect( <span class="hljs-function">-&gt;</span>
+          peers = <span class="hljs-keyword">new</span> PeerCollection([],<span class="hljs-attribute">server</span>: bob.connection)
+        ).<span class="hljs-keyword">not</span>.toThrow(Error)
+      
+      it <span class="hljs-string">'can be initialized with array of peers ids'</span>, <span class="hljs-function">-&gt;</span>
+        spyOn(PeerCollection.prototype, <span class="hljs-string">'update'</span>)
+        <span class="hljs-keyword">new</span> PeerCollection([],<span class="hljs-attribute">ids</span>: [<span class="hljs-string">'a'</span>])
+        expect(PeerCollection.prototype.update).toHaveBeenCalled()
+      
+    describe <span class="hljs-string">'collection manipulation'</span>, <span class="hljs-function">-&gt;</span>
+      beforeEach -&gt;
+        <span class="hljs-property">@bob</span> = <span class="hljs-keyword">new</span> User(<span class="hljs-string">'bob'</span>)
+        <span class="hljs-property">@peers</span> = <span class="hljs-keyword">new</span> PeerCollection([], { <span class="hljs-attribute">server</span>: <span class="hljs-property">@bob</span>.connection} )
+      
+      it <span class="hljs-string">'adds peers'</span>, <span class="hljs-function">-&gt;</span>
+        expect(<span class="hljs-property">@peers</span>.length).toEqual(<span class="hljs-number">0</span>)
+        <span class="hljs-property">@peers</span>.update([<span class="hljs-string">'one'</span>,<span class="hljs-string">'two'</span>, <span class="hljs-string">'three'</span>])
+        expect(<span class="hljs-property">@peers</span>.length).toEqual(<span class="hljs-number">3</span>)</pre></div></div>
             
         </li>
         
@@ -324,15 +355,22 @@ and connect them</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
-              <p>create peer collection
-add some model data</p>
+              <p>console.table @peers.models</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    xit <span class="hljs-string">'adds Peers'</span>, <span class="hljs-function">-&gt;</span>
-    xit <span class="hljs-string">'does not add Peers if they already exist in collection'</span>, <span class="hljs-function">-&gt;</span>
-    xit <span class="hljs-string">'removes Peers'</span>, <span class="hljs-function">-&gt;</span>
-    xit <span class="hljs-string">'removes Peers only if they are not connected to us'</span>, <span class="hljs-function">-&gt;</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>      
+      it <span class="hljs-string">'removes peers'</span>, <span class="hljs-function">-&gt;</span>
+        <span class="hljs-property">@peers</span>.update([<span class="hljs-string">'one'</span>,<span class="hljs-string">'two'</span>, <span class="hljs-string">'three'</span>, <span class="hljs-string">'four'</span>])
+        <span class="hljs-property">@peers</span>.update([<span class="hljs-string">'one'</span>,<span class="hljs-string">'four'</span>])
+        expect(<span class="hljs-property">@peers</span>.length).toEqual(<span class="hljs-number">2</span>)
+      
+      it <span class="hljs-string">'adds peers if they do not exist'</span>, <span class="hljs-function">-&gt;</span>
+        <span class="hljs-property">@peers</span>.update([<span class="hljs-string">'one'</span>,<span class="hljs-string">'two'</span>, <span class="hljs-string">'three'</span>])
+        <span class="hljs-property">@peers</span>.update([<span class="hljs-string">'one'</span>,<span class="hljs-string">'two'</span>, <span class="hljs-string">'three'</span>, <span class="hljs-string">'four'</span>])
+        expect(<span class="hljs-property">@peers</span>.length).toEqual(<span class="hljs-number">4</span>)
+      
+      it <span class="hljs-string">'removes peers unless they are active'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span></pre></div></div>
             
         </li>
         
@@ -343,44 +381,76 @@ add some model data</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
+              <p>create an active connection</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        alice = <span class="hljs-keyword">new</span> User(<span class="hljs-string">'alice'</span>)
+        alice_peer = <span class="hljs-keyword">new</span> Peer (<span class="hljs-attribute">server</span>:<span class="hljs-property">@bob</span>.connection, <span class="hljs-attribute">id</span>:alice.id)
+        alice_peer.connect()
+        <span class="hljs-property">@peers</span>.update([<span class="hljs-string">'one'</span>,<span class="hljs-string">'two'</span>, <span class="hljs-string">'three'</span>])
+        <span class="hljs-property">@peers</span>.add(alice_peer)
+        expect(<span class="hljs-property">@peers</span>.length).toEqual(<span class="hljs-number">4</span>)
+        setTimeout( <span class="hljs-function">=&gt;</span>
+          <span class="hljs-property">@peers</span>.update([])
+        , <span class="hljs-number">1000</span>)
+        setTimeout( <span class="hljs-function">=&gt;</span>
+          expect(<span class="hljs-property">@peers</span>.length).toEqual(<span class="hljs-number">1</span>)
+          done()
+        , <span class="hljs-number">1100</span>)
+
+<span class="hljs-keyword">return</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
               <p>#</p>
 <h1 id="views">Views</h1>
 <p>#</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>describe <span class="hljs-string">'UserView'</span>, <span class="hljs-function">-&gt;</span>
-  
-  describe <span class="hljs-string">'initialization'</span>, <span class="hljs-function">-&gt;</span>
-    xit <span class="hljs-string">'initializes groups property'</span>, <span class="hljs-function">-&gt;</span>
-  
-  describe <span class="hljs-string">'when model gets a list with peers from server'</span>, <span class="hljs-function">-&gt;</span>
-    xit <span class="hljs-string">'creates PeerCollectionView event'</span>, <span class="hljs-function">-&gt;</span>
-  
-  describe <span class="hljs-string">'routing'</span>, <span class="hljs-function">-&gt;</span>
-    describe <span class="hljs-string">'events'</span>, <span class="hljs-function">-&gt;</span>
-      xit <span class="hljs-string">'listens for group routes'</span>, <span class="hljs-function">-&gt;</span>
-      xit <span class="hljs-string">'listens for user routes'</span>, <span class="hljs-function">-&gt;</span>
-  
-    describe <span class="hljs-string">'on user route'</span>, <span class="hljs-function">-&gt;</span>
-      xit <span class="hljs-string">'creates PeerContentView'</span>, <span class="hljs-function">-&gt;</span>
-      xit <span class="hljs-string">'switces to PeerContentView'</span>, <span class="hljs-function">-&gt;</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">unless</span> phantom
+  describe <span class="hljs-string">'UserView'</span>, <span class="hljs-function">-&gt;</span>
+    
+    describe <span class="hljs-string">'initialization'</span>, <span class="hljs-function">-&gt;</span>
+      xit <span class="hljs-string">'initializes groups property'</span>, <span class="hljs-function">-&gt;</span>
+    
+    describe <span class="hljs-string">'when model gets a list with peers from server'</span>, <span class="hljs-function">-&gt;</span>
+      xit <span class="hljs-string">'creates PeerCollectionView event'</span>, <span class="hljs-function">-&gt;</span>
+    
+    describe <span class="hljs-string">'routing'</span>, <span class="hljs-function">-&gt;</span>
+      describe <span class="hljs-string">'events'</span>, <span class="hljs-function">-&gt;</span>
+        xit <span class="hljs-string">'listens for group routes'</span>, <span class="hljs-function">-&gt;</span>
+        xit <span class="hljs-string">'listens for user routes'</span>, <span class="hljs-function">-&gt;</span>
+    
+      describe <span class="hljs-string">'on user route'</span>, <span class="hljs-function">-&gt;</span>
+        xit <span class="hljs-string">'creates PeerContentView'</span>, <span class="hljs-function">-&gt;</span>
+        xit <span class="hljs-string">'switces to PeerContentView'</span>, <span class="hljs-function">-&gt;</span>
 
-    describe <span class="hljs-string">'on group route'</span>, <span class="hljs-function">-&gt;</span>
-      xit <span class="hljs-string">'finds the appropriate PeerCollectionView if it exists'</span>, <span class="hljs-function">-&gt;</span>
-      xit <span class="hljs-string">'creates PeerCollectionView if it does not exist'</span>, <span class="hljs-function">-&gt;</span>
-      xit <span class="hljs-string">'switces to PeerCollectionView'</span>, <span class="hljs-function">-&gt;</span>
-
-describe <span class="hljs-string">'PeerCollectionView'</span>, <span class="hljs-function">-&gt;</span>
-  xit <span class="hljs-string">'creates Peer views for the collection'</span>, <span class="hljs-function">-&gt;</span>
-  xit <span class="hljs-string">'listens to collection add event'</span>, <span class="hljs-function">-&gt;</span>
-  xit <span class="hljs-string">'adds new PeerView'</span>, <span class="hljs-function">-&gt;</span>
-  xit <span class="hljs-string">'listens to collection remove event'</span>, <span class="hljs-function">-&gt;</span>
-  xit <span class="hljs-string">'removes PeerView'</span>, <span class="hljs-function">-&gt;</span>
-
-describe <span class="hljs-string">'PeerView'</span>, <span class="hljs-function">-&gt;</span>
-describe <span class="hljs-string">'PeerContentView'</span>, <span class="hljs-function">-&gt;</span>
-describe <span class="hljs-string">'ContentView'</span>, <span class="hljs-function">-&gt;</span></pre></div></div>
+      describe <span class="hljs-string">'on group route'</span>, <span class="hljs-function">-&gt;</span>
+        xit <span class="hljs-string">'finds the appropriate PeerCollectionView if it exists'</span>, <span class="hljs-function">-&gt;</span>
+        xit <span class="hljs-string">'creates PeerCollectionView if it does not exist'</span>, <span class="hljs-function">-&gt;</span>
+        xit <span class="hljs-string">'switces to PeerCollectionView'</span>, <span class="hljs-function">-&gt;</span>
+<span class="hljs-keyword">unless</span> phantom
+  describe <span class="hljs-string">'PeerCollectionView'</span>, <span class="hljs-function">-&gt;</span>
+    xit <span class="hljs-string">'creates Peer views for the collection'</span>, <span class="hljs-function">-&gt;</span>
+    xit <span class="hljs-string">'listens to collection add event'</span>, <span class="hljs-function">-&gt;</span>
+    xit <span class="hljs-string">'adds new PeerView'</span>, <span class="hljs-function">-&gt;</span>
+    xit <span class="hljs-string">'listens to collection remove event'</span>, <span class="hljs-function">-&gt;</span>
+    xit <span class="hljs-string">'removes PeerView'</span>, <span class="hljs-function">-&gt;</span>
+<span class="hljs-keyword">unless</span> phantom
+  describe <span class="hljs-string">'PeerView'</span>, <span class="hljs-function">-&gt;</span>
+<span class="hljs-keyword">unless</span> phantom
+  describe <span class="hljs-string">'PeerContentView'</span>, <span class="hljs-function">-&gt;</span>
+<span class="hljs-keyword">unless</span> phantom
+  describe <span class="hljs-string">'ContentView'</span>, <span class="hljs-function">-&gt;</span></pre></div></div>
             
         </li>
         

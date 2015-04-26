@@ -29,8 +29,8 @@
               </a>
             
               
-              <a class="source" href="PeerConnectionCollection.html">
-                PeerConnectionCollection.coffee
+              <a class="source" href="PeerCollection.html">
+                PeerCollection.coffee
               </a>
             
               
@@ -69,6 +69,11 @@
               </a>
             
               
+              <a class="source" href="PeerCollectionView.html">
+                PeerCollectionView.coffee
+              </a>
+            
+              
               <a class="source" href="PeerConnectionView.html">
                 PeerConnectionView.coffee
               </a>
@@ -81,6 +86,11 @@
               
               <a class="source" href="ServerConnectionView.html">
                 ServerConnectionView.coffee
+              </a>
+            
+              
+              <a class="source" href="ContentSpec.html">
+                ContentSpec.coffee
               </a>
             
               
@@ -147,11 +157,10 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>groups</p>
+              <p>List of server connections
+servers: null</p>
 
             </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-attribute">groups</span>: <span class="hljs-literal">null</span></pre></div></div>
             
         </li>
         
@@ -162,10 +171,11 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>List of server connections
-servers: null</p>
+              <p>Collection of peers</p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-attribute">peers</span>: <span class="hljs-literal">null</span></pre></div></div>
             
         </li>
         
@@ -176,10 +186,15 @@ servers: null</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>List of peer connections
-peers: null</p>
+              <p>The id that server gave this peer</p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-attribute">id</span>: <span class="hljs-literal">null</span>
+  
+  <span class="hljs-attribute">username</span>: <span class="hljs-literal">null</span>
+  
+  <span class="hljs-attribute">connection</span>: <span class="hljs-literal">null</span></pre></div></div>
             
         </li>
         
@@ -190,32 +205,17 @@ peers: null</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p>The id that server gave this peer</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-attribute">id</span>: <span class="hljs-literal">null</span>
-
-  <span class="hljs-attribute">connection</span>: <span class="hljs-literal">null</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-7">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
-              </div>
               <p>Initializes with optional username.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-attribute">initialize</span>: <span class="hljs-function"><span class="hljs-params">(id)</span> -&gt;</span>
-    <span class="hljs-property">@set</span>(<span class="hljs-string">'host'</span>, <span class="hljs-built_in">window</span>.default_signalling_server)
-    <span class="hljs-property">@id</span>= id + <span class="hljs-string">'-'</span> + Math.random().toString(<span class="hljs-number">36</span>).substring(<span class="hljs-number">7</span>)
-    <span class="hljs-property">@groups</span> = {}
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-attribute">initialize</span>: <span class="hljs-function"><span class="hljs-params">(username)</span> -&gt;</span>
+    <span class="hljs-property">@set</span>(<span class="hljs-string">'host'</span>, <span class="hljs-built_in">window</span>.default_signalling_server) <span class="hljs-comment"># TODO This is bad</span>
+    <span class="hljs-property">@username</span> = username <span class="hljs-keyword">or</span> <span class="hljs-string">'anon'</span> <span class="hljs-comment"># set default id if none is provided</span>
+    <span class="hljs-property">@id</span>= <span class="hljs-property">@username</span> + <span class="hljs-string">'-'</span> + Math.random().toString(<span class="hljs-number">36</span>).substring(<span class="hljs-number">7</span>)
+    <span class="hljs-property">@peers</span> = <span class="hljs-keyword">new</span> App.PeerCollection()
     <span class="hljs-property">@connect</span>()
+    
   
   <span class="hljs-attribute">connect</span>: <span class="hljs-function">-&gt;</span>
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">if</span> phantom
@@ -227,7 +227,9 @@ peers: null</p>
     
     <span class="hljs-property">@connection</span>.<span class="hljs-literal">on</span> <span class="hljs-string">'open'</span>, <span class="hljs-function"><span class="hljs-params">(id)</span> =&gt;</span>
       <span class="hljs-property">@set</span>(<span class="hljs-string">'open'</span>, <span class="hljs-literal">true</span>)
-    
+      <span class="hljs-property">@peers</span>.server = <span class="hljs-property">@connection</span>
+      <span class="hljs-property">@discover</span>()
+      
     <span class="hljs-property">@connection</span>.<span class="hljs-literal">on</span> <span class="hljs-string">'close'</span>, <span class="hljs-function">=&gt;</span>
       <span class="hljs-property">@set</span>(<span class="hljs-string">'open'</span>, <span class="hljs-literal">false</span>)
     
@@ -236,7 +238,10 @@ peers: null</p>
     
     <span class="hljs-property">@connection</span>.<span class="hljs-literal">on</span> <span class="hljs-string">'connection'</span>, <span class="hljs-function"><span class="hljs-params">(conn)</span> =&gt;</span>
       <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">'connection'</span>, {<span class="hljs-attribute">server</span>:<span class="hljs-keyword">this</span>, <span class="hljs-attribute">connection</span>:conn})
-      <span class="hljs-built_in">console</span>.log (<span class="hljs-string">'Incomming Connection'</span>)
+      <span class="hljs-built_in">console</span>.log <span class="hljs-string">'Incomming Connection'</span>
+
+      
+      
   
   <span class="hljs-attribute">reconnect</span>: <span class="hljs-function">-&gt;</span>
     <span class="hljs-property">@connection</span>.reconnect()

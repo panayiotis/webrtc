@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>router.coffee</title>
+  <title>PeerCollectionView.coffee</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -111,7 +111,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>router.coffee</h1>
+                  <h1>PeerCollectionView.coffee</h1>
               </div>
           </li>
         
@@ -128,13 +128,31 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-string">'use strict'</span>
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span>.<span class="hljs-title">Router</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">Router</span></span>
-
-  <span class="hljs-attribute">routes</span>:
-    <span class="hljs-string">'kitchensink'</span> : <span class="hljs-string">'kitchensink'</span>
-    <span class="hljs-string">'*path'</span>       : <span class="hljs-string">'all'</span>
-
-  <span class="hljs-attribute">initialize</span>: <span class="hljs-function">-&gt;</span></pre></div></div>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span>.<span class="hljs-title">PeerCollectionView</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">View</span></span>
+  
+  <span class="hljs-attribute">template</span>: JST[<span class="hljs-string">'templates/peer_collection'</span>]
+  
+  <span class="hljs-attribute">tagName</span>: <span class="hljs-string">'div'</span>
+  
+  <span class="hljs-attribute">className</span>: <span class="hljs-string">'collection view'</span>
+  
+  <span class="hljs-attribute">views</span>: <span class="hljs-literal">null</span>
+  
+  <span class="hljs-attribute">events</span>:
+    <span class="hljs-string">'click #di'</span>: <span class="hljs-string">'open'</span>
+  
+  <span class="hljs-attribute">initialize</span>: <span class="hljs-function">-&gt;</span>
+    <span class="hljs-property">@views</span> = []
+    <span class="hljs-property">@collection</span>.each (peer, index) -&gt;
+      <span class="hljs-property">@views</span>.push(<span class="hljs-keyword">new</span> App.PeerView(<span class="hljs-attribute">model</span>: peer))
+    <span class="hljs-property">@listenTo</span> <span class="hljs-property">@collection</span>, <span class="hljs-string">'add'</span>, <span class="hljs-function"><span class="hljs-params">(peer)</span> -&gt;</span>
+      <span class="hljs-property">@views</span>.push(<span class="hljs-keyword">new</span> App.PeerView(<span class="hljs-attribute">model</span>: peer))
+      <span class="hljs-property">@render</span>()
+    <span class="hljs-property">@listenTo</span> <span class="hljs-property">@collection</span>, <span class="hljs-string">'remove'</span>, <span class="hljs-property">@render</span>
+    <span class="hljs-keyword">return</span>
+  
+  
+  <span class="hljs-attribute">render</span>: <span class="hljs-function">=&gt;</span></pre></div></div>
             
         </li>
         
@@ -145,11 +163,11 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>console.log “Router Map Initialize”</p>
+              <p>console.log @collection</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-property">@$el</span>.html( <span class="hljs-property">@template</span>(<span class="hljs-attribute">length</span>: <span class="hljs-property">@collection</span>.length) )</pre></div></div>
             
         </li>
         
@@ -160,13 +178,12 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>#</p>
-<h1 id="index-route">Index Route</h1>
-<p>#</p>
+              <p>console.log(‘——————————————————‘)
+console.table @views</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-attribute">all</span>: <span class="hljs-function">-&gt;</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">for</span> view <span class="hljs-keyword">in</span> <span class="hljs-property">@views</span></pre></div></div>
             
         </li>
         
@@ -177,28 +194,17 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>console.log “Router Map Index”
-new App.IndexView()</p>
+              <p>console.log view.model.username</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span>
-  
-  <span class="hljs-attribute">kitchensink</span>: <span class="hljs-function">-&gt;</span>
-    bob = <span class="hljs-keyword">new</span> App.User(<span class="hljs-string">'bob'</span>)
-    <span class="hljs-built_in">window</span>.bob = bob
-    mike = <span class="hljs-keyword">new</span> App.User(<span class="hljs-string">'mike'</span>)
-    alex = <span class="hljs-keyword">new</span> App.User(<span class="hljs-string">'alex'</span>)
-    alice = <span class="hljs-keyword">new</span> App.User(<span class="hljs-string">'alice'</span>)
-    <span class="hljs-built_in">window</span>.alice = alice
-    
-    view = <span class="hljs-keyword">new</span> App.KitchensinkView(<span class="hljs-attribute">model</span>:alice)
-    <span class="hljs-built_in">window</span>.view = view
-    $(<span class="hljs-string">'body'</span>).append(view.render().el)
-    
-    bob_view = <span class="hljs-keyword">new</span> App.KitchensinkView(<span class="hljs-attribute">model</span>:bob)
-    $(<span class="hljs-string">'body'</span>).append(bob_view.render().el)
-    <span class="hljs-keyword">return</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-property">@$el</span>.append(view.render().el)
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>
+
+  <span class="hljs-attribute">remove</span>: <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span>
+    <span class="hljs-keyword">while</span> ( <span class="hljs-property">@views</span>.length &gt; <span class="hljs-number">0</span> )
+      <span class="hljs-property">@views</span>.pop().remove()
+    Backbone.View.prototype.remove.call(<span class="hljs-keyword">this</span>)</pre></div></div>
             
         </li>
         

@@ -1,10 +1,12 @@
 phantom = /PhantomJS/.test(navigator.userAgent)
 
-unless phantom
-  describe 'Browser', ->
+describe 'Browser', ->
+  unless phantom
     it 'should support WebRTC', ->
       browser = util.browser
       expect(['Firefox','Chrome','Supported']).toContain(browser) unless phantom
+  it 'should support LocalStorage', ->
+    expect(Modernizr.localstorage).toBeTruthy()
 
 
 
@@ -15,7 +17,7 @@ unless phantom
     it 'should create peer', (done) ->
       opened = false
       
-      peer = new Peer(Math.random().toString(36).substring(7),
+      peer = new PeerJS(Math.random().toString(36).substring(7),
         debug: 3 # 1: Errors, 2: Warnings, 3: All logs
         host: 'signalling.home'
         port: 9000
@@ -47,14 +49,33 @@ unless phantom
 describe 'Node.js', ->
   it 'should load .jst.jade templates', ->
     expect(JST['templates/hello']()).toBe '<h1>Hello</h1>'
+  
   it 'should load jquery', ->
     expect($('body')).toBeInDOM()
+  
   it 'should load Backbone', ->
     expect(Backbone).toBeTruthy()
-    expect(Webrtc).toBeTruthy()
+    expect(App).toBeTruthy()
 
 
 
+describe 'LocalStorage', ->
+  it 'Model should be able to be saved and fetched', ->
+    random = Math.random().toString(36).substring(12)
+    
+    class TestModel extends Backbone.Model
+      localStorage: new Backbone.LocalStorage("key")
+      defaults:
+        'value': ''
+    
+    model = new TestModel(id:1, value: random)
+    model.save()
+    model = null
+    model = new TestModel(id:1)
+    expect(model.get('value')).toEqual('')
+    model.fetch()
+    expect(model.get('value')).toEqual(random)
+###
 describe 'ServerConnection', ->
   
   describe 'initialization', ->
@@ -397,3 +418,5 @@ describe 'PeerView', ->
       view = new Webrtc.Views.PeerView()
       proto = Webrtc.Models.Peer.prototype
       expect(proto.isPrototypeOf(view.model)).toBeTruthy()
+
+###

@@ -8,26 +8,27 @@ class App.User extends Backbone.Model
     'port': '8000'
     'open': false
 
-  # groups
-  groups: null
-
   # List of server connections
   #servers: null
   
-  # List of peer connections
-  #peers: null
+  # Collection of peers
+  peers: null
   
   # The id that server gave this peer
   id: null
-
+  
+  username: null
+  
   connection: null
 
   # Initializes with optional username.
-  initialize: (id) ->
-    @set('host', window.default_signalling_server)
-    @id= id + '-' + Math.random().toString(36).substring(7)
-    @groups = {}
+  initialize: (username) ->
+    @set('host', window.default_signalling_server) # TODO This is bad
+    @username = username or 'anon' # set default id if none is provided
+    @id= @username + '-' + Math.random().toString(36).substring(7)
+    @peers = new App.PeerCollection()
     @connect()
+    
   
   connect: ->
     return if phantom
@@ -39,7 +40,9 @@ class App.User extends Backbone.Model
     
     @connection.on 'open', (id) =>
       @set('open', true)
-    
+      @peers.server = @connection
+      @discover()
+      
     @connection.on 'close', =>
       @set('open', false)
     
@@ -48,7 +51,10 @@ class App.User extends Backbone.Model
     
     @connection.on 'connection', (conn) =>
       this.trigger('connection', {server:this, connection:conn})
-      console.log ('Incomming Connection')
+      console.log 'Incomming Connection'
+
+      
+      
   
   reconnect: ->
     @connection.reconnect()

@@ -4,25 +4,29 @@ class App.KitchensinkView extends Backbone.View
   
   template: JST['templates/kitchensink']
   
+  tagName: 'div'
+  
+  className: 'view'
+  
+  events:
+    'click #discover': 'discover'
+    'click .button.edit': 'openEditDialog'
+    'click .button.delete': 'destroy'
+  
+  peers: null
+  
   initialize: ->
-    $('body').append(@template())
-    
-    alice = new App.Peer()
-    alice.view = new App.PeerView(model:alice)
-    alice.addServer()
-    
-    $('body').append(alice.view.render().el)
-    $('body').append('<hr/>')
-    
-    bob = new App.Peer()
-    bob.addServer()
-    bob.view = new App.PeerView(model:bob)
-    
-    
-    $('body').append(bob.view.render().el)
-    
-    setTimeout (->
-      alice.connect(peer:bob.id)
-    ), 500
-    window.alice = alice
-    window.bob = bob
+    @listenTo @model, 'change', @render
+    @peers = new App.PeerCollectionView(collection: @model.peers)
+    @listenTo @model, 'availablePeers', (peer_ids) ->
+      @peers.collection.update(peer_ids)
+    return
+  
+  
+  render: ->
+    @$el.html( @template(user:@model) )
+    @$el.append(@peers.render().el)
+    return this
+
+  discover: ->
+    @model.discover()

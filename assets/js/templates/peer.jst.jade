@@ -1,2 +1,7 @@
-p peer
-= open
+span
+  |connection with 
+  = peer.username 
+  |&nbsp;is 
+  =(peer.get('open') ? "open" : "closed")
+  | 
+  a(class='button connect') connect

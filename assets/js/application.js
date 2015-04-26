@@ -27,6 +27,7 @@
 
 //= require vendor/lodash
 //= require vendor/backbone
+//= require vendor/backbone.localStorage
 
 // require_directory
 //= require backbone

@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>PeerConnectionView.coffee</title>
+  <title>Content.coffee</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -89,8 +89,8 @@
               </a>
             
               
-              <a class="source" href="ContentSpec.html">
-                ContentSpec.coffee
+              <a class="source" href="Content.html">
+                Content.coffee
               </a>
             
               
@@ -111,7 +111,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>PeerConnectionView.coffee</h1>
+                  <h1>Content.coffee</h1>
               </div>
           </li>
         
@@ -126,28 +126,13 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-string">'use strict'</span>
+            <div class="content"><div class='highlight'><pre>fdescribe <span class="hljs-string">'Content'</span>, <span class="hljs-function">-&gt;</span>
+  it <span class="hljs-string">'is initialized with defaults'</span>, <span class="hljs-function">-&gt;</span>
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span>.<span class="hljs-title">PeerConnectionView</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">View</span></span>
-  
-  <span class="hljs-attribute">template</span>: JST[<span class="hljs-string">'templates/peer'</span>]
-  
-  <span class="hljs-attribute">tagName</span>: <span class="hljs-string">'div'</span>
-  
-  <span class="hljs-attribute">id</span>: <span class="hljs-string">''</span>
-  
-  <span class="hljs-attribute">className</span>: <span class="hljs-string">'peer'</span>
-  
-  <span class="hljs-attribute">events</span>: {}
-  
-  <span class="hljs-attribute">initialize</span>: <span class="hljs-function">-&gt;</span>
-    <span class="hljs-property">@listenTo</span> <span class="hljs-property">@model</span>, <span class="hljs-string">'change'</span>, <span class="hljs-property">@render</span>
-    <span class="hljs-property">@render</span>()
-    <span class="hljs-keyword">return</span>
-  
-  <span class="hljs-attribute">render</span>: <span class="hljs-function">-&gt;</span>
-    <span class="hljs-property">@$el</span>.html(<span class="hljs-property">@template</span>({<span class="hljs-attribute">open</span>:<span class="hljs-literal">true</span>}))
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span></pre></div></div>
+fdescribe <span class="hljs-string">'EditContentView'</span>, <span class="hljs-function">-&gt;</span>
+
+fdescribe <span class="hljs-string">'PeerContentView'</span>, <span class="hljs-function">-&gt;</span>
+  it <span class="hljs-string">'is can be with defaults'</span>, <span class="hljs-function">-&gt;</span></pre></div></div>
             
         </li>
         

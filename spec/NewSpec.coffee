@@ -1,24 +1,23 @@
 User = App.User
 Peer = App.Peer
+PeerCollection = App.PeerCollection
 
 ##
 ##  User
 ##
-describe 'User', ->
-  describe 'initialization', ->
-    beforeEach ->
-      @bob = new User()
+unless phantom
+  describe 'User', ->
+    describe 'initialization', ->
+      beforeEach ->
+        @bob = new User()
+      
+      it 'accepts id as an argument for debuging purposes', ->
+        alice = new User('alice')
+        expect(alice.id).toMatch /^alice.+/
+      
+      
+      #xit 'initializes content property', ->
     
-    it 'accepts id as an argument for debuging purposes', ->
-      alice = new User('alice')
-      expect(alice.id).toMatch /^alice.+/
-    
-    it 'initializes groups property', ->
-      expect( typeof( @bob.groups )).toBe 'object'
-    
-    #xit 'initializes content property', ->
-  
-  unless phantom
     describe 'server connectivity', ->
       beforeEach (done) ->
         @bob = new User()
@@ -34,7 +33,7 @@ describe 'User', ->
       it 'sets open attribute', ->
         expect(@bob.get('open')).toBeTruthy()
       
-      it 'gets peers for a certain key from server', (done) ->
+      it 'gets peers from server', (done) ->
         list = null
         @bob.listenTo(@bob, 'availablePeers', (res) ->
           list = res
@@ -44,10 +43,10 @@ describe 'User', ->
         setTimeout (=>
           expect(_.isArray(list)).toBeTruthy()
           expect(list).toContain(@bob.id)
+          console.log list
           done()
         ), 100
-  
-  unless phantom
+    
     describe 'Peer active Connectivity', ->
       beforeEach (done) ->
         #initialize two peers
@@ -67,8 +66,7 @@ describe 'User', ->
         , 300)
       
       xit 'does not connect to not existing peer, but fails silently', ->
-  
-  unless phantom
+    
     describe 'Peer passive Connectivity', ->
       beforeEach (done) ->
         #initialize two peers
@@ -83,15 +81,13 @@ describe 'User', ->
           flag=true
         )
         peer.connect()
-        console.log peer
         setTimeout( ->
           expect(flag).toBeTruthy()
           done()
         , 300)
       
       xit 'accepts incomming data from other peers', ->
-  
-  unless phantom
+    
     describe 'Peer communication', ->
       beforeEach ->
         # initialize two peers
@@ -104,54 +100,103 @@ describe 'User', ->
 ##
 ##  PeerCollection
 ##
-describe 'PeerCollection', ->
-  describe 'parsing', ->
-    xit 'parses \'available peers\' json', ->
+unless phantom
+  describe 'PeerCollection', ->
+    describe 'initialization', ->
+      
+      it 'can be initialized without arguments', ->
+        expect(-> new PeerCollection()).not.toThrow(Error)
+      
+      it 'can be initialized with server property', ->
+        bob = new User('bob')
+        peers = null
+        expect( ->
+          peers = new PeerCollection([],server: bob.connection)
+        ).not.toThrow(Error)
+        expect(peers.server).toBe(bob.connection)
+        
+        expect( ->
+          peers = new PeerCollection([],server: bob.connection)
+        ).not.toThrow(Error)
+      
+      it 'can be initialized with array of peers ids', ->
+        spyOn(PeerCollection.prototype, 'update')
+        new PeerCollection([],ids: ['a'])
+        expect(PeerCollection.prototype.update).toHaveBeenCalled()
+      
+    describe 'collection manipulation', ->
+      beforeEach ->
+        @bob = new User('bob')
+        @peers = new PeerCollection([], { server: @bob.connection} )
+      
+      it 'adds peers', ->
+        expect(@peers.length).toEqual(0)
+        @peers.update(['one','two', 'three'])
+        expect(@peers.length).toEqual(3)
+        #console.table @peers.models
+      
+      it 'removes peers', ->
+        @peers.update(['one','two', 'three', 'four'])
+        @peers.update(['one','four'])
+        expect(@peers.length).toEqual(2)
+      
+      it 'adds peers if they do not exist', ->
+        @peers.update(['one','two', 'three'])
+        @peers.update(['one','two', 'three', 'four'])
+        expect(@peers.length).toEqual(4)
+      
+      it 'removes peers unless they are active', (done) ->
+        # create an active connection
+        alice = new User('alice')
+        alice_peer = new Peer (server:@bob.connection, id:alice.id)
+        alice_peer.connect()
+        @peers.update(['one','two', 'three'])
+        @peers.add(alice_peer)
+        expect(@peers.length).toEqual(4)
+        setTimeout( =>
+          @peers.update([])
+        , 1000)
+        setTimeout( =>
+          expect(@peers.length).toEqual(1)
+          done()
+        , 1100)
 
-
-  describe 'collection manipulation', ->
-    beforeEach ->
-      # create peer collection
-      # add some model data
-    xit 'adds Peers', ->
-    xit 'does not add Peers if they already exist in collection', ->
-    xit 'removes Peers', ->
-    xit 'removes Peers only if they are not connected to us', ->
-
-
-
+return
 ##
 ##  Views
 ##
-describe 'UserView', ->
-  
-  describe 'initialization', ->
-    xit 'initializes groups property', ->
-  
-  describe 'when model gets a list with peers from server', ->
-    xit 'creates PeerCollectionView event', ->
-  
-  describe 'routing', ->
-    describe 'events', ->
-      xit 'listens for group routes', ->
-      xit 'listens for user routes', ->
-  
-    describe 'on user route', ->
-      xit 'creates PeerContentView', ->
-      xit 'switces to PeerContentView', ->
+unless phantom
+  describe 'UserView', ->
+    
+    describe 'initialization', ->
+      xit 'initializes groups property', ->
+    
+    describe 'when model gets a list with peers from server', ->
+      xit 'creates PeerCollectionView event', ->
+    
+    describe 'routing', ->
+      describe 'events', ->
+        xit 'listens for group routes', ->
+        xit 'listens for user routes', ->
+    
+      describe 'on user route', ->
+        xit 'creates PeerContentView', ->
+        xit 'switces to PeerContentView', ->
 
-    describe 'on group route', ->
-      xit 'finds the appropriate PeerCollectionView if it exists', ->
-      xit 'creates PeerCollectionView if it does not exist', ->
-      xit 'switces to PeerCollectionView', ->
-
-describe 'PeerCollectionView', ->
-  xit 'creates Peer views for the collection', ->
-  xit 'listens to collection add event', ->
-  xit 'adds new PeerView', ->
-  xit 'listens to collection remove event', ->
-  xit 'removes PeerView', ->
-
-describe 'PeerView', ->
-describe 'PeerContentView', ->
-describe 'ContentView', ->
+      describe 'on group route', ->
+        xit 'finds the appropriate PeerCollectionView if it exists', ->
+        xit 'creates PeerCollectionView if it does not exist', ->
+        xit 'switces to PeerCollectionView', ->
+unless phantom
+  describe 'PeerCollectionView', ->
+    xit 'creates Peer views for the collection', ->
+    xit 'listens to collection add event', ->
+    xit 'adds new PeerView', ->
+    xit 'listens to collection remove event', ->
+    xit 'removes PeerView', ->
+unless phantom
+  describe 'PeerView', ->
+unless phantom
+  describe 'PeerContentView', ->
+unless phantom
+  describe 'ContentView', ->

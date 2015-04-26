@@ -1,7 +1,5 @@
-ul
-  li
-    a(href='/doc/Peer.html') Peer
-  li
-    a(href='/doc/PeerView.html') PeerView
-
-h1 Kithensink
+h1= user.username
+p
+  | server connection is 
+  = (user.get('open') ? "open" : "closed")
+  a(class='button', id='discover', href='#') discover

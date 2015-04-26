@@ -29,8 +29,8 @@
               </a>
             
               
-              <a class="source" href="PeerConnectionCollection.html">
-                PeerConnectionCollection.coffee
+              <a class="source" href="PeerCollection.html">
+                PeerCollection.coffee
               </a>
             
               
@@ -69,6 +69,11 @@
               </a>
             
               
+              <a class="source" href="PeerCollectionView.html">
+                PeerCollectionView.coffee
+              </a>
+            
+              
               <a class="source" href="PeerConnectionView.html">
                 PeerConnectionView.coffee
               </a>
@@ -81,6 +86,11 @@
               
               <a class="source" href="ServerConnectionView.html">
                 ServerConnectionView.coffee
+              </a>
+            
+              
+              <a class="source" href="ContentSpec.html">
+                ContentSpec.coffee
               </a>
             
               
@@ -120,55 +130,28 @@
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span>.<span class="hljs-title">PeerView</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">View</span></span>
   
-  <span class="hljs-attribute">template</span>: JST[<span class="hljs-string">'templates/peerview'</span>]
+  <span class="hljs-attribute">template</span>: JST[<span class="hljs-string">'templates/peer'</span>]
+  
+  <span class="hljs-attribute">tagName</span>: <span class="hljs-string">'div'</span>
+  
+  <span class="hljs-attribute">id</span>: <span class="hljs-literal">null</span>
+  
+  <span class="hljs-attribute">className</span>: <span class="hljs-string">'peer view'</span>
+  
+  <span class="hljs-attribute">events</span>:
+    <span class="hljs-string">'click .button'</span>: <span class="hljs-string">'connect'</span>
   
   <span class="hljs-attribute">initialize</span>: <span class="hljs-function">-&gt;</span>
-    <span class="hljs-property">@model</span> = <span class="hljs-keyword">new</span> App.Peer() <span class="hljs-keyword">unless</span> <span class="hljs-property">@model</span>
-    <span class="hljs-keyword">this</span>.listenTo(<span class="hljs-keyword">this</span>.model, <span class="hljs-string">'change'</span>, <span class="hljs-keyword">this</span>.render)
-    <span class="hljs-property">@render</span>()
+    <span class="hljs-property">@listenTo</span> <span class="hljs-property">@model</span>, <span class="hljs-string">'change'</span>, <span class="hljs-property">@render</span>
     <span class="hljs-keyword">return</span>
   
-  <span class="hljs-attribute">render</span>: <span class="hljs-function">-&gt;</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-2">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
-              </div>
-              <p>$(‘body’).append(@template())</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    
-    <span class="hljs-keyword">this</span>.$el.html(<span class="hljs-keyword">this</span>.template())
-    
-    _.each(<span class="hljs-property">@model</span>.servers.views, <span class="hljs-function"><span class="hljs-params">(view)</span> =&gt;</span>
-      <span class="hljs-keyword">this</span>.$el.append(view.render().el)
-    )
-    _.each(<span class="hljs-property">@model</span>.peers.views, <span class="hljs-function"><span class="hljs-params">(view)</span> =&gt;</span>
-      <span class="hljs-keyword">this</span>.$el.append(view.render().el)
-    )</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-3">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
-              </div>
-              <p>this.$el.append
-.render()
-@models.peers.render()</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span></pre></div></div>
+  <span class="hljs-attribute">render</span>: <span class="hljs-function">=&gt;</span>
+    <span class="hljs-property">@$el</span>.html(<span class="hljs-keyword">this</span>.template(<span class="hljs-attribute">peer</span>:<span class="hljs-property">@model</span>))
+    <span class="hljs-keyword">this</span>.delegateEvents()
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>
+  
+  <span class="hljs-attribute">connect</span>: <span class="hljs-function">-&gt;</span>
+    <span class="hljs-property">@model</span>.connect()</pre></div></div>
             
         </li>
         

@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>PeerConnectionView.coffee</title>
+  <title>PeerCollection.coffee</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -111,7 +111,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>PeerConnectionView.coffee</h1>
+                  <h1>PeerCollection.coffee</h1>
               </div>
           </li>
         
@@ -128,26 +128,69 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-string">'use strict'</span>
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span>.<span class="hljs-title">PeerConnectionView</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">View</span></span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span>.<span class="hljs-title">PeerCollection</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">Collection</span></span>
   
-  <span class="hljs-attribute">template</span>: JST[<span class="hljs-string">'templates/peer'</span>]
+  <span class="hljs-attribute">model</span>: App.Peer
   
-  <span class="hljs-attribute">tagName</span>: <span class="hljs-string">'div'</span>
+  <span class="hljs-attribute">server</span>: <span class="hljs-literal">null</span>
   
-  <span class="hljs-attribute">id</span>: <span class="hljs-string">''</span>
-  
-  <span class="hljs-attribute">className</span>: <span class="hljs-string">'peer'</span>
-  
-  <span class="hljs-attribute">events</span>: {}
-  
-  <span class="hljs-attribute">initialize</span>: <span class="hljs-function">-&gt;</span>
-    <span class="hljs-property">@listenTo</span> <span class="hljs-property">@model</span>, <span class="hljs-string">'change'</span>, <span class="hljs-property">@render</span>
-    <span class="hljs-property">@render</span>()
-    <span class="hljs-keyword">return</span>
-  
-  <span class="hljs-attribute">render</span>: <span class="hljs-function">-&gt;</span>
-    <span class="hljs-property">@$el</span>.html(<span class="hljs-property">@template</span>({<span class="hljs-attribute">open</span>:<span class="hljs-literal">true</span>}))
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span></pre></div></div>
+  initialize : <span class="hljs-function"><span class="hljs-params">(models, options)</span> -&gt;</span>
+    options = options <span class="hljs-keyword">or</span> {}
+    <span class="hljs-keyword">if</span> options.server
+      <span class="hljs-keyword">if</span> PeerJS.prototype.isPrototypeOf(options.server)
+        <span class="hljs-property">@server</span> = options.server
+      <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error <span class="hljs-string">"PeerCollection: server must be a PeerJS object"</span>
+    
+    <span class="hljs-keyword">if</span> options.ids
+      <span class="hljs-property">@update</span> options.ids</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Update peers
+it accepts an array with id strings as parameter and
+adds or removes peers according to it</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-attribute">update</span>: <span class="hljs-function"><span class="hljs-params">(peer_ids)</span> =&gt;</span>
+    
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> _.isArray(peer_ids)
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error <span class="hljs-string">"update takes an array as argument"</span>
+    
+    _.each(peer_ids, <span class="hljs-function"><span class="hljs-params">(peer_id)</span> =&gt;</span>
+      <span class="hljs-property">@add</span>( <span class="hljs-keyword">new</span> App.Peer(<span class="hljs-attribute">server</span>:<span class="hljs-property">@server</span>, <span class="hljs-attribute">id</span>:peer_id) )
+    )
+    
+    markedRemoval = []</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>you cannot iterate a collection and manipulate it at the same time</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-property">@each</span>( <span class="hljs-function"><span class="hljs-params">(peer, index)</span> -&gt;</span>
+      <span class="hljs-keyword">unless</span> peer.id <span class="hljs-keyword">in</span> peer_ids
+        <span class="hljs-keyword">unless</span> peer.get(<span class="hljs-string">'open'</span>)
+          markedRemoval.push peer
+    )
+    
+    <span class="hljs-property">@remove</span> markedRemoval <span class="hljs-comment"># remove the peers that were marked for removal</span></pre></div></div>
             
         </li>
         
