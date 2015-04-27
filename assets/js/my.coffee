@@ -7,11 +7,11 @@ log = (message) ->
 
 create_peer = ({username, server}={}) ->
   username ?= ''
-  server ?= default_signalling_server
+  #server ?= default_signalling_server
   console.log "username: #{username}, server: #{server}"
-  peer = new Peer(username,
+  peer = new PeerJS(username,
     debug: 3 # 1: Errors, 2: Warnings, 3: All logs
-    host: server
+    host: window.location.hostname
     port: 9000
     path: '/peerjs')
   peer.on 'open', (id) ->
@@ -69,7 +69,7 @@ $ ->
   console.log 'my.coffee is loaded'
   
   $('.button.username').click ->
-    server = $('input.server').val() or default_signalling_server
+    server = 'home'#$('input.server').val() or default_signalling_server
     username = $('input.username').val()
     create_peer
       username: username

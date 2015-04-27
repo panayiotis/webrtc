@@ -16,8 +16,9 @@ module.exports = function(grunt) {
               'tmp/router.js'
              ],
         options: {
-            //keepRunner:true,
-            specs: 'public/spec/*.js',
+            outfile:'tmp/SpecRunner.html',
+            keepRunner:true,
+            specs: 'public/specs.js',
             vendor: ['assets/js/vendor/jquery.min.js',
                      'public/jasmine-2.2.0/jasmine-jquery.js',
                      'assets/js/vendor/jade.js',

@@ -35,15 +35,15 @@ app.get '/kitchensink', (req, res) ->
 
 # Default route
 app.get '', (req, res) ->
-  signalling_server = req.headers.host.replace('webrtc', 'signalling')
+  #signalling_server = req.headers.host.replace('webrtc', 'signalling')
   
-  if signalling_server.match(/:/g)
-    signalling_server=signalling_server.slice(0, signalling_server.indexOf(':'))
+  #if signalling_server.match(/:/g)
+  #  signalling_server=signalling_server.slice(0, signalling_server.indexOf(':'))
   
   
   res.render 'index',
     peerserver: peerserver
-    default_signalling_server: signalling_server
+    #default_signalling_server: signalling_server
   return
 
 
@@ -67,7 +67,7 @@ peerserver = require('http').createServer(app)
 
 app.use '/peerjs', ExpressPeerServer(peerserver, options)
 
-peerserver.listen 8000, ->
+peerserver.listen 9000, ->
   host = peerserver.address().address
   port = peerserver.address().port
   console.log 'PeerServer listening at http://%s:%s', host, port

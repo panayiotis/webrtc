@@ -213,17 +213,54 @@ app.set <span class="hljs-string">'view engine'</span>, <span class="hljs-string
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>app.get <span class="hljs-string">''</span>, <span class="hljs-function"><span class="hljs-params">(req, res)</span> -&gt;</span>
-  signalling_server = req.headers.host.replace(<span class="hljs-string">'webrtc'</span>, <span class="hljs-string">'signalling'</span>)
-  
-  <span class="hljs-keyword">if</span> signalling_server.match(<span class="hljs-regexp">/:/g</span>)
-    signalling_server=signalling_server.slice(<span class="hljs-number">0</span>, signalling_server.indexOf(<span class="hljs-string">':'</span>))
-  
+            <div class="content"><div class='highlight'><pre>app.get <span class="hljs-string">''</span>, <span class="hljs-function"><span class="hljs-params">(req, res)</span> -&gt;</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>signalling_server = req.headers.host.replace(‘webrtc’, ‘signalling’)</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>if signalling_server.match(/:/g)
+ signalling_server=signalling_server.slice(0, signalling_server.indexOf(‘:’))</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  
   
   res.render <span class="hljs-string">'index'</span>,
-    <span class="hljs-attribute">peerserver</span>: peerserver
-    <span class="hljs-attribute">default_signalling_server</span>: signalling_server
-  <span class="hljs-keyword">return</span>
+    <span class="hljs-attribute">peerserver</span>: peerserver</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>default_signalling_server: signalling_server</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">return</span>
 
 
 server = app.listen(<span class="hljs-number">3000</span>, <span class="hljs-function">-&gt;</span>
