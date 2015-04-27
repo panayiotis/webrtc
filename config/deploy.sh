@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ssh vlantis.gr 'cd /var/www/node/webrtc && git pull'
+ssh -t vlantis.gr 'cd /var/www/node/webrtc && git pull'
