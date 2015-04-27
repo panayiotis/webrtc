@@ -3,11 +3,6 @@ upstream webrtc {
   keepalive 8;
 }
 
-#upstream signalling {
-#  server 127.0.0.1:8000;
-#  keepalive 8;
-#}
-
 server {
   listen 80;
   listen [::]:80;
@@ -17,13 +12,6 @@ server {
   
   keepalive_timeout 8;
   
-  location ~ ^/assets/ {              #production
-    expires     max;                  #production
-    gzip_static on;                   #production
-    add_header  Cache-Control public; #production
-    add_header  ETag "";              #production
-    break;                            #production
-  }                                   #production
   
   location @webrtc  {
     proxy_pass         http://webrtc ;
@@ -34,28 +22,3 @@ server {
   
   error_page 500 502 503 504 /500.html;
 }
-
-#server {
-#  listen 9000;
-#  server_name signalling.home;
-#  root /home/panos/webrtc/public;
-# try_files $uri @signalling;
-#  
-#  keepalive_timeout 8;
-#  
-#  location @signalling  {
-#    proxy_pass         http://signalling ;
-#    proxy_redirect     off;
-#    proxy_buffering    off;
-#
-#    proxy_set_header   Host $host:$proxy_port;
-#    proxy_set_header   X-Real-IP $remote_addr;
-#    proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-#    proxy_set_header   X-NginX-Proxy true;
-#    proxy_http_version 1.1;
-#    proxy_set_header   Upgrade $http_upgrade;
-#    proxy_set_header   Connection "upgrade";
-#  }
-#  
-#  error_page 500 502 503 504 /500.html;
-#}
