@@ -39,6 +39,11 @@
               </a>
             
               
+              <a class="source" href="Content.html">
+                Content.coffee
+              </a>
+            
+              
               <a class="source" href="Peer.html">
                 Peer.coffee
               </a>
@@ -61,6 +66,11 @@
               
               <a class="source" href="router.html">
                 router.coffee
+              </a>
+            
+              
+              <a class="source" href="ContentView.html">
+                ContentView.coffee
               </a>
             
               
@@ -101,6 +111,11 @@
               
               <a class="source" href="NewSpec.html">
                 NewSpec.coffee
+              </a>
+            
+              
+              <a class="source" href="SpecHelper.html">
+                SpecHelper.coffee
               </a>
             
           </div>
@@ -147,7 +162,7 @@
     <span class="hljs-property">@connection</span> = options.connection <span class="hljs-keyword">or</span> <span class="hljs-literal">null</span>
     
     Object.defineProperty <span class="hljs-keyword">this</span>, <span class="hljs-string">'username'</span>,
-      <span class="hljs-attribute">get</span>: <span class="hljs-function">-&gt;</span> <span class="hljs-property">@id</span>.slice(<span class="hljs-number">0</span>, <span class="hljs-property">@id</span>.indexOf(<span class="hljs-string">'-'</span>))
+      <span class="hljs-attribute">get</span>: <span class="hljs-function">=&gt;</span> <span class="hljs-property">@id</span>.slice(<span class="hljs-number">0</span>, <span class="hljs-property">@id</span>.indexOf(<span class="hljs-string">'-'</span>))
     
     <span class="hljs-keyword">return</span></pre></div></div>
             
@@ -211,12 +226,12 @@ and the peer’s username</p>
       <span class="hljs-property">@connection</span> = <span class="hljs-property">@server</span>.connect(<span class="hljs-property">@id</span>)
 
     <span class="hljs-property">@connection</span>.<span class="hljs-literal">on</span> <span class="hljs-string">'open'</span>, <span class="hljs-function">=&gt;</span>
-      <span class="hljs-built_in">console</span>.log <span class="hljs-string">'Peer: connection open'</span>
+      <span class="hljs-built_in">console</span>.log <span class="hljs-string">"Peer <span class="hljs-subst">#{<span class="hljs-property">@username</span>}</span>: connection to <span class="hljs-subst">#{<span class="hljs-property">@connection</span>.peer}</span> is open"</span>
       <span class="hljs-property">@set</span>(<span class="hljs-string">'open'</span>, <span class="hljs-literal">true</span>)
       
-      <span class="hljs-property">@connection</span>.<span class="hljs-literal">on</span> <span class="hljs-string">'data'</span>, <span class="hljs-function"><span class="hljs-params">(data)</span> -&gt;</span>
-        <span class="hljs-built_in">console</span>.log <span class="hljs-string">'Peer: connection data'</span>
-        <span class="hljs-built_in">console</span>.log data
+      <span class="hljs-property">@connection</span>.<span class="hljs-literal">on</span> <span class="hljs-string">'data'</span>, <span class="hljs-function"><span class="hljs-params">(data)</span> =&gt;</span>
+        <span class="hljs-built_in">console</span>.log <span class="hljs-string">"Peer <span class="hljs-subst">#{<span class="hljs-property">@username</span>}</span>: connection data"</span>
+        <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">'data'</span>, {<span class="hljs-attribute">connection</span>:<span class="hljs-property">@connection</span>, <span class="hljs-attribute">data</span>:data} )
         <span class="hljs-keyword">return</span>
       
       <span class="hljs-property">@connection</span>.<span class="hljs-literal">on</span> <span class="hljs-string">'error'</span>, <span class="hljs-function"><span class="hljs-params">(err)</span> =&gt;</span>

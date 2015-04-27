@@ -39,6 +39,11 @@
               </a>
             
               
+              <a class="source" href="Content.html">
+                Content.coffee
+              </a>
+            
+              
               <a class="source" href="Peer.html">
                 Peer.coffee
               </a>
@@ -61,6 +66,11 @@
               
               <a class="source" href="router.html">
                 router.coffee
+              </a>
+            
+              
+              <a class="source" href="ContentView.html">
+                ContentView.coffee
               </a>
             
               
@@ -103,6 +113,11 @@
                 NewSpec.coffee
               </a>
             
+              
+              <a class="source" href="SpecHelper.html">
+                SpecHelper.coffee
+              </a>
+            
           </div>
         </li>
       </ul>
@@ -134,7 +149,7 @@
   
   <span class="hljs-attribute">tagName</span>: <span class="hljs-string">'div'</span>
   
-  <span class="hljs-attribute">className</span>: <span class="hljs-string">'view'</span>
+  <span class="hljs-attribute">className</span>: <span class="hljs-string">'view large-6 columns'</span>
   
   <span class="hljs-attribute">events</span>:
     <span class="hljs-string">'click #discover'</span>: <span class="hljs-string">'discover'</span>
@@ -146,13 +161,15 @@
   <span class="hljs-attribute">initialize</span>: <span class="hljs-function">-&gt;</span>
     <span class="hljs-property">@listenTo</span> <span class="hljs-property">@model</span>, <span class="hljs-string">'change'</span>, <span class="hljs-property">@render</span>
     <span class="hljs-property">@peers</span> = <span class="hljs-keyword">new</span> App.PeerCollectionView(<span class="hljs-attribute">collection</span>: <span class="hljs-property">@model</span>.peers)
-    <span class="hljs-property">@listenTo</span> <span class="hljs-property">@model</span>, <span class="hljs-string">'availablePeers'</span>, <span class="hljs-function"><span class="hljs-params">(peer_ids)</span> -&gt;</span>
+    <span class="hljs-property">@content</span> = <span class="hljs-keyword">new</span> App.ContentView(<span class="hljs-attribute">model</span>: <span class="hljs-property">@model</span>.content)
+    <span class="hljs-property">@listenTo</span> <span class="hljs-property">@model</span>, <span class="hljs-string">'availablePeers'</span>, <span class="hljs-function"><span class="hljs-params">(peer_ids)</span> =&gt;</span>
       <span class="hljs-property">@peers</span>.collection.update(peer_ids)
     <span class="hljs-keyword">return</span>
   
   
   <span class="hljs-attribute">render</span>: <span class="hljs-function">-&gt;</span>
     <span class="hljs-property">@$el</span>.html( <span class="hljs-property">@template</span>(<span class="hljs-attribute">user</span>:<span class="hljs-property">@model</span>) )
+    <span class="hljs-property">@$el</span>.append(<span class="hljs-property">@content</span>.render().el)
     <span class="hljs-property">@$el</span>.append(<span class="hljs-property">@peers</span>.render().el)
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>
 

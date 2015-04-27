@@ -15,9 +15,9 @@ class App.PeerCollectionView extends Backbone.View
   
   initialize: ->
     @views = []
-    @collection.each (peer, index) ->
+    @collection.each (peer, index) =>
       @views.push(new App.PeerView(model: peer))
-    @listenTo @collection, 'add', (peer) ->
+    @listenTo @collection, 'add', (peer) =>
       @views.push(new App.PeerView(model: peer))
       @render()
     @listenTo @collection, 'remove', @render
@@ -34,7 +34,7 @@ class App.PeerCollectionView extends Backbone.View
       @$el.append(view.render().el)
     return this
 
-  remove: () ->
+  remove: ->
     while ( @views.length > 0 )
       @views.pop().remove()
     Backbone.View.prototype.remove.call(this)

@@ -19,7 +19,7 @@ class App.Peer extends Backbone.Model
     @connection = options.connection or null
     
     Object.defineProperty this, 'username',
-      get: -> @id.slice(0, @id.indexOf('-'))
+      get: => @id.slice(0, @id.indexOf('-'))
     
     return
   # Connect to this peer
@@ -47,12 +47,12 @@ class App.Peer extends Backbone.Model
       @connection = @server.connect(@id)
 
     @connection.on 'open', =>
-      console.log 'Peer: connection open'
+      console.log "Peer #{@username}: connection to #{@connection.peer} is open"
       @set('open', true)
       
-      @connection.on 'data', (data) ->
-        console.log 'Peer: connection data'
-        console.log data
+      @connection.on 'data', (data) =>
+        console.log "Peer #{@username}: connection data"
+        this.trigger('data', {connection:@connection, data:data} )
         return
       
       @connection.on 'error', (err) =>

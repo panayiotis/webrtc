@@ -39,6 +39,11 @@
               </a>
             
               
+              <a class="source" href="Content.html">
+                Content.coffee
+              </a>
+            
+              
               <a class="source" href="Peer.html">
                 Peer.coffee
               </a>
@@ -61,6 +66,11 @@
               
               <a class="source" href="router.html">
                 router.coffee
+              </a>
+            
+              
+              <a class="source" href="ContentView.html">
+                ContentView.coffee
               </a>
             
               
@@ -103,6 +113,11 @@
                 NewSpec.coffee
               </a>
             
+              
+              <a class="source" href="SpecHelper.html">
+                SpecHelper.coffee
+              </a>
+            
           </div>
         </li>
       </ul>
@@ -143,9 +158,9 @@
   
   <span class="hljs-attribute">initialize</span>: <span class="hljs-function">-&gt;</span>
     <span class="hljs-property">@views</span> = []
-    <span class="hljs-property">@collection</span>.each (peer, index) -&gt;
+    <span class="hljs-property">@collection</span>.each (peer, index) =&gt;
       <span class="hljs-property">@views</span>.push(<span class="hljs-keyword">new</span> App.PeerView(<span class="hljs-attribute">model</span>: peer))
-    <span class="hljs-property">@listenTo</span> <span class="hljs-property">@collection</span>, <span class="hljs-string">'add'</span>, <span class="hljs-function"><span class="hljs-params">(peer)</span> -&gt;</span>
+    <span class="hljs-property">@listenTo</span> <span class="hljs-property">@collection</span>, <span class="hljs-string">'add'</span>, <span class="hljs-function"><span class="hljs-params">(peer)</span> =&gt;</span>
       <span class="hljs-property">@views</span>.push(<span class="hljs-keyword">new</span> App.PeerView(<span class="hljs-attribute">model</span>: peer))
       <span class="hljs-property">@render</span>()
     <span class="hljs-property">@listenTo</span> <span class="hljs-property">@collection</span>, <span class="hljs-string">'remove'</span>, <span class="hljs-property">@render</span>
@@ -201,7 +216,7 @@ console.table @views</p>
             <div class="content"><div class='highlight'><pre>      <span class="hljs-property">@$el</span>.append(view.render().el)
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>
 
-  <span class="hljs-attribute">remove</span>: <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span>
+  <span class="hljs-attribute">remove</span>: <span class="hljs-function">-&gt;</span>
     <span class="hljs-keyword">while</span> ( <span class="hljs-property">@views</span>.length &gt; <span class="hljs-number">0</span> )
       <span class="hljs-property">@views</span>.pop().remove()
     Backbone.View.prototype.remove.call(<span class="hljs-keyword">this</span>)</pre></div></div>

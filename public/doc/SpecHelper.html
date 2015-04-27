@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>PeerConnectionCollection.coffee</title>
+  <title>SpecHelper.coffee</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -29,13 +29,18 @@
               </a>
             
               
-              <a class="source" href="PeerConnectionCollection.html">
-                PeerConnectionCollection.coffee
+              <a class="source" href="PeerCollection.html">
+                PeerCollection.coffee
               </a>
             
               
               <a class="source" href="ServerConnectionCollection.html">
                 ServerConnectionCollection.coffee
+              </a>
+            
+              
+              <a class="source" href="Content.html">
+                Content.coffee
               </a>
             
               
@@ -64,8 +69,18 @@
               </a>
             
               
+              <a class="source" href="ContentView.html">
+                ContentView.coffee
+              </a>
+            
+              
               <a class="source" href="KitchensinkView.html">
                 KitchensinkView.coffee
+              </a>
+            
+              
+              <a class="source" href="PeerCollectionView.html">
+                PeerCollectionView.coffee
               </a>
             
               
@@ -84,6 +99,11 @@
               </a>
             
               
+              <a class="source" href="ContentSpec.html">
+                ContentSpec.coffee
+              </a>
+            
+              
               <a class="source" href="GeneralSpec.html">
                 GeneralSpec.coffee
               </a>
@@ -91,6 +111,11 @@
               
               <a class="source" href="NewSpec.html">
                 NewSpec.coffee
+              </a>
+            
+              
+              <a class="source" href="SpecHelper.html">
+                SpecHelper.coffee
               </a>
             
           </div>
@@ -101,7 +126,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>PeerConnectionCollection.coffee</h1>
+                  <h1>SpecHelper.coffee</h1>
               </div>
           </li>
         
@@ -116,63 +141,13 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-string">'use strict'</span>
+            <div class="content"><div class='highlight'><pre>phantom = <span class="hljs-regexp">/PhantomJS/</span>.test(navigator.userAgent)
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span>.<span class="hljs-title">PeerCollection</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">Collection</span></span>
-  
-  <span class="hljs-attribute">model</span>: App.Peer</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-2">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
-              </div>
-              <p>views: null</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  
-  initialize : <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span>
-    <span class="hljs-keyword">this</span>.listenTo(<span class="hljs-keyword">this</span>, <span class="hljs-string">'add'</span>, <span class="hljs-property">@addOne</span>)
-    <span class="hljs-property">@views</span> = []
-    <span class="hljs-keyword">return</span>
-    
-  <span class="hljs-attribute">addOne</span>: <span class="hljs-function"><span class="hljs-params">(peer)</span> -&gt;</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-3">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
-              </div>
-              <p>view = new App.PeerConnectionView( {model: connection} )
-@views.push view
-$(“body”).append( view.render().el )</p>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>remove: () -&gt;
- while (@views.length &gt; 0)
-   @views.pop().remove()
- @reset()</p>
-
-            </div>
+User = App.User
+Peer = App.Peer
+PeerCollection = App.PeerCollection
+Content=App.Content
+ContentView=App.ContentView</pre></div></div>
             
         </li>
         

@@ -39,6 +39,11 @@
               </a>
             
               
+              <a class="source" href="Content.html">
+                Content.coffee
+              </a>
+            
+              
               <a class="source" href="Peer.html">
                 Peer.coffee
               </a>
@@ -61,6 +66,11 @@
               
               <a class="source" href="router.html">
                 router.coffee
+              </a>
+            
+              
+              <a class="source" href="ContentView.html">
+                ContentView.coffee
               </a>
             
               
@@ -101,6 +111,11 @@
               
               <a class="source" href="NewSpec.html">
                 NewSpec.coffee
+              </a>
+            
+              
+              <a class="source" href="SpecHelper.html">
+                SpecHelper.coffee
               </a>
             
           </div>
@@ -185,19 +200,20 @@ new App.IndexView()</p>
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span>
   
   <span class="hljs-attribute">kitchensink</span>: <span class="hljs-function">-&gt;</span>
+    $(<span class="hljs-string">'body'</span>).append($(<span class="hljs-string">'&lt;div class="kitchensink row"&gt;'</span>))
     bob = <span class="hljs-keyword">new</span> App.User(<span class="hljs-string">'bob'</span>)
     <span class="hljs-built_in">window</span>.bob = bob
-    mike = <span class="hljs-keyword">new</span> App.User(<span class="hljs-string">'mike'</span>)
-    alex = <span class="hljs-keyword">new</span> App.User(<span class="hljs-string">'alex'</span>)
+    mike = <span class="hljs-keyword">new</span> App.User(<span class="hljs-string">'diana'</span>)
+    alex = <span class="hljs-keyword">new</span> App.User(<span class="hljs-string">'charly'</span>)
     alice = <span class="hljs-keyword">new</span> App.User(<span class="hljs-string">'alice'</span>)
     <span class="hljs-built_in">window</span>.alice = alice
     
     view = <span class="hljs-keyword">new</span> App.KitchensinkView(<span class="hljs-attribute">model</span>:alice)
     <span class="hljs-built_in">window</span>.view = view
-    $(<span class="hljs-string">'body'</span>).append(view.render().el)
+    $(<span class="hljs-string">'.kitchensink.row'</span>).append(view.render().el)
     
     bob_view = <span class="hljs-keyword">new</span> App.KitchensinkView(<span class="hljs-attribute">model</span>:bob)
-    $(<span class="hljs-string">'body'</span>).append(bob_view.render().el)
+    $(<span class="hljs-string">'.kitchensink.row'</span>).append(bob_view.render().el)
     <span class="hljs-keyword">return</span></pre></div></div>
             
         </li>

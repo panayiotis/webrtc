@@ -39,6 +39,11 @@
               </a>
             
               
+              <a class="source" href="Content.html">
+                Content.coffee
+              </a>
+            
+              
               <a class="source" href="Peer.html">
                 Peer.coffee
               </a>
@@ -61,6 +66,11 @@
               
               <a class="source" href="router.html">
                 router.coffee
+              </a>
+            
+              
+              <a class="source" href="ContentView.html">
+                ContentView.coffee
               </a>
             
               
@@ -103,6 +113,11 @@
                 NewSpec.coffee
               </a>
             
+              
+              <a class="source" href="SpecHelper.html">
+                SpecHelper.coffee
+              </a>
+            
           </div>
         </li>
       </ul>
@@ -126,8 +141,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>phantom = <span class="hljs-regexp">/PhantomJS/</span>.test(navigator.userAgent)
-
+            <div class="content"><div class='highlight'><pre>
 describe <span class="hljs-string">'Browser'</span>, <span class="hljs-function">-&gt;</span>
   <span class="hljs-keyword">unless</span> phantom
     it <span class="hljs-string">'should support WebRTC'</span>, <span class="hljs-function">-&gt;</span>
@@ -192,7 +206,7 @@ describe <span class="hljs-string">'LocalStorage'</span>, <span class="hljs-func
     random = Math.random().toString(<span class="hljs-number">36</span>).substring(<span class="hljs-number">12</span>)
     
     <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestModel</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">Model</span></span>
-      <span class="hljs-attribute">localStorage</span>: <span class="hljs-keyword">new</span> Backbone.LocalStorage(<span class="hljs-string">"key"</span>)
+      <span class="hljs-attribute">localStorage</span>: <span class="hljs-keyword">new</span> Backbone.LocalStorage(<span class="hljs-string">'key'</span>)
       <span class="hljs-attribute">defaults</span>:
         <span class="hljs-string">'value'</span>: <span class="hljs-string">''</span>
     

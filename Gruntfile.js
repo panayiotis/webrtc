@@ -25,7 +25,8 @@ module.exports = function(grunt) {
                      'assets/js/vendor/peer.js',
                      'assets/js/vendor/modernizr.js',
                      'assets/js/vendor/foundation/foundation.js',
-                     'assets/js/vendor/backbone.js'
+                     'assets/js/vendor/backbone.js',
+                     'assets/js/vendor/backbone.localStorage.js'
                     ]
         }
       }
@@ -46,22 +47,13 @@ module.exports = function(grunt) {
         ext: '.js'
       },
       specs: {
-        expand:true,
-        sourceMap: true,
-        cwd: 'spec/',   // Src matches are relative to this path.
-        src: ['*.coffee'     // Actual pattern(s) to match.
-             ],
-        dest: 'public/spec', // Destination path prefix.
-        ext: '.js'
-      },
-      doc: {
-        expand:true,
-        sourceMap: true,
-        cwd: 'spec/',   // Src matches are relative to this path.
-        src: ['*.coffee'     // Actual pattern(s) to match.
-             ],
-        dest: 'public/spec', // Destination path prefix.
-        ext: '.js'
+        options: {
+          sourceMap: true
+        },
+        files: {
+          // concat then compile into single file
+          'public/specs.js': ['spec/SpecHelper.coffee','spec/*Spec.coffee']
+        }
       }
       
     },
@@ -70,8 +62,9 @@ module.exports = function(grunt) {
     jade: {
       compile: {
         options: {
+          pretty: true,
           data: {
-            debug: false
+            debug: true,
           },
           client:true,
           processName: function(filename) {
@@ -123,8 +116,8 @@ module.exports = function(grunt) {
         no_unnecessary_double_quotes:{level:'warn'},
         prefer_english_operator:{level:'warn'},
         arrow_spacing:{level:'warn'},
-        missing_fat_arrows:{level:'warn'},
-        no_empty_functions:{level:'warn'},
+        missing_fat_arrows:{level:'ignore'},
+        no_empty_functions:{level:'ignore'},
         no_empty_param_list:{level:'warn'},
         no_stand_alone_at:{level:'warn'},
         force:false

@@ -18,17 +18,18 @@ class App.Router extends Backbone.Router
     return
   
   kitchensink: ->
+    $('body').append($('<div class="kitchensink row">'))
     bob = new App.User('bob')
     window.bob = bob
-    mike = new App.User('mike')
-    alex = new App.User('alex')
+    mike = new App.User('diana')
+    alex = new App.User('charly')
     alice = new App.User('alice')
     window.alice = alice
     
     view = new App.KitchensinkView(model:alice)
     window.view = view
-    $('body').append(view.render().el)
+    $('.kitchensink.row').append(view.render().el)
     
     bob_view = new App.KitchensinkView(model:bob)
-    $('body').append(bob_view.render().el)
+    $('.kitchensink.row').append(bob_view.render().el)
     return

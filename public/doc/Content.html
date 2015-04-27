@@ -39,6 +39,11 @@
               </a>
             
               
+              <a class="source" href="Content.html">
+                Content.coffee
+              </a>
+            
+              
               <a class="source" href="Peer.html">
                 Peer.coffee
               </a>
@@ -61,6 +66,11 @@
               
               <a class="source" href="router.html">
                 router.coffee
+              </a>
+            
+              
+              <a class="source" href="ContentView.html">
+                ContentView.coffee
               </a>
             
               
@@ -89,8 +99,8 @@
               </a>
             
               
-              <a class="source" href="Content.html">
-                Content.coffee
+              <a class="source" href="ContentSpec.html">
+                ContentSpec.coffee
               </a>
             
               
@@ -101,6 +111,11 @@
               
               <a class="source" href="NewSpec.html">
                 NewSpec.coffee
+              </a>
+            
+              
+              <a class="source" href="SpecHelper.html">
+                SpecHelper.coffee
               </a>
             
           </div>
@@ -126,13 +141,17 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>fdescribe <span class="hljs-string">'Content'</span>, <span class="hljs-function">-&gt;</span>
-  it <span class="hljs-string">'is initialized with defaults'</span>, <span class="hljs-function">-&gt;</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-string">'use strict'</span>
 
-fdescribe <span class="hljs-string">'EditContentView'</span>, <span class="hljs-function">-&gt;</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span>.<span class="hljs-title">Content</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">Model</span></span>
+  
+  <span class="hljs-attribute">localStorage</span>: <span class="hljs-keyword">new</span> Backbone.LocalStorage(<span class="hljs-string">'content'</span>)
+  
+  <span class="hljs-attribute">defaults</span>:
+    <span class="hljs-string">'content'</span>: <span class="hljs-string">''</span>
 
-fdescribe <span class="hljs-string">'PeerContentView'</span>, <span class="hljs-function">-&gt;</span>
-  it <span class="hljs-string">'is can be with defaults'</span>, <span class="hljs-function">-&gt;</span></pre></div></div>
+  <span class="hljs-attribute">initialize</span>: <span class="hljs-function">-&gt;</span>
+    <span class="hljs-keyword">return</span></pre></div></div>
             
         </li>
         

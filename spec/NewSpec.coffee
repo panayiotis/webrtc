@@ -1,7 +1,3 @@
-User = App.User
-Peer = App.Peer
-PeerCollection = App.PeerCollection
-
 ##
 ##  User
 ##
@@ -155,11 +151,9 @@ unless phantom
         expect(@peers.length).toEqual(4)
         setTimeout( =>
           @peers.update([])
-        , 1000)
-        setTimeout( =>
           expect(@peers.length).toEqual(1)
           done()
-        , 1100)
+        , 2000)
 
 return
 ##
