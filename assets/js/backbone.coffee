@@ -8,7 +8,6 @@
 window.PeerJS = Peer
 window.Peer = null
 
-window.default_signalling_server = 'signalling.home'
 
 window.phantom = /PhantomJS/.test(navigator.userAgent)
 

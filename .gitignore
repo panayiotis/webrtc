@@ -33,3 +33,5 @@ assets/js/compiled
 public/assets/*
 
 tmp
+
+_SpecRunner.html

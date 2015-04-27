@@ -24,6 +24,7 @@ class App.User extends Backbone.Model
 
   # Initializes with optional username.
   initialize: (username) ->
+    alert window.default_signalling_server
     @set('host', window.default_signalling_server) # TODO This is bad
     @username = username or 'anon' # set default id if none is provided
     @id= @username + '-' + Math.random().toString(36).substring(7)

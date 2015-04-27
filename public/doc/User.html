@@ -227,6 +227,7 @@ servers: null</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-attribute">initialize</span>: <span class="hljs-function"><span class="hljs-params">(username)</span> -&gt;</span>
+    alert <span class="hljs-built_in">window</span>.default_signalling_server
     <span class="hljs-property">@set</span>(<span class="hljs-string">'host'</span>, <span class="hljs-built_in">window</span>.default_signalling_server) <span class="hljs-comment"># TODO This is bad</span>
     <span class="hljs-property">@username</span> = username <span class="hljs-keyword">or</span> <span class="hljs-string">'anon'</span> <span class="hljs-comment"># set default id if none is provided</span>
     <span class="hljs-property">@id</span>= <span class="hljs-property">@username</span> + <span class="hljs-string">'-'</span> + Math.random().toString(<span class="hljs-number">36</span>).substring(<span class="hljs-number">7</span>)

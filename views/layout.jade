@@ -9,6 +9,10 @@ html(lang="en")
     != js("application")
     != css("application")
     link(rel='shortcut icon', href='favicon.ico', type='image/png') 
+    script.
+      alert(!{JSON.stringify(default_signalling_server)});
+      var window.default_signalling_server=(!{JSON.stringify(default_signalling_server)});
+      
   
   body
     block content
