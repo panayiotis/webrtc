@@ -88,7 +88,7 @@ module.exports = function(grunt) {
           'spec/*.coffee',
           'Gruntfile.js'
         ],
-        tasks: ['docco','test'],
+        tasks: ['doc','test'],
         options: {
           spawn: false,
           livereload: true
@@ -134,14 +134,31 @@ module.exports = function(grunt) {
     // Docco
     docco: {
       debug: {
-        src: ['*.coffee', 'assets/js/*.coffee',
-              'assets/js/**/*.coffee','spec/*.coffee'
+        // src: ['*.coffee', 'assets/js/*.coffee',
+        //       'assets/js/**/*.coffee','spec/*.coffee'
+        //      ],
+        src: ['*.coffee', 'tmp/backbone.coffee'
              ],
         options: {
           output: 'public/doc/'
         }
       }
+    },
+    
+    // Concaternate files
+    concat: {
+      dist: {
+        files: {
+          'tmp/backbone.coffee':[
+            'assets/js/models/*.coffee',
+            'assets/js/collections/*.coffee',
+            'assets/js/views/*.coffee'
+          ]
+        }
+      }
     }
+
+
   });
 
 
@@ -163,6 +180,8 @@ module.exports = function(grunt) {
   
   grunt.loadNpmTasks('grunt-docco');
   
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  
   grunt.registerTask('test',
     ['reset_screen',
     'coffee',
@@ -176,7 +195,7 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('doc', 'Run docco', function() {
-    grunt.task.run('reset_screen', 'docco');
+    grunt.task.run('reset_screen', 'concat', 'docco');
   });
   
   grunt.registerTask('sleep', 'Example async task', function() {

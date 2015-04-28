@@ -6,12 +6,9 @@ class App.PeerCollectionView extends Backbone.View
   
   tagName: 'div'
   
-  className: 'collection view'
+  className: 'collection view large-6 columns'
   
   views: null
-  
-  events:
-    'click #di': 'open'
   
   initialize: ->
     @views = []

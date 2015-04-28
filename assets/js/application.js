@@ -31,7 +31,7 @@
 
 // require_directory
 //= require backbone
-//= require my
+// require my
 //= require vendor/jade
 $(document).ready(function() {
   $(document).foundation();

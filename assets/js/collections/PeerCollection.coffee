@@ -33,6 +33,9 @@ class App.PeerCollection extends Backbone.Collection
     if not _.isArray(peer_ids)
       return throw new Error "update takes an array as argument"
     
+    if @server and @server.id
+      peer_ids = _.reject(peer_ids, (id) => return id is @server.id)
+      
     _.each(peer_ids, (peer_id) =>
       @add( new App.Peer(server:@server, id:peer_id) )
     )

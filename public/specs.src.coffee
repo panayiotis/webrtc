@@ -136,12 +136,32 @@ unless phantom
         expect(_.isArray(list)).toBeTruthy()
         done()
       ), 200
-
-
+    
+    it 'should support multiple groups', (done) ->
+      opened = false
+      
+      peer = new PeerJS(Math.random().toString(36).substring(7),
+        debug: 3 # 1: Errors, 2: Warnings, 3: All logs
+        host: window.location.hostname
+        port: 9000
+        path: '/peerjs'
+        key: 'welcome'
+        )
+      
+      peer.on 'open', (id) ->
+        opened = true
+        return
+      
+      setTimeout (->
+        expect(opened).toBeTruthy()
+        expect(peer.open).toBeTruthy()
+        done()
+      ), 200
+      return
 
 describe 'Node.js', ->
   it 'should load .jst.jade templates', ->
-    expect(JST['templates/hello']()).toBe '<h1>Hello</h1>'
+    expect(JST['templates/hello']()).toMatch '<h1>Hello</h1>'
   
   it 'should load jquery', ->
     expect($('body')).toBeInDOM()

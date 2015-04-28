@@ -31,7 +31,7 @@
     "coffeelint": "~1.9.3",
     "docco": "~0.7.0",
     "grunt-docco": "~0.3.3",
-    "coffeelint": "~1.9.3",
-    "grunt-coffeelint": "0.0.13"
+    "grunt-coffeelint": "0.0.13",
+    "grunt-contrib-concat": "~0.5.1"
   }
 }

@@ -1,15 +1,18 @@
 .row
-  .large-12.columns
-    span
-      |connection with 
-      = peer.username 
-      |&nbsp;is 
-      =(peer.open ? "open" : "closed")
-      if peer.open
-        a.disconnect.button disconnect
-        a.content.button content
-      else
-        a.connect.button connect
+  .small-3.columns
+    h2= peer.username
+  .small-3.columns
+    p connection is #{(peer.open ? "open" : "closed")}
+  .small-3.columns
+    if peer.open
+      a.disconnect.button.expand disconnect
+    else
+      a.connect.button.expand connect
+  .small-3.columns
+    if peer.open
+      a.content.button.expand content
+
+
   .row
     .large-12.columns
       !=peer.get('content')

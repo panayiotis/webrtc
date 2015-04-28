@@ -142,7 +142,7 @@
           return done();
         }), 200);
       });
-      return it('should get available peers', function(done) {
+      it('should get available peers', function(done) {
         var list;
         expect(peer).toBeTruthy();
         list = null;
@@ -154,12 +154,31 @@
           return done();
         }), 200);
       });
+      return it('should support multiple groups', function(done) {
+        var opened;
+        opened = false;
+        peer = new PeerJS(Math.random().toString(36).substring(7), {
+          debug: 3,
+          host: window.location.hostname,
+          port: 9000,
+          path: '/peerjs',
+          key: 'welcome'
+        });
+        peer.on('open', function(id) {
+          opened = true;
+        });
+        setTimeout((function() {
+          expect(opened).toBeTruthy();
+          expect(peer.open).toBeTruthy();
+          return done();
+        }), 200);
+      });
     });
   }
 
   describe('Node.js', function() {
     it('should load .jst.jade templates', function() {
-      return expect(JST['templates/hello']()).toBe('<h1>Hello</h1>');
+      return expect(JST['templates/hello']()).toMatch('<h1>Hello</h1>');
     });
     it('should load jquery', function() {
       return expect($('body')).toBeInDOM();
