@@ -1,7 +1,15 @@
-span
-  |connection with 
-  = peer.username 
-  |&nbsp;is 
-  =(peer.get('open') ? "open" : "closed")
-  | 
-  a(class='button connect') connect
+.row
+  .large-12.columns
+    span
+      |connection with 
+      = peer.username 
+      |&nbsp;is 
+      =(peer.open ? "open" : "closed")
+      if peer.open
+        a.disconnect.button disconnect
+        a.content.button content
+      else
+        a.connect.button connect
+  .row
+    .large-12.columns
+      !=peer.get('content')

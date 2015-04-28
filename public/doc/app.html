@@ -64,6 +64,11 @@
               </a>
             
               
+              <a class="source" href="IndexView.html">
+                IndexView.coffee
+              </a>
+            
+              
               <a class="source" href="KitchensinkView.html">
                 KitchensinkView.coffee
               </a>
@@ -142,19 +147,7 @@ app.use express.static(path.join(__dirname, <span class="hljs-string">'public'</
 app.use <span class="hljs-built_in">require</span>(<span class="hljs-string">'connect-assets'</span>)
   <span class="hljs-attribute">buildDir</span>:<span class="hljs-string">'public/assets'</span>
   <span class="hljs-attribute">compress</span>:<span class="hljs-literal">true</span>
-  <span class="hljs-attribute">gzip</span>:<span class="hljs-literal">true</span>
-
-app.locals.pretty = <span class="hljs-literal">true</span>
-
-ExpressPeerServer = <span class="hljs-built_in">require</span>(<span class="hljs-string">'peer'</span>).ExpressPeerServer
-
-<span class="hljs-built_in">console</span>.log app.get(<span class="hljs-string">'env'</span>)
-<span class="hljs-keyword">if</span> app.get(<span class="hljs-string">'env'</span>) <span class="hljs-keyword">is</span> <span class="hljs-string">'production'</span>
-  ;<span class="hljs-comment">#console.log "production mode"</span>
-<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> app.get(<span class="hljs-string">'env'</span>) <span class="hljs-keyword">is</span> <span class="hljs-string">'development'</span>
-  ;<span class="hljs-comment">#console.log "development mode"</span>
-
-app.set <span class="hljs-string">'view engine'</span>, <span class="hljs-string">'jade'</span></pre></div></div>
+  <span class="hljs-attribute">gzip</span>:<span class="hljs-literal">true</span></pre></div></div>
             
         </li>
         
@@ -165,55 +158,13 @@ app.set <span class="hljs-string">'view engine'</span>, <span class="hljs-string
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>Jasmine route</p>
+              <p>use this to make Jade output pretty html views</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>app.get <span class="hljs-string">'/jasmine'</span>, <span class="hljs-function"><span class="hljs-params">(req, res)</span> -&gt;</span>
-  res.render <span class="hljs-string">'jasmine'</span>
-  <span class="hljs-keyword">return</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-3">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
-              </div>
-              <p>Kitcensink route</p>
+            <div class="content"><div class='highlight'><pre>app.locals.pretty = <span class="hljs-literal">true</span>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>app.get <span class="hljs-string">'/kitchensink'</span>, <span class="hljs-function"><span class="hljs-params">(req, res)</span> -&gt;</span>
-  res.render <span class="hljs-string">'kitchensink'</span>
-  <span class="hljs-keyword">return</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>Default route</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>app.get <span class="hljs-string">''</span>, <span class="hljs-function"><span class="hljs-params">(req, res)</span> -&gt;</span>
-  res.render <span class="hljs-string">'index'</span>
-  <span class="hljs-keyword">return</span>
-
-
-server = app.listen(<span class="hljs-number">3000</span>, <span class="hljs-function">-&gt;</span>
-  host = server.address().address
-  port = server.address().port
-  <span class="hljs-built_in">console</span>.log <span class="hljs-string">'Node listening at http://%s:%s'</span>, host, port
-  <span class="hljs-keyword">return</span>
-)
+ExpressPeerServer = <span class="hljs-built_in">require</span>(<span class="hljs-string">'peer'</span>).ExpressPeerServer
 
 options =
   <span class="hljs-attribute">debug</span>: <span class="hljs-literal">true</span>
@@ -232,7 +183,96 @@ peerserver.listen <span class="hljs-number">9000</span>, <span class="hljs-funct
   host = peerserver.address().address
   port = peerserver.address().port
   <span class="hljs-built_in">console</span>.log <span class="hljs-string">'PeerServer listening at http://%s:%s'</span>, host, port
+  <span class="hljs-keyword">return</span>
+
+<span class="hljs-built_in">console</span>.log app.get(<span class="hljs-string">'env'</span>)
+<span class="hljs-keyword">if</span> app.get(<span class="hljs-string">'env'</span>) <span class="hljs-keyword">is</span> <span class="hljs-string">'production'</span>
+  ;<span class="hljs-comment">#console.log "production mode"</span>
+<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> app.get(<span class="hljs-string">'env'</span>) <span class="hljs-keyword">is</span> <span class="hljs-string">'development'</span>
+  ;<span class="hljs-comment">#console.log "development mode"</span>
+
+app.set <span class="hljs-string">'view engine'</span>, <span class="hljs-string">'jade'</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Jasmine route</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>app.get <span class="hljs-string">'/jasmine'</span>, <span class="hljs-function"><span class="hljs-params">(req, res)</span> -&gt;</span>
+  res.render <span class="hljs-string">'jasmine'</span>
   <span class="hljs-keyword">return</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Kitcensink route</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>app.get <span class="hljs-string">'/kitchensink'</span>, <span class="hljs-function"><span class="hljs-params">(req, res)</span> -&gt;</span>
+  res.render <span class="hljs-string">'kitchensink'</span>
+  <span class="hljs-keyword">return</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Default route
+app.get ‘’, (req, res) -&gt;
+  res.render ‘index’
+  return
+Default route</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>app.get <span class="hljs-string">''</span>, <span class="hljs-function"><span class="hljs-params">(req, res)</span> -&gt;</span>
+  res.redirect <span class="hljs-string">'welcome'</span>
+  <span class="hljs-keyword">return</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Default route</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>app.get <span class="hljs-string">'*'</span>, <span class="hljs-function"><span class="hljs-params">(req, res)</span> -&gt;</span>
+  res.render <span class="hljs-string">'index'</span>
+  <span class="hljs-keyword">return</span>
+  
+
+
+server = app.listen(<span class="hljs-number">3000</span>, <span class="hljs-function">-&gt;</span>
+  host = server.address().address
+  port = server.address().port
+  <span class="hljs-built_in">console</span>.log <span class="hljs-string">'Node listening at http://%s:%s'</span>, host, port
+  <span class="hljs-keyword">return</span>
+)</pre></div></div>
             
         </li>
         

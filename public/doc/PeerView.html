@@ -64,6 +64,11 @@
               </a>
             
               
+              <a class="source" href="IndexView.html">
+                IndexView.coffee
+              </a>
+            
+              
               <a class="source" href="KitchensinkView.html">
                 KitchensinkView.coffee
               </a>
@@ -144,7 +149,9 @@
   <span class="hljs-attribute">className</span>: <span class="hljs-string">'peer view'</span>
   
   <span class="hljs-attribute">events</span>:
-    <span class="hljs-string">'click .button'</span>: <span class="hljs-string">'connect'</span>
+    <span class="hljs-string">'click .connect.button'</span>: <span class="hljs-string">'connect'</span>
+    <span class="hljs-string">'click .disconnect.button'</span>: <span class="hljs-string">'diconnect'</span>
+    <span class="hljs-string">'click .content.button'</span>: <span class="hljs-string">'content'</span>
   
   <span class="hljs-attribute">initialize</span>: <span class="hljs-function">-&gt;</span>
     <span class="hljs-property">@listenTo</span> <span class="hljs-property">@model</span>, <span class="hljs-string">'change'</span>, <span class="hljs-property">@render</span>
@@ -156,7 +163,16 @@
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>
   
   <span class="hljs-attribute">connect</span>: <span class="hljs-function">-&gt;</span>
-    <span class="hljs-property">@model</span>.connect()</pre></div></div>
+    <span class="hljs-property">@model</span>.connect()
+    <span class="hljs-keyword">return</span>
+
+  <span class="hljs-attribute">disconnect</span>: <span class="hljs-function">-&gt;</span>
+    <span class="hljs-property">@model</span>.close()
+    <span class="hljs-keyword">return</span>
+    
+  <span class="hljs-attribute">content</span>: <span class="hljs-function">-&gt;</span>
+    <span class="hljs-property">@model</span>.send(<span class="hljs-string">'content'</span>)
+    <span class="hljs-keyword">return</span></pre></div></div>
             
         </li>
         

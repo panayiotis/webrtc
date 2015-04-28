@@ -11,9 +11,29 @@ app.use require('connect-assets')
   compress:true
   gzip:true
 
+# use this to make Jade output pretty html views
 app.locals.pretty = true
 
 ExpressPeerServer = require('peer').ExpressPeerServer
+
+options =
+  debug: true
+  timeout: 5000
+  key: 'peerjs'
+  ip_limit: 5000
+  concurrent_limit: 5000
+  allow_discovery: true
+  proxied: true
+
+peerserver = require('http').createServer(app)
+
+app.use '/peerjs', ExpressPeerServer(peerserver, options)
+
+peerserver.listen 9000, ->
+  host = peerserver.address().address
+  port = peerserver.address().port
+  console.log 'PeerServer listening at http://%s:%s', host, port
+  return
 
 console.log app.get('env')
 if app.get('env') is 'production'
@@ -34,9 +54,19 @@ app.get '/kitchensink', (req, res) ->
   return
 
 # Default route
+# app.get '', (req, res) ->
+#   res.render 'index'
+#   return
+# Default route
 app.get '', (req, res) ->
+  res.redirect 'welcome'
+  return
+
+# Default route
+app.get '*', (req, res) ->
   res.render 'index'
   return
+  
 
 
 server = app.listen(3000, ->
@@ -45,22 +75,3 @@ server = app.listen(3000, ->
   console.log 'Node listening at http://%s:%s', host, port
   return
 )
-
-options =
-  debug: true
-  timeout: 5000
-  key: 'peerjs'
-  ip_limit: 5000
-  concurrent_limit: 5000
-  allow_discovery: true
-  proxied: true
-
-peerserver = require('http').createServer(app)
-
-app.use '/peerjs', ExpressPeerServer(peerserver, options)
-
-peerserver.listen 9000, ->
-  host = peerserver.address().address
-  port = peerserver.address().port
-  console.log 'PeerServer listening at http://%s:%s', host, port
-  return

@@ -1,0 +1,5 @@
+h1= user.username
+p
+  | server connection is 
+  = (user.get('open') ? "open" : "closed")
+  a(class='button', id='discover', href='#') discover

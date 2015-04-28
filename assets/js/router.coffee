@@ -13,8 +13,20 @@ class App.Router extends Backbone.Router
   ##  Index Route
   ##
   all: ->
-    #console.log "Router Map Index"
-    #new App.IndexView()
+    $('body').append($('<div class="kitchensink row">'))
+    bob = new App.User('bob')
+    window.bob = bob
+    mike = new App.User('diana')
+    alex = new App.User('charly')
+    alice = new App.User('alice')
+    window.alice = alice
+    
+    view = new App.KitchensinkView(model:alice)
+    window.view = view
+    $('.kitchensink.row').append(view.render().el)
+    
+    bob_view = new App.KitchensinkView(model:bob)
+    $('.kitchensink.row').append(bob_view.render().el)
     return
   
   kitchensink: ->

@@ -5,6 +5,7 @@ class App.Peer extends Backbone.Model
 
   defaults:
     'open': false
+    'content': ''
   
   server: null
   
@@ -30,6 +31,15 @@ class App.Peer extends Backbone.Model
     Object.defineProperty this, 'username',
       get: => @id.slice(0, @id.indexOf('-'))
     
+    # open property
+    #
+    # an alias to connection.open property
+    Object.defineProperty this, 'open',
+      get: =>
+        if @connection
+          return @connection.open
+        else
+          return false
     return
   
   #  #### Connect to this peer
@@ -62,6 +72,8 @@ class App.Peer extends Backbone.Model
       @connection.on 'data', (data) =>
         console.log "Peer #{@username}: connection data"
         this.trigger('data', {connection:@connection, data:data} )
+        if data.content
+          @set('content', data.content)
         return
       
       # Listen to error event
@@ -77,8 +89,14 @@ class App.Peer extends Backbone.Model
         console.log "Peer #{@username}: connection closed"
         @set('open', false)
         return
+    return
   
+    
+  send: (msg) ->
+    @connection.send(msg)
+    return
   # #### Close
   # call close() on a Peer to close the connection with this Peer gracefully
   close: ->
     @connection.close()
+    return

@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>ServerConnectionView.coffee</title>
+  <title>IndexView.coffee</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -121,7 +121,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>ServerConnectionView.coffee</h1>
+                  <h1>IndexView.coffee</h1>
               </div>
           </li>
         
@@ -138,39 +138,38 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-string">'use strict'</span>
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span>.<span class="hljs-title">ServerConnectionView</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">View</span></span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span>.<span class="hljs-title">IndexView</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">View</span></span>
   
-  <span class="hljs-attribute">template</span>: JST[<span class="hljs-string">'templates/server'</span>]
+  <span class="hljs-attribute">template</span>: JST[<span class="hljs-string">'templates/index'</span>]
   
   <span class="hljs-attribute">tagName</span>: <span class="hljs-string">'div'</span>
   
-  <span class="hljs-attribute">id</span>: <span class="hljs-string">''</span>
+  <span class="hljs-attribute">className</span>: <span class="hljs-string">'view large-6 columns'</span>
   
-  <span class="hljs-attribute">className</span>: <span class="hljs-string">'server'</span>
+  <span class="hljs-attribute">events</span>:
+    <span class="hljs-string">'click #discover'</span>: <span class="hljs-string">'discover'</span>
+    <span class="hljs-string">'click .button.edit'</span>: <span class="hljs-string">'openEditDialog'</span>
+    <span class="hljs-string">'click .button.delete'</span>: <span class="hljs-string">'destroy'</span>
   
-  <span class="hljs-attribute">events</span>: {}
+  <span class="hljs-attribute">peers</span>: <span class="hljs-literal">null</span>
   
-  <span class="hljs-attribute">initialize</span>: <span class="hljs-function">-&gt;</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-2">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
-              </div>
-              <p>   @listenTo @model, ‘change’, @render
-@render()</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span>
+  <span class="hljs-attribute">initialize</span>: <span class="hljs-function">-&gt;</span>
+    <span class="hljs-property">@listenTo</span> <span class="hljs-property">@model</span>, <span class="hljs-string">'change'</span>, <span class="hljs-property">@render</span>
+    <span class="hljs-property">@peers</span> = <span class="hljs-keyword">new</span> App.PeerCollectionView(<span class="hljs-attribute">collection</span>: <span class="hljs-property">@model</span>.peers)
+    <span class="hljs-property">@content</span> = <span class="hljs-keyword">new</span> App.ContentView(<span class="hljs-attribute">model</span>: <span class="hljs-property">@model</span>.content)
+    <span class="hljs-property">@listenTo</span> <span class="hljs-property">@model</span>, <span class="hljs-string">'availablePeers'</span>, <span class="hljs-function"><span class="hljs-params">(peer_ids)</span> =&gt;</span>
+      <span class="hljs-property">@peers</span>.collection.update(peer_ids)
+    <span class="hljs-keyword">return</span>
+  
   
   <span class="hljs-attribute">render</span>: <span class="hljs-function">-&gt;</span>
-    <span class="hljs-property">@$el</span>.html(<span class="hljs-property">@template</span>({<span class="hljs-attribute">open</span>:<span class="hljs-literal">true</span>}))
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span></pre></div></div>
+    <span class="hljs-property">@$el</span>.html( <span class="hljs-property">@template</span>(<span class="hljs-attribute">user</span>:<span class="hljs-property">@model</span>) )
+    <span class="hljs-property">@$el</span>.append(<span class="hljs-property">@content</span>.render().el)
+    <span class="hljs-property">@$el</span>.append(<span class="hljs-property">@peers</span>.render().el)
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>
+
+  <span class="hljs-attribute">discover</span>: <span class="hljs-function">-&gt;</span>
+    <span class="hljs-property">@model</span>.discover()</pre></div></div>
             
         </li>
         
