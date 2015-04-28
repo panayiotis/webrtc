@@ -164,7 +164,7 @@ conn = <span class="hljs-literal">undefined</span>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-built_in">console</span>.log <span class="hljs-string">"username: <span class="hljs-subst">#{username}</span>, server: <span class="hljs-subst">#{server}</span>"</span>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-built_in">console</span>.log <span class="hljs-string">"username: <span class="hljs-subst">#{username}</span>"</span>
   peer = <span class="hljs-keyword">new</span> PeerJS(username,
     <span class="hljs-attribute">debug</span>: <span class="hljs-number">3</span> <span class="hljs-comment"># 1: Errors, 2: Warnings, 3: All logs</span>
     <span class="hljs-attribute">host</span>: <span class="hljs-built_in">window</span>.location.hostname
@@ -238,11 +238,9 @@ $ -&gt;
   <span class="hljs-built_in">console</span>.log <span class="hljs-string">'my.coffee is loaded'</span>
   
   $(<span class="hljs-string">'.button.username'</span>).click -&gt;
-    server = <span class="hljs-string">'home'</span><span class="hljs-comment">#$('input.server').val() or default_signalling_server</span>
     username = $(<span class="hljs-string">'input.username'</span>).val()
     create_peer
       <span class="hljs-attribute">username</span>: username
-      <span class="hljs-attribute">server</span>: server
     <span class="hljs-keyword">return</span>
   
   $(<span class="hljs-string">'.button.connect'</span>).click -&gt;

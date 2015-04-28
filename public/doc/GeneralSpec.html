@@ -161,7 +161,7 @@ describe <span class="hljs-string">'Browser'</span>, <span class="hljs-function"
       
       peer = <span class="hljs-keyword">new</span> PeerJS(Math.random().toString(<span class="hljs-number">36</span>).substring(<span class="hljs-number">7</span>),
         <span class="hljs-attribute">debug</span>: <span class="hljs-number">3</span> <span class="hljs-comment"># 1: Errors, 2: Warnings, 3: All logs</span>
-        <span class="hljs-attribute">host</span>: <span class="hljs-string">'signalling.home'</span>
+        <span class="hljs-attribute">host</span>: <span class="hljs-built_in">window</span>.location.hostname
         <span class="hljs-attribute">port</span>: <span class="hljs-number">9000</span>
         <span class="hljs-attribute">path</span>: <span class="hljs-string">'/peerjs'</span>)
       

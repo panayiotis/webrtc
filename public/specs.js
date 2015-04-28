@@ -129,7 +129,7 @@
         opened = false;
         peer = new PeerJS(Math.random().toString(36).substring(7), {
           debug: 3,
-          host: 'signalling.home',
+          host: window.location.hostname,
           port: 9000,
           path: '/peerjs'
         });

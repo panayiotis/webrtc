@@ -6,7 +6,7 @@ upstream webrtc {
 server {
   listen 80;
   listen [::]:80;
-  server_name webrtc.home;
+  server_name webrtc;
   root /home/panos/webrtc/public;
   try_files $uri @webrtc;
   

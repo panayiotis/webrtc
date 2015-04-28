@@ -18,7 +18,7 @@ unless phantom
       
       peer = new PeerJS(Math.random().toString(36).substring(7),
         debug: 3 # 1: Errors, 2: Warnings, 3: All logs
-        host: 'signalling.home'
+        host: window.location.hostname
         port: 9000
         path: '/peerjs')
       
