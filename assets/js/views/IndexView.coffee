@@ -4,7 +4,7 @@ class App.IndexView extends Backbone.View
   
   template: JST['templates/index']
   
-  #tagName: 'div'
+  tagName: 'div'
   
   #className: 'view large-6 columns'
   
@@ -27,12 +27,6 @@ class App.IndexView extends Backbone.View
       if username
         @createUser(username)
     return
-  #  @listenTo @model, 'change', @render
-  #  @peers = new App.PeerCollectionView(collection: @model.peers)
-  #  @content = new App.ContentView(model: @model.content)
-  #  @listenTo @model, 'availablePeers', (peer_ids) =>
-  #    @peers.collection.update(peer_ids)
-  #  return
   
   
   render: ->
@@ -43,8 +37,12 @@ class App.IndexView extends Backbone.View
       @$el.append(@view.render().el)
     return this
 
-  createUser: (username) =>
-    username = username or @$('input#username').val()
+  createUser: (username) ->
+    #console.log this
+    unless typeof(username) is 'string'
+      username =  @$('input#username').val().toString()
+    #console.log username
+    #console.log  @$('input#username').val()
     @user = new App.User(username)
     @view = new App.UserView(model:@user)
     @render()

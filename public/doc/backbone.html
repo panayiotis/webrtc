@@ -973,7 +973,9 @@ It adds or removes peers according to it</li>
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span>.<span class="hljs-title">IndexView</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">View</span></span>
   
-  <span class="hljs-attribute">template</span>: JST[<span class="hljs-string">'templates/index'</span>]</pre></div></div>
+  <span class="hljs-attribute">template</span>: JST[<span class="hljs-string">'templates/index'</span>]
+  
+  <span class="hljs-attribute">tagName</span>: <span class="hljs-string">'div'</span></pre></div></div>
             
         </li>
         
@@ -983,19 +985,6 @@ It adds or removes peers according to it</li>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-48">&#182;</a>
-              </div>
-              <p>tagName: ‘div’</p>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-49">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-49">&#182;</a>
               </div>
               <p>className: ‘view large-6 columns’</p>
 
@@ -1012,11 +1001,11 @@ It adds or removes peers according to it</li>
         </li>
         
         
-        <li id="section-50">
+        <li id="section-49">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-50">&#182;</a>
+                <a class="pilcrow" href="#section-49">&#182;</a>
               </div>
               <p> ‘click .button.edit’: ‘openEditDialog’
  ‘click .button.delete’: ‘destroy’</p>
@@ -1026,11 +1015,11 @@ It adds or removes peers according to it</li>
         </li>
         
         
-        <li id="section-51">
+        <li id="section-50">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-51">&#182;</a>
+                <a class="pilcrow" href="#section-50">&#182;</a>
               </div>
               <p>peers: null</p>
 
@@ -1044,7 +1033,34 @@ It adds or removes peers according to it</li>
       username = localStorage.getItem(<span class="hljs-string">'username'</span>)
       <span class="hljs-keyword">if</span> username
         <span class="hljs-property">@createUser</span>(username)
-    <span class="hljs-keyword">return</span></pre></div></div>
+    <span class="hljs-keyword">return</span>
+  
+  
+  <span class="hljs-attribute">render</span>: <span class="hljs-function">-&gt;</span>
+    <span class="hljs-keyword">unless</span> <span class="hljs-property">@view</span>
+      <span class="hljs-property">@$el</span>.html( <span class="hljs-property">@template</span>() )
+    <span class="hljs-keyword">else</span>
+      <span class="hljs-property">@$el</span>.html(<span class="hljs-string">''</span>)
+      <span class="hljs-property">@$el</span>.append(<span class="hljs-property">@view</span>.render().el)
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>
+
+  <span class="hljs-attribute">createUser</span>: <span class="hljs-function"><span class="hljs-params">(username)</span> -&gt;</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-51">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-51">&#182;</a>
+              </div>
+              <p>console.log this</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">unless</span> <span class="hljs-keyword">typeof</span>(username) <span class="hljs-keyword">is</span> <span class="hljs-string">'string'</span>
+      username =  <span class="hljs-property">@$</span>(<span class="hljs-string">'input#username'</span>).val().toString()</pre></div></div>
             
         </li>
         
@@ -1055,28 +1071,12 @@ It adds or removes peers according to it</li>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-52">&#182;</a>
               </div>
-              <p> @listenTo @model, ‘change’, @render
- @peers = new App.PeerCollectionView(collection: @model.peers)
- @content = new App.ContentView(model: @model.content)
- @listenTo @model, ‘availablePeers’, (peer_ids) =&gt;
-   @peers.collection.update(peer_ids)
- return</p>
+              <p>console.log username
+console.log  @$(‘input#username’).val()</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  
-  
-  <span class="hljs-attribute">render</span>: <span class="hljs-function">-&gt;</span>
-    <span class="hljs-keyword">unless</span> <span class="hljs-property">@view</span>
-      <span class="hljs-property">@$el</span>.html( <span class="hljs-property">@template</span>() )
-    <span class="hljs-keyword">else</span>
-      <span class="hljs-property">@$el</span>.html(<span class="hljs-string">''</span>)
-      <span class="hljs-property">@$el</span>.append(<span class="hljs-property">@view</span>.render().el)
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>
-
-  <span class="hljs-attribute">createUser</span>: <span class="hljs-function"><span class="hljs-params">(username)</span> =&gt;</span>
-    username = username <span class="hljs-keyword">or</span> <span class="hljs-property">@$</span>(<span class="hljs-string">'input#username'</span>).val()
-    <span class="hljs-property">@user</span> = <span class="hljs-keyword">new</span> App.User(username)
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-property">@user</span> = <span class="hljs-keyword">new</span> App.User(username)
     <span class="hljs-property">@view</span> = <span class="hljs-keyword">new</span> App.UserView(<span class="hljs-attribute">model</span>:<span class="hljs-property">@user</span>)
     <span class="hljs-property">@render</span>()</pre></div></div>
             
