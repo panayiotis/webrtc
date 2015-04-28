@@ -95,6 +95,7 @@ class App.Peer extends Backbone.Model
   send: (msg) ->
     @connection.send(msg)
     return
+  
   # #### Close
   # call close() on a Peer to close the connection with this Peer gracefully
   close: ->

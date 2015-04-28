@@ -12,7 +12,7 @@ class App.PeerView extends Backbone.View
   
   events:
     'click .connect.button': 'connect'
-    'click .disconnect.button': 'diconnect'
+    'click .disconnect.button': 'disconnect'
     'click .content.button': 'content'
   
   initialize: ->
@@ -27,7 +27,7 @@ class App.PeerView extends Backbone.View
   connect: ->
     @model.connect()
     return
-
+  
   disconnect: ->
     @model.close()
     return

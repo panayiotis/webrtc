@@ -27,7 +27,7 @@ class App.ContentView extends Backbone.View
     console.log 'edit'
     this.$('.edit-area').removeClass('inactive')
     this.$('.edit-area').html(
-      "<textarea rows='10'>#{@model.get('content')}</textarea>"
+      "<textarea rows='20'>#{@model.get('content')}</textarea>"
     )
   
   blur: =>

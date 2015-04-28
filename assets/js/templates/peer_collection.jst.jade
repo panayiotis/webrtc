@@ -2,5 +2,19 @@ br
 br
 br
 
-h3.center There are #{length} peers totally
+h2.center Peers
+h3.center 
+  if (length === 0)
+    |There is nobody connected at the moment
+  else if (length === 1)
+    |There is only one peer connected
+  else
+    |There are #{length} other peers
+
+if (length === 0)
+  p.center
+    | press the &nbsp;
+    a.discover.button.tiny discover peers
+    | &nbsp; button to ask the server for peers
+
 br
