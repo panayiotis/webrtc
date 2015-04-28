@@ -34,11 +34,6 @@
               </a>
             
               
-              <a class="source" href="ServerConnectionCollection.html">
-                ServerConnectionCollection.coffee
-              </a>
-            
-              
               <a class="source" href="Content.html">
                 Content.coffee
               </a>
@@ -46,11 +41,6 @@
               
               <a class="source" href="Peer.html">
                 Peer.coffee
-              </a>
-            
-              
-              <a class="source" href="ServerConnection.html">
-                ServerConnection.coffee
               </a>
             
               
@@ -109,13 +99,13 @@
               </a>
             
               
-              <a class="source" href="NewSpec.html">
-                NewSpec.coffee
+              <a class="source" href="SpecHelper.html">
+                SpecHelper.coffee
               </a>
             
               
-              <a class="source" href="SpecHelper.html">
-                SpecHelper.coffee
+              <a class="source" href="UserSpec.html">
+                UserSpec.coffee
               </a>
             
           </div>
@@ -147,9 +137,32 @@
   
   <span class="hljs-attribute">model</span>: App.Peer
   
-  <span class="hljs-attribute">server</span>: <span class="hljs-literal">null</span>
-  
-  initialize : <span class="hljs-function"><span class="hljs-params">(models, options)</span> -&gt;</span>
+  <span class="hljs-attribute">server</span>: <span class="hljs-literal">null</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h3 id="initialize-a-peer-collection">Initialize a Peer collection</h3>
+<ul>
+<li>models, is a Peer array</li>
+<li>options is an object<ul>
+<li>server, a User.connection object.
+It is passed to the Peer objects that are created by the collection</li>
+<li>ids, array of strings. Peers with these ids will be created on
+initialization. This is used by tests</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  initialize : <span class="hljs-function"><span class="hljs-params">(models, options)</span> -&gt;</span>
     options = options <span class="hljs-keyword">or</span> {}
     <span class="hljs-keyword">if</span> options.server
       <span class="hljs-keyword">if</span> PeerJS.prototype.isPrototypeOf(options.server)
@@ -163,15 +176,17 @@
         </li>
         
         
-        <li id="section-2">
+        <li id="section-3">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
+                <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>Update peers
-it accepts an array with id strings as parameter and
-adds or removes peers according to it</p>
+              <h3 id="update-peers">Update peers</h3>
+<ul>
+<li>peer_ids, array with id strings.
+It adds or removes peers according to it</li>
+</ul>
 
             </div>
             
@@ -189,11 +204,11 @@ adds or removes peers according to it</p>
         </li>
         
         
-        <li id="section-3">
+        <li id="section-4">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>you cannot iterate a collection and manipulate it at the same time</p>
 
@@ -201,11 +216,25 @@ adds or removes peers according to it</p>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-property">@each</span>( <span class="hljs-function"><span class="hljs-params">(peer, index)</span> -&gt;</span>
       <span class="hljs-keyword">unless</span> peer.id <span class="hljs-keyword">in</span> peer_ids
-        <span class="hljs-keyword">unless</span> peer.get(<span class="hljs-string">'open'</span>)
+        <span class="hljs-keyword">unless</span> peer.connection <span class="hljs-keyword">and</span> peer.connection.open
           markedRemoval.push peer
-    )
-    
-    <span class="hljs-property">@remove</span> markedRemoval <span class="hljs-comment"># remove the peers that were marked for removal</span></pre></div></div>
+    )</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>remove the peers that were marked for removal</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-property">@remove</span> markedRemoval
+    <span class="hljs-keyword">return</span></pre></div></div>
             
         </li>
         

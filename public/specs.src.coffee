@@ -65,7 +65,7 @@ unless phantom
           expect(data.content).toBeTruthy()
           expect(data.content).toBe '<h1>Bob!</h1>'
           done()
-        , 1200
+        , 1500
 
 
   ###
@@ -124,7 +124,7 @@ unless phantom
         expect(opened).toBeTruthy()
         expect(peer.open).toBeTruthy()
         done()
-      ), 100
+      ), 200
       return
     
     it 'should get available peers', (done) ->
@@ -135,7 +135,7 @@ unless phantom
       setTimeout (->
         expect(_.isArray(list)).toBeTruthy()
         done()
-      ), 100
+      ), 200
 
 
 
@@ -149,10 +149,7 @@ describe 'Node.js', ->
   it 'should load Backbone', ->
     expect(Backbone).toBeTruthy()
     expect(App).toBeTruthy()
-  
-  fit 'should define window variable default_signalling_server variable', ->
-    expect(default_signalling_server).toBeTruthy()
-    expect(typeof(default_signalling_server)).toBe 'string'
+
 
 
 describe 'LocalStorage', ->
@@ -191,7 +188,7 @@ unless phantom
     describe 'server connectivity', ->
       beforeEach (done) ->
         @bob = new User()
-        setTimeout( done , 100)
+        setTimeout( done , 200)
       
       it 'connects to server', ->
         expect(@bob.connection.open).toBeTruthy()
@@ -213,9 +210,9 @@ unless phantom
         setTimeout (=>
           expect(_.isArray(list)).toBeTruthy()
           expect(list).toContain(@bob.id)
-          console.log list
+          #console.log list
           done()
-        ), 100
+        ), 200
     
     describe 'Peer active Connectivity', ->
       beforeEach (done) ->
@@ -229,13 +226,12 @@ unless phantom
       it 'connects to existing peer', (done) ->
         peer= new Peer(server: @alice.connection, id: @bob.id)
         peer.connect()
-        console.log peer
+        #console.log peer
         setTimeout( ->
           expect(peer.get('open')).toBeTruthy()
           done()
         , 300)
-      
-      xit 'does not connect to not existing peer, but fails silently', ->
+    
     
     describe 'Peer passive Connectivity', ->
       beforeEach (done) ->
@@ -255,16 +251,6 @@ unless phantom
           expect(flag).toBeTruthy()
           done()
         , 300)
-      
-      xit 'accepts incomming data from other peers', ->
-    
-    describe 'Peer communication', ->
-      beforeEach ->
-        # initialize two peers
-        # and connect them
-      xit 'requests content from a connected peer', ->
-      xit 'responds with content to a connected peer', ->
-
 
 
 ##
@@ -323,13 +309,17 @@ unless phantom
         @peers.update(['one','two', 'three'])
         @peers.add(alice_peer)
         expect(@peers.length).toEqual(4)
+        
         setTimeout( =>
           @peers.update([])
+          unless @peers.length is 1
+            console.table @peers
           expect(@peers.length).toEqual(1)
           done()
         , 2000)
 
-return
+###
+
 ##
 ##  Views
 ##
@@ -368,3 +358,4 @@ unless phantom
   describe 'PeerContentView', ->
 unless phantom
   describe 'ContentView', ->
+###

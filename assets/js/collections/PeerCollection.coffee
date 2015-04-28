@@ -5,7 +5,14 @@ class App.PeerCollection extends Backbone.Collection
   model: App.Peer
   
   server: null
-  
+  # ### Initialize a Peer collection
+  #
+  # * models, is a Peer array
+  # * options is an object
+  #  * server, a User.connection object.
+  #    It is passed to the Peer objects that are created by the collection
+  #  * ids, array of strings. Peers with these ids will be created on
+  #  initialization. This is used by tests
   initialize : (models, options) ->
     options = options or {}
     if options.server
@@ -17,9 +24,10 @@ class App.PeerCollection extends Backbone.Collection
     if options.ids
       @update options.ids
     
-  # Update peers
-  # it accepts an array with id strings as parameter and
-  # adds or removes peers according to it
+  # ### Update peers
+  #
+  # * peer_ids, array with id strings.
+  #   It adds or removes peers according to it
   update: (peer_ids) =>
     
     if not _.isArray(peer_ids)
@@ -34,10 +42,12 @@ class App.PeerCollection extends Backbone.Collection
     # you cannot iterate a collection and manipulate it at the same time
     @each( (peer, index) ->
       unless peer.id in peer_ids
-        unless peer.get('open')
+        unless peer.connection and peer.connection.open
           markedRemoval.push peer
     )
     
-    @remove markedRemoval # remove the peers that were marked for removal
+    # remove the peers that were marked for removal
+    @remove markedRemoval
+    return
     
     

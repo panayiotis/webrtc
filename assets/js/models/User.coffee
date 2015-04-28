@@ -4,8 +4,8 @@
 class App.User extends Backbone.Model
   
   defaults:
-    'host'   : '127.0.0.1'
-    'port'   : '8000'
+    'host'   : ''
+    'port'   : 9000
     'open'   : false
 
   # List of server connections
@@ -24,8 +24,7 @@ class App.User extends Backbone.Model
 
   # Initializes with optional username.
   initialize: (username) ->
-    alert window.default_signalling_server
-    @set('host', window.default_signalling_server) # TODO This is bad
+    @set('host', window.location.hostname)
     @username = username or 'anon' # set default id if none is provided
     @id= @username + '-' + Math.random().toString(36).substring(7)
     @content= new App.Content(id:@id.charCodeAt(0))
@@ -40,7 +39,7 @@ class App.User extends Backbone.Model
       data=obj.data
       if (data is 'content')
         console.log "User #{@username}: send content to #{connection.peer}"
-        console.log connection
+        #console.log connection
         connection.send {content: @content.get('content')}
       return
     
@@ -52,7 +51,7 @@ class App.User extends Backbone.Model
     @connection = new PeerJS(@id,
       debug: 1 # 1: Errors, 2: Warnings, 3: All logs
       host: @get('host')
-      port: 9000
+      port: @get('port')
       path: '/peerjs')
     
     @connection.on 'open', (id) =>
@@ -69,7 +68,7 @@ class App.User extends Backbone.Model
     @connection.on 'connection', (conn) =>
       this.trigger('connection', { server:this, connection:conn } )
       console.log "User #{@username}: incomming connection from #{conn.peer}"
-      console.log conn
+      #console.log conn
       conn.on 'data', (data) =>
         this.trigger('data', {connection:conn, data:data} )
         console.log "User #{@username}: data from #{conn.peer}"

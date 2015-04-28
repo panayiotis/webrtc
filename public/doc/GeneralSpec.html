@@ -34,11 +34,6 @@
               </a>
             
               
-              <a class="source" href="ServerConnectionCollection.html">
-                ServerConnectionCollection.coffee
-              </a>
-            
-              
               <a class="source" href="Content.html">
                 Content.coffee
               </a>
@@ -46,11 +41,6 @@
               
               <a class="source" href="Peer.html">
                 Peer.coffee
-              </a>
-            
-              
-              <a class="source" href="ServerConnection.html">
-                ServerConnection.coffee
               </a>
             
               
@@ -109,13 +99,13 @@
               </a>
             
               
-              <a class="source" href="NewSpec.html">
-                NewSpec.coffee
+              <a class="source" href="SpecHelper.html">
+                SpecHelper.coffee
               </a>
             
               
-              <a class="source" href="SpecHelper.html">
-                SpecHelper.coffee
+              <a class="source" href="UserSpec.html">
+                UserSpec.coffee
               </a>
             
           </div>
@@ -173,7 +163,7 @@ describe <span class="hljs-string">'Browser'</span>, <span class="hljs-function"
         expect(opened).toBeTruthy()
         expect(peer.open).toBeTruthy()
         done()
-      ), <span class="hljs-number">100</span>
+      ), <span class="hljs-number">200</span>
       <span class="hljs-keyword">return</span>
     
     it <span class="hljs-string">'should get available peers'</span>, <span class="hljs-function"><span class="hljs-params">(done)</span> -&gt;</span>
@@ -184,7 +174,7 @@ describe <span class="hljs-string">'Browser'</span>, <span class="hljs-function"
       setTimeout (<span class="hljs-function">-&gt;</span>
         expect(_.isArray(list)).toBeTruthy()
         done()
-      ), <span class="hljs-number">100</span>
+      ), <span class="hljs-number">200</span>
 
 
 
@@ -198,10 +188,7 @@ describe <span class="hljs-string">'Node.js'</span>, <span class="hljs-function"
   it <span class="hljs-string">'should load Backbone'</span>, <span class="hljs-function">-&gt;</span>
     expect(Backbone).toBeTruthy()
     expect(App).toBeTruthy()
-  
-  fit <span class="hljs-string">'should define window variable default_signalling_server variable'</span>, <span class="hljs-function">-&gt;</span>
-    expect(default_signalling_server).toBeTruthy()
-    expect(<span class="hljs-keyword">typeof</span>(default_signalling_server)).toBe <span class="hljs-string">'string'</span>
+
 
 
 describe <span class="hljs-string">'LocalStorage'</span>, <span class="hljs-function">-&gt;</span>

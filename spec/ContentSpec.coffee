@@ -57,7 +57,7 @@ unless phantom
           expect(data.content).toBeTruthy()
           expect(data.content).toBe '<h1>Bob!</h1>'
           done()
-        , 1200
+        , 1500
 
 
   ###

@@ -30,7 +30,7 @@ unless phantom
         expect(opened).toBeTruthy()
         expect(peer.open).toBeTruthy()
         done()
-      ), 100
+      ), 200
       return
     
     it 'should get available peers', (done) ->
@@ -41,7 +41,7 @@ unless phantom
       setTimeout (->
         expect(_.isArray(list)).toBeTruthy()
         done()
-      ), 100
+      ), 200
 
 
 
@@ -55,10 +55,7 @@ describe 'Node.js', ->
   it 'should load Backbone', ->
     expect(Backbone).toBeTruthy()
     expect(App).toBeTruthy()
-  
-  fit 'should define window variable default_signalling_server variable', ->
-    expect(default_signalling_server).toBeTruthy()
-    expect(typeof(default_signalling_server)).toBe 'string'
+
 
 
 describe 'LocalStorage', ->

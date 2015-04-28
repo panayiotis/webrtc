@@ -76,7 +76,7 @@
             expect(data.content).toBeTruthy();
             expect(data.content).toBe('<h1>Bob!</h1>');
             return done();
-          }, 1200);
+          }, 1500);
         });
       });
     });
@@ -140,7 +140,7 @@
           expect(opened).toBeTruthy();
           expect(peer.open).toBeTruthy();
           return done();
-        }), 100);
+        }), 200);
       });
       return it('should get available peers', function(done) {
         var list;
@@ -152,7 +152,7 @@
         return setTimeout((function() {
           expect(_.isArray(list)).toBeTruthy();
           return done();
-        }), 100);
+        }), 200);
       });
     });
   }
@@ -164,13 +164,9 @@
     it('should load jquery', function() {
       return expect($('body')).toBeInDOM();
     });
-    it('should load Backbone', function() {
+    return it('should load Backbone', function() {
       expect(Backbone).toBeTruthy();
       return expect(App).toBeTruthy();
-    });
-    return fit('should define window variable default_signalling_server variable', function() {
-      expect(default_signalling_server).toBeTruthy();
-      return expect(typeof default_signalling_server).toBe('string');
     });
   });
 
@@ -224,7 +220,7 @@
       describe('server connectivity', function() {
         beforeEach(function(done) {
           this.bob = new User();
-          return setTimeout(done, 100);
+          return setTimeout(done, 200);
         });
         it('connects to server', function() {
           return expect(this.bob.connection.open).toBeTruthy();
@@ -248,10 +244,9 @@
             return function() {
               expect(_.isArray(list)).toBeTruthy();
               expect(list).toContain(_this.bob.id);
-              console.log(list);
               return done();
             };
-          })(this)), 100);
+          })(this)), 200);
         });
       });
       describe('Peer active Connectivity', function() {
@@ -260,28 +255,26 @@
           this.bob = new User('bob');
           return setTimeout(done, 300);
         });
-        it('connects to existing peer', function(done) {
+        return it('connects to existing peer', function(done) {
           var peer;
           peer = new Peer({
             server: this.alice.connection,
             id: this.bob.id
           });
           peer.connect();
-          console.log(peer);
           return setTimeout(function() {
             expect(peer.get('open')).toBeTruthy();
             return done();
           }, 300);
         });
-        return xit('does not connect to not existing peer, but fails silently', function() {});
       });
-      describe('Peer passive Connectivity', function() {
+      return describe('Peer passive Connectivity', function() {
         beforeEach(function(done) {
           this.alice = new User('alice');
           this.bob = new User('bob');
           return setTimeout(done, 300);
         });
-        it('accepts incomming connections from other peers', function(done) {
+        return it('accepts incomming connections from other peers', function(done) {
           var flag, peer;
           flag = false;
           peer = new Peer({
@@ -297,12 +290,6 @@
             return done();
           }, 300);
         });
-        return xit('accepts incomming data from other peers', function() {});
-      });
-      return describe('Peer communication', function() {
-        beforeEach(function() {});
-        xit('requests content from a connected peer', function() {});
-        return xit('responds with content to a connected peer', function() {});
       });
     });
   }
@@ -375,6 +362,9 @@
           return setTimeout((function(_this) {
             return function() {
               _this.peers.update([]);
+              if (_this.peers.length !== 1) {
+                console.table(_this.peers);
+              }
               expect(_this.peers.length).toEqual(1);
               return done();
             };
@@ -384,55 +374,48 @@
     });
   }
 
-  return;
 
-  if (!phantom) {
-    describe('UserView', function() {
-      describe('initialization', function() {
-        return xit('initializes groups property', function() {});
-      });
-      describe('when model gets a list with peers from server', function() {
-        return xit('creates PeerCollectionView event', function() {});
-      });
-      return describe('routing', function() {
-        describe('events', function() {
-          xit('listens for group routes', function() {});
-          return xit('listens for user routes', function() {});
-        });
-        describe('on user route', function() {
-          xit('creates PeerContentView', function() {});
-          return xit('switces to PeerContentView', function() {});
-        });
-        return describe('on group route', function() {
-          xit('finds the appropriate PeerCollectionView if it exists', function() {});
-          xit('creates PeerCollectionView if it does not exist', function() {});
-          return xit('switces to PeerCollectionView', function() {});
-        });
-      });
-    });
-  }
-
-  if (!phantom) {
-    describe('PeerCollectionView', function() {
-      xit('creates Peer views for the collection', function() {});
-      xit('listens to collection add event', function() {});
-      xit('adds new PeerView', function() {});
-      xit('listens to collection remove event', function() {});
-      return xit('removes PeerView', function() {});
-    });
-  }
-
-  if (!phantom) {
-    describe('PeerView', function() {});
-  }
-
-  if (!phantom) {
-    describe('PeerContentView', function() {});
-  }
-
-  if (!phantom) {
-    describe('ContentView', function() {});
-  }
+  /*
+  
+  ##
+  ##  Views
+  ##
+  unless phantom
+    describe 'UserView', ->
+      
+      describe 'initialization', ->
+        xit 'initializes groups property', ->
+      
+      describe 'when model gets a list with peers from server', ->
+        xit 'creates PeerCollectionView event', ->
+      
+      describe 'routing', ->
+        describe 'events', ->
+          xit 'listens for group routes', ->
+          xit 'listens for user routes', ->
+      
+        describe 'on user route', ->
+          xit 'creates PeerContentView', ->
+          xit 'switces to PeerContentView', ->
+  
+        describe 'on group route', ->
+          xit 'finds the appropriate PeerCollectionView if it exists', ->
+          xit 'creates PeerCollectionView if it does not exist', ->
+          xit 'switces to PeerCollectionView', ->
+  unless phantom
+    describe 'PeerCollectionView', ->
+      xit 'creates Peer views for the collection', ->
+      xit 'listens to collection add event', ->
+      xit 'adds new PeerView', ->
+      xit 'listens to collection remove event', ->
+      xit 'removes PeerView', ->
+  unless phantom
+    describe 'PeerView', ->
+  unless phantom
+    describe 'PeerContentView', ->
+  unless phantom
+    describe 'ContentView', ->
+   */
 
 }).call(this);
 

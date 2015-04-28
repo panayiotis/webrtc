@@ -34,11 +34,6 @@
               </a>
             
               
-              <a class="source" href="ServerConnectionCollection.html">
-                ServerConnectionCollection.coffee
-              </a>
-            
-              
               <a class="source" href="Content.html">
                 Content.coffee
               </a>
@@ -46,11 +41,6 @@
               
               <a class="source" href="Peer.html">
                 Peer.coffee
-              </a>
-            
-              
-              <a class="source" href="ServerConnection.html">
-                ServerConnection.coffee
               </a>
             
               
@@ -109,13 +99,13 @@
               </a>
             
               
-              <a class="source" href="NewSpec.html">
-                NewSpec.coffee
+              <a class="source" href="SpecHelper.html">
+                SpecHelper.coffee
               </a>
             
               
-              <a class="source" href="SpecHelper.html">
-                SpecHelper.coffee
+              <a class="source" href="UserSpec.html">
+                UserSpec.coffee
               </a>
             
           </div>
@@ -159,8 +149,8 @@
             <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span>.<span class="hljs-title">User</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">Model</span></span>
   
   <span class="hljs-attribute">defaults</span>:
-    <span class="hljs-string">'host'</span>   : <span class="hljs-string">'127.0.0.1'</span>
-    <span class="hljs-string">'port'</span>   : <span class="hljs-string">'8000'</span>
+    <span class="hljs-string">'host'</span>   : <span class="hljs-string">''</span>
+    <span class="hljs-string">'port'</span>   : <span class="hljs-number">9000</span>
     <span class="hljs-string">'open'</span>   : <span class="hljs-literal">false</span></pre></div></div>
             
         </li>
@@ -227,8 +217,7 @@ servers: null</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-attribute">initialize</span>: <span class="hljs-function"><span class="hljs-params">(username)</span> -&gt;</span>
-    alert <span class="hljs-built_in">window</span>.default_signalling_server
-    <span class="hljs-property">@set</span>(<span class="hljs-string">'host'</span>, <span class="hljs-built_in">window</span>.default_signalling_server) <span class="hljs-comment"># TODO This is bad</span>
+    <span class="hljs-property">@set</span>(<span class="hljs-string">'host'</span>, <span class="hljs-built_in">window</span>.location.hostname)
     <span class="hljs-property">@username</span> = username <span class="hljs-keyword">or</span> <span class="hljs-string">'anon'</span> <span class="hljs-comment"># set default id if none is provided</span>
     <span class="hljs-property">@id</span>= <span class="hljs-property">@username</span> + <span class="hljs-string">'-'</span> + Math.random().toString(<span class="hljs-number">36</span>).substring(<span class="hljs-number">7</span>)
     <span class="hljs-property">@content</span>= <span class="hljs-keyword">new</span> App.Content(<span class="hljs-attribute">id</span>:<span class="hljs-property">@id</span>.charCodeAt(<span class="hljs-number">0</span>))
@@ -242,9 +231,22 @@ servers: null</p>
       connection=obj.connection
       data=obj.data
       <span class="hljs-keyword">if</span> (data <span class="hljs-keyword">is</span> <span class="hljs-string">'content'</span>)
-        <span class="hljs-built_in">console</span>.log <span class="hljs-string">"User <span class="hljs-subst">#{<span class="hljs-property">@username</span>}</span>: send content to <span class="hljs-subst">#{connection.peer}</span>"</span>
-        <span class="hljs-built_in">console</span>.log connection
-        connection.send {<span class="hljs-attribute">content</span>: <span class="hljs-property">@content</span>.get(<span class="hljs-string">'content'</span>)}
+        <span class="hljs-built_in">console</span>.log <span class="hljs-string">"User <span class="hljs-subst">#{<span class="hljs-property">@username</span>}</span>: send content to <span class="hljs-subst">#{connection.peer}</span>"</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>console.log connection</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        connection.send {<span class="hljs-attribute">content</span>: <span class="hljs-property">@content</span>.get(<span class="hljs-string">'content'</span>)}
       <span class="hljs-keyword">return</span>
     
     <span class="hljs-keyword">return</span>
@@ -255,7 +257,7 @@ servers: null</p>
     <span class="hljs-property">@connection</span> = <span class="hljs-keyword">new</span> PeerJS(<span class="hljs-property">@id</span>,
       <span class="hljs-attribute">debug</span>: <span class="hljs-number">1</span> <span class="hljs-comment"># 1: Errors, 2: Warnings, 3: All logs</span>
       <span class="hljs-attribute">host</span>: <span class="hljs-property">@get</span>(<span class="hljs-string">'host'</span>)
-      <span class="hljs-attribute">port</span>: <span class="hljs-number">9000</span>
+      <span class="hljs-attribute">port</span>: <span class="hljs-property">@get</span>(<span class="hljs-string">'port'</span>)
       <span class="hljs-attribute">path</span>: <span class="hljs-string">'/peerjs'</span>)
     
     <span class="hljs-property">@connection</span>.<span class="hljs-literal">on</span> <span class="hljs-string">'open'</span>, <span class="hljs-function"><span class="hljs-params">(id)</span> =&gt;</span>
@@ -271,9 +273,22 @@ servers: null</p>
     
     <span class="hljs-property">@connection</span>.<span class="hljs-literal">on</span> <span class="hljs-string">'connection'</span>, <span class="hljs-function"><span class="hljs-params">(conn)</span> =&gt;</span>
       <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">'connection'</span>, { <span class="hljs-attribute">server</span>:<span class="hljs-keyword">this</span>, <span class="hljs-attribute">connection</span>:conn } )
-      <span class="hljs-built_in">console</span>.log <span class="hljs-string">"User <span class="hljs-subst">#{<span class="hljs-property">@username</span>}</span>: incomming connection from <span class="hljs-subst">#{conn.peer}</span>"</span>
-      <span class="hljs-built_in">console</span>.log conn
-      conn.<span class="hljs-literal">on</span> <span class="hljs-string">'data'</span>, <span class="hljs-function"><span class="hljs-params">(data)</span> =&gt;</span>
+      <span class="hljs-built_in">console</span>.log <span class="hljs-string">"User <span class="hljs-subst">#{<span class="hljs-property">@username</span>}</span>: incomming connection from <span class="hljs-subst">#{conn.peer}</span>"</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>console.log conn</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      conn.<span class="hljs-literal">on</span> <span class="hljs-string">'data'</span>, <span class="hljs-function"><span class="hljs-params">(data)</span> =&gt;</span>
         <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">'data'</span>, {<span class="hljs-attribute">connection</span>:conn, <span class="hljs-attribute">data</span>:data} )
         <span class="hljs-built_in">console</span>.log <span class="hljs-string">"User <span class="hljs-subst">#{<span class="hljs-property">@username</span>}</span>: data from <span class="hljs-subst">#{conn.peer}</span>"</span>
       
