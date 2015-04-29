@@ -1,10 +1,18 @@
+if group == 'welcome'
+  .row
+    .large-12.columns
+      h1 P2P application
 .row
   .large-12.columns
-    h1 Welcome
-  
+    h1 Welcome to #{group} group 
     h2 Choose a username
+    if oldUsername
+      h3 aren't you #{oldUsername} ?
     .row
       .small-8.columns
-        input#username(type='text', placeholder='type a username')
+        if oldUsername
+          input#username(type='text', value = "#{oldUsername}")
+        else
+          input#username(type='text', placeholder='type a username')
       .small-3.columns
         a.create-user.button.expand connect

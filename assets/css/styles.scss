@@ -1,10 +1,44 @@
-body {
-  div.view{
-    //border: 1px dashed grey;
-    min-width: 5px;
-    min-height: 5px;
+div.view{
+  //border: 1px dashed grey;
+  min-width: 5px;
+  min-height: 5px;
+}
+
+.center {
+  text-align: center;
+}
+
+.content {
+  
+  .hide-content{
+    visibility:hidden;
+    position: absolute;
+    right: 30px;
+    top:10px;
+    font-size: 30px !important;
+    padding: 0px 8px !important;
   }
-  .center {
-    text-align: center;
+  &:hover{
+    .hide-content{
+      visibility:visible;
+    }
+  }
+}
+
+.edit-area{
+  
+  .edit-content.button{
+    visibility:hidden !important;
+    position: absolute;
+    right: 16px;
+    top:0px;
+    font-size: 30px !important;
+    padding: 0px 8px !important;
+  }
+
+  &:hover{
+    .edit-content {
+      visibility:visible !important;
+    }
   }
 }

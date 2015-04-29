@@ -9,7 +9,7 @@ class App.UserView extends Backbone.View
   className: 'view user row'
   
   events:
-    'click .discover.button': 'discover'
+    'click .discover.button' : 'discover'
     'click .button.edit'     : 'openEditDialog'
     'click .button.delete'   : 'destroy'
   
@@ -27,7 +27,7 @@ class App.UserView extends Backbone.View
   render: ->
     @$el.html( @template(user:@model) )
     @$el.append(@peers.render().el)
-    @$('.insert-content-here').append(@content.render().el)
+    @$('.user-content').append(@content.render().el)
     this.delegateEvents()
     return this
 

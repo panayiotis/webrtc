@@ -3,28 +3,26 @@
 class App.Router extends Backbone.Router
 
   routes:
-    "kitchensink"    : 'kitchensink'
-    "jasmine"    : 'jasmine'
-    "welcome/:user"  : 'createUser'
-    "*path" : 'all'
+    "kitchensink"       : 'kitchensink'
+    "jasmine"           : 'jasmine'
+    ":group(/:user)(/)" : 'index'
+    "*path"             : 'wrong'
 
   initialize: ->
-    #console.log "Router Map Initialize"
     return
-  ##
-  ##  Index Route
-  ##
   
-  createUser: (user)->
-    view = new App.IndexView(user)
+  
+  index: (group, user)->
+    view = new App.IndexView(group, user)
     $('body').append(view.render().el)
     return
   
-  all: ->
-    view = new App.IndexView()
-    $('body').append(view.render().el)
+  wrong: ->
+    alert "Dude!\nEnter a correct url!\nsomething like /welcome/dude\nOK?"
     return
+    #@navigate("/welcome", true)
   
+  ###
   kitchensink: ->
     $('body').append($('<div class="kitchensink row">'))
     bob = new App.User('bob')
@@ -41,6 +39,6 @@ class App.Router extends Backbone.Router
     bob_view = new App.KitchensinkView(model:bob)
     $('.kitchensink.row').append(bob_view.render().el)
     return
-
+  ###
   jasmine: ->
     return

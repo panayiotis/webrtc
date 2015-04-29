@@ -10,9 +10,12 @@
       a.connect.button.expand connect
   .small-3.columns
     if peer.open
-      a.content.button.expand content
+      a.get-content.button.expand content
 
 
   .row
     .large-12.columns
-      !=peer.get('content')
+      a.show-content.button.expand show #{peer.username}'s content
+      .content
+        a.hide-content.button.tiny &times;
+        !=peer.get('content')

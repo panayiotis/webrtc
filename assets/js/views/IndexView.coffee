@@ -19,32 +19,31 @@ class App.IndexView extends Backbone.View
   
   #peers: null
   
-  initialize: (username) ->
-    if username
-      @createUser(username)
-    else
-      username = localStorage.getItem('username')
-      if username
-        @createUser(username)
+  initialize: (group, username) ->
+    @group = group
+    @username = username
+    @oldUsername = localStorage.getItem('username')
+    @createUser() if @username?
     return
   
   
   render: ->
     unless @view
-      @$el.html( @template() )
+      @$el.html( @template(group: @group, oldUsername: @oldUsername ) )
     else
       @$el.html('')
       @$el.append(@view.render().el)
     return this
 
-  createUser: (username) ->
+  createUser: =>
     #console.log this
-    unless typeof(username) is 'string'
-      username =  @$('input#username').val().toString()
+    unless typeof(@username) is 'string'
+      @username =  @$('input#username').val()#.toString()
     #console.log username
     #console.log  @$('input#username').val()
-    @user = new App.User(username)
+    @user = new App.User(@username)
     @view = new App.UserView(model:@user)
     @render()
+    Backbone.history.navigate("#{@group}/#{@username}")
   #discover: ->
   #  @model.discover()

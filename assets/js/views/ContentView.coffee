@@ -11,8 +11,8 @@ class App.ContentView extends Backbone.View
   className: 'content view'
   
   events:
-    'click .edit-area.inactive'        : 'edit'
-    'blur .edit-area textarea': 'blur'
+    'click .edit-content.button'  : 'edit'
+    'blur  .edit-area textarea'  : 'blur'
   
   initialize: ->
     #@listenTo @model, 'change', @render
@@ -20,11 +20,11 @@ class App.ContentView extends Backbone.View
   
   render: =>
     @$el.html(this.template(content:@model.get('content')))
+    @$('.edit-area')
     this.delegateEvents()
     return this
   
   edit: =>
-    console.log 'edit'
     this.$('.edit-area').removeClass('inactive')
     this.$('.edit-area').html(
       "<textarea rows='20'>#{@model.get('content')}</textarea>"
@@ -32,7 +32,6 @@ class App.ContentView extends Backbone.View
   
   blur: =>
     newContent = this.$('.edit-area textarea').val()
-    console.log newContent
     @model.set('content', newContent)
     @model.save()
     @render()

@@ -22,12 +22,9 @@ class App.PeerCollectionView extends Backbone.View
   
   
   render: =>
-    #console.log @collection
     @$el.html( @template(length: @collection.length) )
-    #console.log('------------------------------------')
-    #console.table @views
     for view in @views
-      #console.log view.model.username
+      @$el.append('<hr>')
       @$el.append(view.render().el)
     return this
 

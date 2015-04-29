@@ -10,10 +10,14 @@ class App.PeerView extends Backbone.View
   
   className: 'peer view'
   
+  
   events:
-    'click .connect.button': 'connect'
-    'click .disconnect.button': 'disconnect'
-    'click .content.button': 'content'
+    'click .connect.button'     : 'connect'
+    'click .disconnect.button'  : 'disconnect'
+    'click .get-content.button' : 'getContentButton'
+    'click .show-content.button': 'showContentButton'
+    'click .hide-content.button': 'hideContentButton'
+    'hover .content'            : 'showHideContentButton'
   
   initialize: ->
     @listenTo @model, 'change', @render
@@ -21,6 +25,8 @@ class App.PeerView extends Backbone.View
   
   render: =>
     @$el.html(this.template(peer:@model))
+    @$('.show-content').hide()
+    @$('.hide-content').hide() unless @model.get('content')
     this.delegateEvents()
     return this
   
@@ -32,6 +38,19 @@ class App.PeerView extends Backbone.View
     @model.close()
     return
     
-  content: ->
+  getContentButton: ->
     @model.send('content')
-    return
+    @showContentButton()
+  
+  showContentButton: ->
+    @$('.content').slideDown()
+    @$('.hide-content').show()
+    @$('.show-content').hide()
+    
+  
+  hideContentButton: ->
+    @$('.content').slideUp()
+    @$('.hide-content').hide()
+    setTimeout( =>
+      @$('.show-content').show()
+    , 400)

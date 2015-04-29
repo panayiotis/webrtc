@@ -930,8 +930,8 @@ It adds or removes peers according to it</li>
   <span class="hljs-attribute">className</span>: <span class="hljs-string">'content view'</span>
   
   <span class="hljs-attribute">events</span>:
-    <span class="hljs-string">'click .edit-area.inactive'</span>        : <span class="hljs-string">'edit'</span>
-    <span class="hljs-string">'blur .edit-area textarea'</span>: <span class="hljs-string">'blur'</span>
+    <span class="hljs-string">'click .edit-content.button'</span>  : <span class="hljs-string">'edit'</span>
+    <span class="hljs-string">'blur  .edit-area textarea'</span>  : <span class="hljs-string">'blur'</span>
   
   <span class="hljs-attribute">initialize</span>: <span class="hljs-function">-&gt;</span></pre></div></div>
             
@@ -952,19 +952,18 @@ It adds or removes peers according to it</li>
   
   <span class="hljs-attribute">render</span>: <span class="hljs-function">=&gt;</span>
     <span class="hljs-property">@$el</span>.html(<span class="hljs-keyword">this</span>.template(<span class="hljs-attribute">content</span>:<span class="hljs-property">@model</span>.get(<span class="hljs-string">'content'</span>)))
+    <span class="hljs-property">@$</span>(<span class="hljs-string">'.edit-area'</span>)
     <span class="hljs-keyword">this</span>.delegateEvents()
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>
   
   <span class="hljs-attribute">edit</span>: <span class="hljs-function">=&gt;</span>
-    <span class="hljs-built_in">console</span>.log <span class="hljs-string">'edit'</span>
     <span class="hljs-keyword">this</span>.$(<span class="hljs-string">'.edit-area'</span>).removeClass(<span class="hljs-string">'inactive'</span>)
     <span class="hljs-keyword">this</span>.$(<span class="hljs-string">'.edit-area'</span>).html(
-      <span class="hljs-string">"&lt;textarea rows='10'&gt;<span class="hljs-subst">#{<span class="hljs-property">@model</span>.get(<span class="hljs-string">'content'</span>)}</span>&lt;/textarea&gt;"</span>
+      <span class="hljs-string">"&lt;textarea rows='20'&gt;<span class="hljs-subst">#{<span class="hljs-property">@model</span>.get(<span class="hljs-string">'content'</span>)}</span>&lt;/textarea&gt;"</span>
     )
   
   <span class="hljs-attribute">blur</span>: <span class="hljs-function">=&gt;</span>
     newContent = <span class="hljs-keyword">this</span>.$(<span class="hljs-string">'.edit-area textarea'</span>).val()
-    <span class="hljs-built_in">console</span>.log newContent
     <span class="hljs-property">@model</span>.set(<span class="hljs-string">'content'</span>, newContent)
     <span class="hljs-property">@model</span>.save()
     <span class="hljs-property">@render</span>()
@@ -1026,25 +1025,23 @@ It adds or removes peers according to it</li>
             </div>
             
             <div class="content"><div class='highlight'><pre>  
-  <span class="hljs-attribute">initialize</span>: <span class="hljs-function"><span class="hljs-params">(username)</span> -&gt;</span>
-    <span class="hljs-keyword">if</span> username
-      <span class="hljs-property">@createUser</span>(username)
-    <span class="hljs-keyword">else</span>
-      username = localStorage.getItem(<span class="hljs-string">'username'</span>)
-      <span class="hljs-keyword">if</span> username
-        <span class="hljs-property">@createUser</span>(username)
+  <span class="hljs-attribute">initialize</span>: <span class="hljs-function"><span class="hljs-params">(group, username)</span> -&gt;</span>
+    <span class="hljs-property">@group</span> = group
+    <span class="hljs-property">@username</span> = username
+    <span class="hljs-property">@oldUsername</span> = localStorage.getItem(<span class="hljs-string">'username'</span>)
+    <span class="hljs-property">@createUser</span>() <span class="hljs-keyword">if</span> <span class="hljs-property">@username</span>?
     <span class="hljs-keyword">return</span>
   
   
   <span class="hljs-attribute">render</span>: <span class="hljs-function">-&gt;</span>
     <span class="hljs-keyword">unless</span> <span class="hljs-property">@view</span>
-      <span class="hljs-property">@$el</span>.html( <span class="hljs-property">@template</span>() )
+      <span class="hljs-property">@$el</span>.html( <span class="hljs-property">@template</span>(<span class="hljs-attribute">group</span>: <span class="hljs-property">@group</span>, <span class="hljs-attribute">oldUsername</span>: <span class="hljs-property">@oldUsername</span> ) )
     <span class="hljs-keyword">else</span>
       <span class="hljs-property">@$el</span>.html(<span class="hljs-string">''</span>)
       <span class="hljs-property">@$el</span>.append(<span class="hljs-property">@view</span>.render().el)
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>
 
-  <span class="hljs-attribute">createUser</span>: <span class="hljs-function"><span class="hljs-params">(username)</span> -&gt;</span></pre></div></div>
+  <span class="hljs-attribute">createUser</span>: <span class="hljs-function">=&gt;</span></pre></div></div>
             
         </li>
         
@@ -1059,8 +1056,8 @@ It adds or removes peers according to it</li>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">unless</span> <span class="hljs-keyword">typeof</span>(username) <span class="hljs-keyword">is</span> <span class="hljs-string">'string'</span>
-      username =  <span class="hljs-property">@$</span>(<span class="hljs-string">'input#username'</span>).val().toString()</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">unless</span> <span class="hljs-keyword">typeof</span>(<span class="hljs-property">@username</span>) <span class="hljs-keyword">is</span> <span class="hljs-string">'string'</span>
+      <span class="hljs-property">@username</span> =  <span class="hljs-property">@$</span>(<span class="hljs-string">'input#username'</span>).val()<span class="hljs-comment">#.toString()</span></pre></div></div>
             
         </li>
         
@@ -1076,9 +1073,10 @@ console.log  @$(‘input#username’).val()</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-property">@user</span> = <span class="hljs-keyword">new</span> App.User(username)
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-property">@user</span> = <span class="hljs-keyword">new</span> App.User(<span class="hljs-property">@username</span>)
     <span class="hljs-property">@view</span> = <span class="hljs-keyword">new</span> App.UserView(<span class="hljs-attribute">model</span>:<span class="hljs-property">@user</span>)
-    <span class="hljs-property">@render</span>()</pre></div></div>
+    <span class="hljs-property">@render</span>()
+    Backbone.history.navigate(<span class="hljs-string">"<span class="hljs-subst">#{<span class="hljs-property">@group</span>}</span>/<span class="hljs-subst">#{<span class="hljs-property">@username</span>}</span>"</span>)</pre></div></div>
             
         </li>
         
@@ -1153,53 +1151,11 @@ console.log  @$(‘input#username’).val()</p>
     <span class="hljs-keyword">return</span>
   
   
-  <span class="hljs-attribute">render</span>: <span class="hljs-function">=&gt;</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-54">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-54">&#182;</a>
-              </div>
-              <p>console.log @collection</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-property">@$el</span>.html( <span class="hljs-property">@template</span>(<span class="hljs-attribute">length</span>: <span class="hljs-property">@collection</span>.length) )</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-55">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-55">&#182;</a>
-              </div>
-              <p>console.log(‘——————————————————‘)
-console.table @views</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">for</span> view <span class="hljs-keyword">in</span> <span class="hljs-property">@views</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-56">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-56">&#182;</a>
-              </div>
-              <p>console.log view.model.username</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-property">@$el</span>.append(view.render().el)
+  <span class="hljs-attribute">render</span>: <span class="hljs-function">=&gt;</span>
+    <span class="hljs-property">@$el</span>.html( <span class="hljs-property">@template</span>(<span class="hljs-attribute">length</span>: <span class="hljs-property">@collection</span>.length) )
+    <span class="hljs-keyword">for</span> view <span class="hljs-keyword">in</span> <span class="hljs-property">@views</span>
+      <span class="hljs-property">@$el</span>.append(<span class="hljs-string">'&lt;hr&gt;'</span>)
+      <span class="hljs-property">@$el</span>.append(view.render().el)
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>
 
   <span class="hljs-attribute">remove</span>: <span class="hljs-function">-&gt;</span>
@@ -1242,10 +1198,14 @@ console.table @views</p>
   
   <span class="hljs-attribute">className</span>: <span class="hljs-string">'peer view'</span>
   
+  
   <span class="hljs-attribute">events</span>:
-    <span class="hljs-string">'click .connect.button'</span>: <span class="hljs-string">'connect'</span>
-    <span class="hljs-string">'click .disconnect.button'</span>: <span class="hljs-string">'diconnect'</span>
-    <span class="hljs-string">'click .content.button'</span>: <span class="hljs-string">'content'</span>
+    <span class="hljs-string">'click .connect.button'</span>     : <span class="hljs-string">'connect'</span>
+    <span class="hljs-string">'click .disconnect.button'</span>  : <span class="hljs-string">'disconnect'</span>
+    <span class="hljs-string">'click .get-content.button'</span> : <span class="hljs-string">'getContentButton'</span>
+    <span class="hljs-string">'click .show-content.button'</span>: <span class="hljs-string">'showContentButton'</span>
+    <span class="hljs-string">'click .hide-content.button'</span>: <span class="hljs-string">'hideContentButton'</span>
+    <span class="hljs-string">'hover .content'</span>            : <span class="hljs-string">'showHideContentButton'</span>
   
   <span class="hljs-attribute">initialize</span>: <span class="hljs-function">-&gt;</span>
     <span class="hljs-property">@listenTo</span> <span class="hljs-property">@model</span>, <span class="hljs-string">'change'</span>, <span class="hljs-property">@render</span>
@@ -1253,20 +1213,35 @@ console.table @views</p>
   
   <span class="hljs-attribute">render</span>: <span class="hljs-function">=&gt;</span>
     <span class="hljs-property">@$el</span>.html(<span class="hljs-keyword">this</span>.template(<span class="hljs-attribute">peer</span>:<span class="hljs-property">@model</span>))
+    <span class="hljs-property">@$</span>(<span class="hljs-string">'.show-content'</span>).hide()
+    <span class="hljs-property">@$</span>(<span class="hljs-string">'.hide-content'</span>).hide() <span class="hljs-keyword">unless</span> <span class="hljs-property">@model</span>.get(<span class="hljs-string">'content'</span>)
     <span class="hljs-keyword">this</span>.delegateEvents()
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>
   
   <span class="hljs-attribute">connect</span>: <span class="hljs-function">-&gt;</span>
     <span class="hljs-property">@model</span>.connect()
     <span class="hljs-keyword">return</span>
-
+  
   <span class="hljs-attribute">disconnect</span>: <span class="hljs-function">-&gt;</span>
     <span class="hljs-property">@model</span>.close()
     <span class="hljs-keyword">return</span>
     
-  <span class="hljs-attribute">content</span>: <span class="hljs-function">-&gt;</span>
+  <span class="hljs-attribute">getContentButton</span>: <span class="hljs-function">-&gt;</span>
     <span class="hljs-property">@model</span>.send(<span class="hljs-string">'content'</span>)
-    <span class="hljs-keyword">return</span>
+    <span class="hljs-property">@showContentButton</span>()
+  
+  <span class="hljs-attribute">showContentButton</span>: <span class="hljs-function">-&gt;</span>
+    <span class="hljs-property">@$</span>(<span class="hljs-string">'.content'</span>).slideDown()
+    <span class="hljs-property">@$</span>(<span class="hljs-string">'.hide-content'</span>).show()
+    <span class="hljs-property">@$</span>(<span class="hljs-string">'.show-content'</span>).hide()
+    
+  
+  <span class="hljs-attribute">hideContentButton</span>: <span class="hljs-function">-&gt;</span>
+    <span class="hljs-property">@$</span>(<span class="hljs-string">'.content'</span>).slideUp()
+    <span class="hljs-property">@$</span>(<span class="hljs-string">'.hide-content'</span>).hide()
+    setTimeout( <span class="hljs-function">=&gt;</span>
+      <span class="hljs-property">@$</span>(<span class="hljs-string">'.show-content'</span>).show()
+    , <span class="hljs-number">400</span>)
 
 <span class="hljs-string">'use strict'</span>
 
@@ -1287,11 +1262,11 @@ console.table @views</p>
         </li>
         
         
-        <li id="section-57">
+        <li id="section-54">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-57">&#182;</a>
+                <a class="pilcrow" href="#section-54">&#182;</a>
               </div>
               <p>   @listenTo @model, ‘change’, @render
 @render()</p>
@@ -1315,7 +1290,7 @@ console.table @views</p>
   <span class="hljs-attribute">className</span>: <span class="hljs-string">'view user row'</span>
   
   <span class="hljs-attribute">events</span>:
-    <span class="hljs-string">'click .discover.button'</span>: <span class="hljs-string">'discover'</span>
+    <span class="hljs-string">'click .discover.button'</span> : <span class="hljs-string">'discover'</span>
     <span class="hljs-string">'click .button.edit'</span>     : <span class="hljs-string">'openEditDialog'</span>
     <span class="hljs-string">'click .button.delete'</span>   : <span class="hljs-string">'destroy'</span>
   
@@ -1333,7 +1308,7 @@ console.table @views</p>
   <span class="hljs-attribute">render</span>: <span class="hljs-function">-&gt;</span>
     <span class="hljs-property">@$el</span>.html( <span class="hljs-property">@template</span>(<span class="hljs-attribute">user</span>:<span class="hljs-property">@model</span>) )
     <span class="hljs-property">@$el</span>.append(<span class="hljs-property">@peers</span>.render().el)
-    <span class="hljs-property">@$</span>(<span class="hljs-string">'.insert-content-here'</span>).append(<span class="hljs-property">@content</span>.render().el)
+    <span class="hljs-property">@$</span>(<span class="hljs-string">'.user-content'</span>).append(<span class="hljs-property">@content</span>.render().el)
     <span class="hljs-keyword">this</span>.delegateEvents()
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>
 

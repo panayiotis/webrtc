@@ -1,5 +1,6 @@
 .large-6.columns
-  h1= user.username
+  h1 Hello #{user.username}!
+  h2 you are in #{user.group} group :)
   .row
     .large-12.columns
       .panel.callout.radius
@@ -9,4 +10,5 @@
             h3.center=(user.get('open') ? "open" : "closed")
           .small-4.columns
             a.discover.button discover peers
-  .insert-content-here
+  .user-content
+    
