@@ -11,8 +11,13 @@
 // about supported directives.
 //
 //= require vendor/jquery.min
+//= require vendor/jquery-easing
+
+// https://github.com/alumbo/jquery.parallax-scroll
+//= require vendor/jquery.parallax-scroll
+
 // require vendor/jquery.scrollTo.min
-// require vendor/scrollReveal.min
+//= require vendor/scrollReveal
 //= require vendor/modernizr
 //= require vendor/foundation
 // require vendor/d3

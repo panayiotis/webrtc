@@ -1,21 +1,10 @@
-
-(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define(factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory(require, exports, module);
-  } else {
-    root.scrollReveal = factory();
-  }
-}(this, function(require, exports, module) {
-
 /*
                        _ _ _____                      _   _
                       | | |  __ \                    | | (_)
     ___  ___ _ __ ___ | | | |__) |_____   _____  __ _| |  _ ___
    / __|/ __| '__/ _ \| | |  _  // _ \ \ / / _ \/ _` | | | / __|
    \__ \ (__| | | (_) | | | | \ \  __/\ V /  __/ (_| | |_| \__ \
-   |___/\___|_|  \___/|_|_|_|  \_\___| \_/ \___|\__,_|_(_) |___/ v2.2.0
+   |___/\___|_|  \___/|_|_|_|  \_\___| \_/ \___|\__,_|_(_) |___/ v2.3.0
                                                         _/ |
                                                        |__/
 
@@ -332,6 +321,15 @@ window.scrollReveal = (function( window ){
             parsed.scale.power = words[ i + 1 ];
             break;
 
+          case 'vFactor':
+          case 'vF':
+            parsed.vFactor = words[ i + 1 ];
+            break;
+
+          case 'opacity':
+            parsed.opacity = words[ i + 1 ];
+            break;
+
           default:
             return;
         }
@@ -346,10 +344,6 @@ window.scrollReveal = (function( window ){
         config.axis = 'Y';
       } else if ( config.enter === 'left' || config.enter === 'right' ){
         config.axis = 'X';
-      }
-
-      if ( config.easing === 'hustle' ){
-        config.easing = 'cubic-bezier( 0.6, 0.2, 0.1, 1 )';
       }
 
       // Let’s make sure our our pixel distances are negative for top and left.
@@ -592,7 +586,3 @@ window.scrollReveal = (function( window ){
   return scrollReveal;
 
 })( window );
-
-return scrollReveal;
-
-}));

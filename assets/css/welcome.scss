@@ -1,0 +1,99 @@
+.welcome{
+  min-height: 100px;
+  min-width: 100px;
+  width:100%;
+  height: 100%;
+  
+  
+  .container{
+    min-height:10%;
+  }
+
+  .hello {
+    z-index: -1000;
+    position: fixed;
+    top:0;
+    height: 100%;
+    min-height: 100px;
+    width: 100%;
+    min-width: 100px;
+    background-image: url("/a.jpg");
+    background-size: cover;
+  }
+  
+  h1,h2,h3,p,input,a{
+    font-family: 'PT Sans', sans-serif !important;
+  }
+  
+  h1,h2,h3,h4,p { color: Ghostwhite; }
+  
+  .features{
+    background-color: rgba(0,0,0,0.5);
+    padding:20px;
+  }
+
+  .footer {
+    margin:10% 0; text-align:right;
+  }
+  
+  h1.title{
+    margin: 2em 0;
+    font-size: 5em;
+  }
+  
+  h2.hero{
+    margin: 2em 0;
+    font-size: 2em;
+  }
+  
+  h1.howto{
+    margin: 2em 0;
+    font-size: 5em;
+  }
+  
+  .group.row{
+    background-color: rgba(0,0,0,0.5);
+    .columns { padding-left:0; }
+    .text { padding:20px }
+    margin-top: 120px;
+    margin-bottom: 120px;
+    text-align:left;
+    
+    p {
+      text-align:left;
+      font-size: 2em;
+    }
+  }
+  
+  .user.row{
+    .columns{ padding-right:0; }
+    .text { padding:20px }
+    background-color: rgba(0,0,0,0.5);
+    margin-top: 120px;
+    margin-bottom: 0px;
+    text-align:right;
+    
+    p {
+      text-align:right;
+      font-size: 2em;
+    }
+  }
+  
+  .spacer{min-height:400px;}
+  
+  .enter.row{
+    h1,h2,h3,p,input,a{
+    font-family: 'PT Sans', sans-serif !important;
+    }
+    background-color: rgba(0,0,0,0.5);
+    margin-top: 10%;
+    h1{font-size: 3.5em;}
+    h2{font-size: 2.5em;}
+    h3{font-size: 2em;}
+    .button{font-size: 2em;}
+    input{
+      font-size: 2em;
+      height: 2.2em;
+    }
+  }
+}

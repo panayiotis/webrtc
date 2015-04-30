@@ -9,7 +9,6 @@ div.view{
 }
 
 .content {
-  
   .hide-content{
     visibility:hidden;
     position: absolute;
@@ -26,7 +25,6 @@ div.view{
 }
 
 .edit-area{
-  
   .edit-content.button{
     visibility:hidden !important;
     position: absolute;
@@ -41,4 +39,12 @@ div.view{
       visibility:visible !important;
     }
   }
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
 }

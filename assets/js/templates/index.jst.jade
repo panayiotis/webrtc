@@ -1,18 +1,58 @@
-if group == 'welcome'
+.welcome
+  .container
+    .hello(data-parallax='{"scale":1.3}')
+  if group == 'welcome'
+    .row
+      .large-12.columns
+        h1.center.bold.title P2P network
+    .features.row(data-sr="wait 0.5s, enter top,reset")
+      h2.hero.center
+        | Create or join groups and publish your content to other users
+    
+    h1.bold.center.howto How to use it
+    .group.row
+      .small-6.columns(data-sr="enter left,reset")
+        img(src='/group.png')
+      .small-6.columns.text
+        p
+          |Enter to group 
+          span.italic welcome
+    
+    .user.row(data-sr="enter right,reset")
+      .small-6.columns.text
+        p
+          |Enter to group 
+          span.italic welcome 
+          |as 
+          span.bold Bob
+      .small-6.columns
+        img(src='/user.png')
+    div(data-parallax='{"y":500}')
+      .arrow.bounce
+    .spacer
+    
+  .row.enter(data-sr="enter bottom,reset")
+    .large-12.columns
+      
+      h1
+        |Welcome to 
+        span.italic=group
+        |&nbsp;group 
+      
+      h1 Choose a username
+      
+      if oldUsername
+        h2 aren't you #{oldUsername} ?
+      
+      .row
+        .small-8.columns
+          if oldUsername
+            input#username(type='text', value = "#{oldUsername}")
+          else
+            input#username(type='text', placeholder='username')
+        .small-3.columns
+          a.create-user.button.large.expand connect
   .row
     .large-12.columns
-      h1 P2P application
-.row
-  .large-12.columns
-    h1 Welcome to #{group} group 
-    h2 Choose a username
-    if oldUsername
-      h3 aren't you #{oldUsername} ?
-    .row
-      .small-8.columns
-        if oldUsername
-          input#username(type='text', value = "#{oldUsername}")
-        else
-          input#username(type='text', placeholder='type a username')
-      .small-3.columns
-        a.create-user.button.expand connect
+      .footer
+        a(href='https://www.flickr.com/photos/jeronimooo/16442891629') background image

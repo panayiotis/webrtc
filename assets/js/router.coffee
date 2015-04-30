@@ -15,6 +15,7 @@ class App.Router extends Backbone.Router
   index: (group, user)->
     view = new App.IndexView(group, user)
     $('body').append(view.render().el)
+    window.sr = new scrollReveal()
     return
   
   wrong: ->
