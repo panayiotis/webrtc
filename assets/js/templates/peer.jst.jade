@@ -13,9 +13,9 @@
       a.get-content.button.expand content
 
 
-  .row
-    .large-12.columns
-      a.show-content.button.expand show #{peer.username}'s content
-      .content
-        a.hide-content.button.tiny &times;
-        !=peer.get('content')
+.row
+  .large-12.columns
+    a.show-content.button.expand show #{peer.username}'s content
+    .content
+      a.hide-content.button.tiny &times;
+      !=peer.get('content')
