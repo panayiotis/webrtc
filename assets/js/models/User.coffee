@@ -79,7 +79,8 @@ class App.User extends Backbone.Model
     #
     # the user registers to a group according to the
     # first fragment of the url path
-    @group = Backbone.history.getFragment().split('/')[0]
+    fragment = Backbone.history.getFragment().split('/')[0]
+    @group = fragment.replace(/(\/?\?.*)/, "")
     
     # connect to signalling server
     @connect()

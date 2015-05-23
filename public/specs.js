@@ -49,7 +49,7 @@
           this.bobPeer.connect();
           return setTimeout(function() {
             return done();
-          }, 500);
+          }, 1000);
         });
         it('triggers data event when it receives data', function(done) {
           var flag;
@@ -57,7 +57,11 @@
           this.bob.listenTo(this.bob, 'data', function() {
             return flag = true;
           });
-          this.bobPeer.connection.send('content');
+          setTimeout((function(_this) {
+            return function() {
+              return _this.bobPeer.connection.send('content');
+            };
+          })(this), 500);
           return setTimeout(function() {
             expect(flag).toBeTruthy();
             return done();
@@ -70,13 +74,17 @@
           this.bobPeer.listenTo(this.bobPeer, 'data', function(obj) {
             return data = obj.data;
           });
-          this.bobPeer.connection.send('content');
+          setTimeout((function(_this) {
+            return function() {
+              return _this.bobPeer.connection.send('content');
+            };
+          })(this), 500);
           return setTimeout(function() {
             expect(data).toBeTruthy();
             expect(data.content).toBeTruthy();
             expect(data.content).toBe('<h1>Bob!</h1>');
             return done();
-          }, 1500);
+          }, 1000);
         });
       });
     });
@@ -284,7 +292,7 @@
           return setTimeout(function() {
             expect(peer.get('open')).toBeTruthy();
             return done();
-          }, 300);
+          }, 600);
         });
       });
       return describe('Peer passive Connectivity', function() {

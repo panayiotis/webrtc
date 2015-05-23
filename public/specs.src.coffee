@@ -30,16 +30,21 @@ unless phantom
         @alice = new User('alice')
         @bob = new User('bob')
         @bobPeer = new Peer(server:@alice.connection, id:@bob.id)
-        @bobPeer.connect()
-        
+        @bobPeer.connect() # alice connects to bob
+
+
         setTimeout ->
           done()
-        , 500
+        , 1000
       
       it 'triggers data event when it receives data', (done) ->
         flag = false
         @bob.listenTo(@bob, 'data', -> flag = true)
-        @bobPeer.connection.send('content')
+        
+        setTimeout =>
+          @bobPeer.connection.send('content')
+        , 500
+        
         setTimeout ->
           expect(flag).toBeTruthy()
           done()
@@ -57,7 +62,9 @@ unless phantom
           data = obj.data
         
         # alice sends content request to bob
-        @bobPeer.connection.send('content')
+        setTimeout =>
+          @bobPeer.connection.send('content')
+        , 500
         
         # wait and check the flag
         setTimeout ->
@@ -65,7 +72,7 @@ unless phantom
           expect(data.content).toBeTruthy()
           expect(data.content).toBe '<h1>Bob!</h1>'
           done()
-        , 1500
+        , 1000
 
 
   ###
@@ -250,7 +257,7 @@ unless phantom
         setTimeout( ->
           expect(peer.get('open')).toBeTruthy()
           done()
-        , 300)
+        , 600)
     
     
     describe 'Peer passive Connectivity', ->

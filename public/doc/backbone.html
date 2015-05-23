@@ -583,7 +583,8 @@ first fragment of the url path</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-property">@group</span> = Backbone.history.getFragment().split(<span class="hljs-string">'/'</span>)[<span class="hljs-number">0</span>]</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    fragment = Backbone.history.getFragment().split(<span class="hljs-string">'/'</span>)[<span class="hljs-number">0</span>]
+    <span class="hljs-property">@group</span> = fragment.replace(<span class="hljs-regexp">/(\/?\?.*)/</span>, <span class="hljs-string">""</span>)</pre></div></div>
             
         </li>
         
