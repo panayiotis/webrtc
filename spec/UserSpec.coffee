@@ -59,7 +59,7 @@ unless phantom
         setTimeout( ->
           expect(peer.get('open')).toBeTruthy()
           done()
-        , 300)
+        , 600)
     
     
     describe 'Peer passive Connectivity', ->

@@ -35,7 +35,7 @@ unless phantom
         setTimeout ->
           expect(flag).toBeTruthy()
           done()
-        , 1000
+        , 2000
         
       
       it 'replies with content when a message "content" is received', (done) ->
@@ -57,7 +57,7 @@ unless phantom
           expect(data.content).toBeTruthy()
           expect(data.content).toBe '<h1>Bob!</h1>'
           done()
-        , 1500
+        , 2000
 
 
   ###
