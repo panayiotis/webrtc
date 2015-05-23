@@ -1,5 +1,5 @@
 'use strict'
-
+## UserView
 class App.UserView extends Backbone.View
   
   template: JST['templates/user']

@@ -1,5 +1,6 @@
 'use strict'
 
+## User model
 # The Peer User of the application
 class App.User extends Backbone.Model
   

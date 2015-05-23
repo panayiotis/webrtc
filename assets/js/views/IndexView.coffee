@@ -1,5 +1,5 @@
 'use strict'
-
+## IndexView
 class App.IndexView extends Backbone.View
   
   template: JST['templates/index']

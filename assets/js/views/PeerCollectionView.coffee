@@ -1,5 +1,5 @@
 'use strict'
-
+## PeerCollectionView
 class App.PeerCollectionView extends Backbone.View
   
   template: JST['templates/peer_collection']

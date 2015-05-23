@@ -1,6 +1,6 @@
 'use strict'
 
-  
+## Peer model
 class App.Peer extends Backbone.Model
 
   defaults:

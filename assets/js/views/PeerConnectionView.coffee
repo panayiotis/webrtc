@@ -1,5 +1,5 @@
 'use strict'
-
+## PeerConnectionView
 class App.PeerConnectionView extends Backbone.View
   
   template: JST['templates/peer']

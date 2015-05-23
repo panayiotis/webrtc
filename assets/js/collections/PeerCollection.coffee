@@ -1,5 +1,6 @@
 'use strict'
 
+## Peer collection
 class App.PeerCollection extends Backbone.Collection
   
   model: App.Peer

@@ -1,5 +1,6 @@
 'use strict'
-
+## KitchensinkView
+# no longer used
 class App.KitchensinkView extends Backbone.View
   
   template: JST['templates/kitchensink']

@@ -29,6 +29,7 @@ peerserver = require('http').createServer(app)
 
 app.use '/peerjs', ExpressPeerServer(peerserver, options)
 
+# Signalling server
 peerserver.listen 9000, ->
   host = peerserver.address().address
   port = peerserver.address().port
@@ -54,10 +55,6 @@ app.get '/kitchensink', (req, res) ->
   return
 
 # Default route
-# app.get '', (req, res) ->
-#   res.render 'index'
-#   return
-# Default route
 app.get '', (req, res) ->
   res.redirect 'welcome'
   return
@@ -66,9 +63,8 @@ app.get '', (req, res) ->
 app.get '*', (req, res) ->
   res.render 'index'
   return
-  
 
-
+# HTML server
 server = app.listen(3000, ->
   host = server.address().address
   port = server.address().port

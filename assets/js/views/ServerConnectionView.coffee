@@ -1,5 +1,5 @@
 'use strict'
-
+## ServerConnectionView
 class App.ServerConnectionView extends Backbone.View
   
   template: JST['templates/server']
@@ -13,8 +13,6 @@ class App.ServerConnectionView extends Backbone.View
   events: {}
   
   initialize: ->
-    #    @listenTo @model, 'change', @render
-    #@render()
     return
   
   render: ->

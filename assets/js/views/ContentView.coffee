@@ -1,5 +1,5 @@
 'use strict'
-
+## ContentView
 class App.ContentView extends Backbone.View
   
   template: JST['templates/content']
