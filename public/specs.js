@@ -61,11 +61,11 @@
             return function() {
               return _this.bobPeer.connection.send('content');
             };
-          })(this), 500);
+          })(this), 1000);
           return setTimeout(function() {
             expect(flag).toBeTruthy();
             return done();
-          }, 1000);
+          }, 1500);
         });
         return it('replies with content when a message "content" is received', function(done) {
           var data;
@@ -280,7 +280,7 @@
         beforeEach(function(done) {
           this.alice = new User('alice');
           this.bob = new User('bob');
-          return setTimeout(done, 300);
+          return setTimeout(done, 500);
         });
         return it('connects to existing peer', function(done) {
           var peer;
@@ -292,7 +292,7 @@
           return setTimeout(function() {
             expect(peer.get('open')).toBeTruthy();
             return done();
-          }, 600);
+          }, 1500);
         });
       });
       return describe('Peer passive Connectivity', function() {

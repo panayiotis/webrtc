@@ -43,12 +43,12 @@ unless phantom
         
         setTimeout =>
           @bobPeer.connection.send('content')
-        , 500
+        , 1000
         
         setTimeout ->
           expect(flag).toBeTruthy()
           done()
-        , 1000
+        , 1500
         
       
       it 'replies with content when a message "content" is received', (done) ->
@@ -248,7 +248,7 @@ unless phantom
         @bob = new User('bob')
         
         #@bobpeer = new Peer(server:@alice.connection)
-        setTimeout( done , 300)
+        setTimeout( done , 500)
         
       it 'connects to existing peer', (done) ->
         peer= new Peer(server: @alice.connection, id: @bob.id)
@@ -257,7 +257,7 @@ unless phantom
         setTimeout( ->
           expect(peer.get('open')).toBeTruthy()
           done()
-        , 600)
+        , 1500)
     
     
     describe 'Peer passive Connectivity', ->

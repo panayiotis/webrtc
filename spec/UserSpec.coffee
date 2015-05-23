@@ -50,7 +50,7 @@ unless phantom
         @bob = new User('bob')
         
         #@bobpeer = new Peer(server:@alice.connection)
-        setTimeout( done , 300)
+        setTimeout( done , 500)
         
       it 'connects to existing peer', (done) ->
         peer= new Peer(server: @alice.connection, id: @bob.id)
@@ -59,7 +59,7 @@ unless phantom
         setTimeout( ->
           expect(peer.get('open')).toBeTruthy()
           done()
-        , 600)
+        , 1500)
     
     
     describe 'Peer passive Connectivity', ->

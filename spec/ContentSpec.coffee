@@ -35,12 +35,12 @@ unless phantom
         
         setTimeout =>
           @bobPeer.connection.send('content')
-        , 500
+        , 1000
         
         setTimeout ->
           expect(flag).toBeTruthy()
           done()
-        , 1000
+        , 1500
         
       
       it 'replies with content when a message "content" is received', (done) ->
