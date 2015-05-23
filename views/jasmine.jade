@@ -10,6 +10,9 @@ block content
   script(src='jasmine-2.2.0/boot.js')
   script(src='jasmine-2.2.0/jasmine-jquery.js')
   script(src='specs.js')
-  a(href='/doc/User.html') User
-  a(href='/doc/Peer.html') Peer
-  a(href='/doc/PeerCollection.html') PeerCollection
+  .alert-box(data-alert='')
+    | Warning: Some tests may fail due to network delays.
+    a.close(href='#') &times;
+  //- a(href='/doc/User.html') User
+  //- a(href='/doc/Peer.html') Peer
+  //- a(href='/doc/PeerCollection.html') PeerCollection
